@@ -3,20 +3,30 @@ export interface ProjectItem {
   index: string;
   title: string;
   category: string;
+  tagline: string;
   flashConcept: string;
   timeline: string;
   tools: string[];
   thumbnail: string;
-  overview: string;
+  metadataBar: {
+    role: string;
+    context: string;
+    tools: string;
+  };
   problem: string;
   solution: string;
-  results: string[];
-  keyHighlights: {
-    label: string;
-    value: string;
-  }[];
-  figmaUrl?: string;
-  liveUrl?: string;
+  brandAndDesignSystem?: {
+    concept: string;
+    colorPalette: {
+      name: string;
+      hex: string;
+      desc: string;
+    }[];
+    typography: {
+      name: string;
+      desc: string;
+    }[];
+  };
 }
 
 export const PROJECTS: ProjectItem[] = [
@@ -24,69 +34,90 @@ export const PROJECTS: ProjectItem[] = [
     id: 'pansies',
     index: '01',
     title: 'Pansies',
-    category: 'Mobile App / Sprint',
-    flashConcept: 'Instant voice capture app with smart notifications',
-    timeline: '4-day Academic Sprint',
-    tools: ['Figma', 'UX Research', 'Interactive Prototyping', 'Design System'],
+    category: 'MOBILE APP / ACADEMIC SPRINT',
+    tagline: 'Instant voice capture app with scheduled notification reminders.',
+    flashConcept: 'Instant voice capture app with scheduled notification reminders.',
+    timeline: '4-Day Academic Sprint',
+    tools: ['Figma'],
     thumbnail: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=80',
-    overview: 'An ultra-focused voice note capture app designed to turn spoken thoughts into prioritized actions with zero cognitive load.',
-    problem: 'Standard audio note apps accumulate unstructured audio clips that users rarely listen back to, turning quick voice memos into an unmanageable archive.',
-    solution: 'Designed an interactive mobile experience where recording takes one tap from the lock screen widget, audio is parsed instantly into structured bullet points, and contextual reminder notifications trigger based on schedule urgency.',
-    results: [
-      'Engineered a complete 4-day Figma prototype from wireframes to hi-fi interactive micro-states.',
-      'Reduced voice-to-structured-task capture time from 15 seconds to under 3 seconds.',
-      'Defined a crisp 8pt design token system for consistent typography and spacing.'
-    ],
-    keyHighlights: [
-      { label: 'Sprint Duration', value: '4 Days' },
-      { label: 'Platform', value: 'iOS Mobile' },
-      { label: 'Deliverables', value: 'Hi-Fi Figma Prototype, UI Kit' }
-    ]
+    metadataBar: {
+      role: 'UX/UI Designer',
+      context: '4-Day Academic Sprint',
+      tools: 'Figma'
+    },
+    problem: 'Standard voice note apps accumulate unstructured audio clips that users rarely re-listen to. Great ideas strike while walking or commuting, but without active follow-ups, voice memos turn into unmanageable audio graveyards.',
+    solution: 'Pansies streamlines audio capture down to a single tap. Notes are instantly tagged into clear categories (Projects, Ideas, Personal, Work) and paired with custom notification reminders (e.g., 09:30 AM, 12:30 PM) so users re-listen and act on their thoughts at the right time.',
+    brandAndDesignSystem: {
+      concept: 'Named after the pansy flower (a symbol of thought) and pluralized to reflect the flow of daily mental ideas.',
+      colorPalette: [
+        { name: 'Deep Purple', hex: '#61286C', desc: 'Calm focus' },
+        { name: 'Amber Yellow', hex: '#E1B43D', desc: 'Interactive highlights' },
+        { name: 'Off-White', hex: '#FAF3E0', desc: 'Reduce screen fatigue' }
+      ],
+      typography: [
+        { name: 'Montserrat', desc: 'Structured geometric titles' },
+        { name: 'Fustat', desc: 'Soft, highly readable mobile body text' }
+      ]
+    }
   },
   {
     id: 'cms-ai-websites',
     index: '02',
     title: 'CMS & AI Web Systems',
-    category: 'Web Design & Systems',
-    flashConcept: 'High-efficiency web design leveraging CMS and AI workflows',
-    timeline: 'Continuous Exploration & Client Work',
-    tools: ['Framer', 'Webflow', 'AI Workflows', 'UI Systems', 'Information Architecture'],
+    category: 'WEB DESIGN & SYSTEMS',
+    tagline: 'High-efficiency web design leveraging CMS and AI workflows.',
+    flashConcept: 'High-efficiency web design leveraging CMS and AI workflows.',
+    timeline: 'Continuous Exploration',
+    tools: ['Webflow', 'Framer', 'AI Workflows'],
     thumbnail: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1000&q=80',
-    overview: 'Production-ready web design pipeline combining AI-assisted wireframing and modern CMS engines to launch fast, accessible marketing sites.',
-    problem: 'Traditional design-to-development cycles for marketing websites often take weeks of repetitive layout coding, delaying go-to-market testing for early-stage teams.',
-    solution: 'Built a systematic web creation framework using modern visual builders and AI workflow automations to generate component variants, structure SEO-ready CMS schemas, and deploy live landing pages in days.',
-    results: [
-      'Streamlined responsive page generation with reusable component libraries.',
-      'Maintained 100/100 Lighthouse performance and accessibility benchmarks across desktop and mobile.',
-      'Cut design delivery iterations by 50% without compromising visual polish.'
-    ],
-    keyHighlights: [
-      { label: 'Approach', value: 'Content-First & Systems' },
-      { label: 'Stack', value: 'Framer / Webflow / CMS' },
-      { label: 'Outcome', value: 'Fast Turnaround, Clean Code' }
-    ]
+    metadataBar: {
+      role: 'Web Designer & Developer',
+      context: 'Continuous Exploration',
+      tools: 'Framer / Webflow'
+    },
+    problem: 'Traditional website design and development cycles take weeks of repetitive layout coding, delaying critical go-to-market testing for fast-moving teams.',
+    solution: 'A systematic web creation framework using modern visual builders (Webflow / Framer) and AI workflows to generate component variants, structure CMS schemas, and deploy live landing pages in record time.',
+    brandAndDesignSystem: {
+      concept: 'Speed, accessibility, and high visual standards for modern marketing landing pages.',
+      colorPalette: [
+        { name: 'Carbon Black', hex: '#1A1A1A', desc: 'Structural contrast' },
+        { name: 'Pure White', hex: '#FFFFFF', desc: 'Clean background' },
+        { name: 'Electric Emerald', hex: '#10B981', desc: 'Live status & feedback' }
+      ],
+      typography: [
+        { name: 'Geist', desc: 'Clean sans-serif geometry' },
+        { name: 'Space Mono', desc: 'Technical indices & tags' }
+      ]
+    }
   },
   {
     id: 'notion-templates',
     index: '03',
     title: 'Notion Productivity Systems',
-    category: 'Information Architecture',
-    flashConcept: 'Productivity frameworks and system design templates',
-    timeline: 'Personal & Public Release',
-    tools: ['Notion', 'Database Architecture', 'UX Mapping', 'System Design'],
+    category: 'INFORMATION ARCHITECTURE',
+    tagline: 'Productivity frameworks and system design templates.',
+    flashConcept: 'Productivity frameworks and system design templates.',
+    timeline: 'Public Release',
+    tools: ['Notion', 'Information Architecture'],
     thumbnail: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=1000&q=80',
-    overview: 'Modular Notion operating frameworks designed for freelance task tracking, design sprints, and personal knowledge management.',
-    problem: 'Most workspace templates are either overloaded with redundant properties or too bare to maintain team alignment during rapid design cycles.',
-    solution: 'Architected a minimalist relational database system with linked sprint trackers, asset libraries, and automated weekly review views optimized for UX designers and students.',
-    results: [
-      'Created intuitive UX navigation with contextual dashboards and filtered views.',
-      'Eliminated clutter by structuring database relations around 3 core pillars: Inputs, Actions, and Archives.',
-      'Adopted by design peers for tracking design sprint milestones and portfolio assets.'
-    ],
-    keyHighlights: [
-      { label: 'Discipline', value: 'Information Architecture' },
-      { label: 'Ecosystem', value: 'Notion Relational DB' },
-      { label: 'Focus', value: 'UX Designers & Sprint Workflows' }
-    ]
+    metadataBar: {
+      role: 'System Architect',
+      context: 'Public Release',
+      tools: 'Notion'
+    },
+    problem: 'Most workspace frameworks are overloaded with redundant properties and lack clear UX hierarchy, creating cognitive drag for designers and sprint teams.',
+    solution: 'A clean relational database system organized around 3 core pillars (Inputs, Actions, Archives) with contextual dashboard views tailored for UX designers.',
+    brandAndDesignSystem: {
+      concept: 'Eliminating workspace noise through strictly relational database architecture.',
+      colorPalette: [
+        { name: 'Paper Ecru', hex: '#F4F3EF', desc: 'Warm workspace tone' },
+        { name: 'Graphite', hex: '#2A2A2A', desc: 'Readable text blocks' },
+        { name: 'Slate Gray', hex: '#666664', desc: 'Metadata & dividers' }
+      ],
+      typography: [
+        { name: 'Inter / Geist', desc: 'Standard UI legibility' },
+        { name: 'Space Mono', desc: 'Identifiers & formulas' }
+      ]
+    }
   }
 ];
