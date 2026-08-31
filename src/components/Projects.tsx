@@ -34,10 +34,10 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
     <section
       id="projects"
       ref={containerRef}
-      className="py-24 w-full border-b border-[#D5D4CE] relative bg-[#F4F3EF] overflow-hidden"
+      className="min-h-screen w-full border-b border-[#D5D4CE] relative bg-[#F4F3EF] overflow-hidden flex flex-col justify-between py-16 px-0"
     >
       {/* Section Header with Navigation Controls */}
-      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div className="w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#1A1A1A]">
             Projects
@@ -53,14 +53,14 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
           <div className="flex items-center gap-2">
             <button
               onClick={prevProject}
-              className="p-3 border border-[#1A1A1A] bg-[#F4F3EF] hover:bg-[#1A1A1A] hover:text-[#F4F3EF] transition-colors cursor-pointer flex items-center justify-center group"
+              className="p-2.5 border border-[#1A1A1A] bg-[#F4F3EF] hover:bg-[#1A1A1A] hover:text-[#F4F3EF] transition-colors cursor-pointer flex items-center justify-center group"
               aria-label="Previous project"
             >
               <ChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
             </button>
             <button
               onClick={nextProject}
-              className="p-3 border border-[#1A1A1A] bg-[#F4F3EF] hover:bg-[#1A1A1A] hover:text-[#F4F3EF] transition-colors cursor-pointer flex items-center justify-center group"
+              className="p-2.5 border border-[#1A1A1A] bg-[#F4F3EF] hover:bg-[#1A1A1A] hover:text-[#F4F3EF] transition-colors cursor-pointer flex items-center justify-center group"
               aria-label="Next project"
             >
               <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -71,7 +71,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
 
       {/* Full-width 3D Circular Perspective Container with Soft Edge Masking */}
       <div
-        className="relative w-full overflow-hidden py-8"
+        className="relative w-full overflow-hidden my-auto py-4"
         style={{
           perspective: '1400px',
           perspectiveOrigin: 'center center',
@@ -79,7 +79,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
           WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)'
         }}
       >
-        <div className="relative w-full h-[620px] sm:h-[640px] flex items-center justify-center">
+        <div className="relative w-full h-[470px] sm:h-[490px] flex items-center justify-center">
           <AnimatePresence initial={false}>
             {PROJECTS.map((project, index) => {
               // Calculate relative offset from active card: -1 (left), 0 (center), 1 (right)
@@ -105,17 +105,20 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
 
               if (isLeft) {
                 xTranslation = '-92%';
-                rotateY = 32; // tilted inward
+                rotateY = 32;
                 scale = 0.84;
                 opacity = 0.45;
                 zIndex = 10;
               } else if (isRight) {
                 xTranslation = '92%';
-                rotateY = -32; // tilted inward
+                rotateY = -32;
                 scale = 0.84;
                 opacity = 0.45;
                 zIndex = 10;
               }
+
+              // Category label formatting (e.g., 'Mobile App / Sprint' -> 'MOBILE APP')
+              const surtitre = project.category.split('/')[0].trim().toUpperCase();
 
               return (
                 <motion.div
@@ -143,7 +146,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                       nextProject();
                     }
                   }}
-                  className={`absolute w-[88vw] sm:w-[540px] md:w-[600px] h-[580px] bg-[#F4F3EF] border border-[#1A1A1A] p-6 sm:p-7 flex flex-col justify-between cursor-pointer select-none transition-shadow duration-300 ${
+                  className={`absolute w-[88vw] sm:w-[480px] md:w-[520px] bg-[#F4F3EF] border border-[#1A1A1A] p-5 sm:p-6 flex flex-col justify-between cursor-pointer select-none transition-shadow duration-300 ${
                     isCenter
                       ? 'shadow-2xl ring-1 ring-[#1A1A1A]'
                       : 'hover:opacity-75'
@@ -152,8 +155,8 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                     transformStyle: 'preserve-3d',
                   }}
                 >
-                  {/* TOP: Project Image Preview */}
-                  <div className="relative w-full h-[230px] sm:h-[250px] border border-[#1A1A1A] overflow-hidden bg-[#E5E3DC] group">
+                  {/* TOP: Project Image Preview (Max 200px, clean, no badge, no duration) */}
+                  <div className="relative w-full h-[180px] sm:h-[190px] max-h-[200px] border border-[#1A1A1A] overflow-hidden bg-[#E5E3DC] group">
                     <img
                       src={project.thumbnail}
                       alt={project.title}
@@ -162,61 +165,49 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                       }`}
                       loading="lazy"
                     />
-                    
-                    {/* Index Badge */}
-                    <div className="absolute top-2.5 left-2.5 px-2.5 py-1 bg-[#1A1A1A] text-[#F4F3EF] font-mono-custom text-xs uppercase tracking-wider">
-                      {project.index}
-                    </div>
-
-                    {/* Timeline Tag */}
-                    <div className="absolute bottom-2.5 right-2.5 px-2 py-0.5 bg-[#F4F3EF] text-[#1A1A1A] border border-[#1A1A1A] font-mono-custom text-[10px] uppercase">
-                      {project.timeline}
-                    </div>
                   </div>
 
-                  {/* MIDDLE: Project Title, Flash Concept & Category */}
-                  <div className="my-auto py-3">
-                    <div className="font-mono-custom text-xs text-[#666664] uppercase tracking-wider mb-1 flex items-center gap-2">
-                      <span>{project.category}</span>
-                    </div>
+                  {/* MIDDLE: Text Layout (Sur-titre, Titre, 1-line Description) */}
+                  <div className="py-3">
+                    {/* Sur-titre : Space Mono, small, opacity 0.6 */}
+                    <span className="font-mono-custom text-[11px] text-[#666664] opacity-60 tracking-wider uppercase block mb-1">
+                      {surtitre}
+                    </span>
 
+                    {/* Titre : Geist, bold */}
                     <h3 className="text-2xl sm:text-3xl font-extrabold text-[#1A1A1A] tracking-tight">
                       {project.title}
                     </h3>
 
-                    <p className="text-sm text-[#1A1A1A] mt-2 leading-relaxed line-clamp-2">
+                    {/* Description : Geist, single line */}
+                    <p className="text-xs sm:text-sm text-[#1A1A1A] mt-1.5 truncate">
                       {project.flashConcept}
                     </p>
-
-                    <div className="mt-3 text-xs font-mono-custom text-[#666664] flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
-                      <span>{project.keyHighlights[0]?.label}: {project.keyHighlights[0]?.value}</span>
-                    </div>
                   </div>
 
-                  {/* BOTTOM: Tools Badges & Interactive CTA */}
-                  <div className="pt-4 border-t border-[#D5D4CE] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    {/* Tools Tags (Space Mono) */}
+                  {/* BOTTOM: Tags (Space Mono fine border) & Minimal Text CTA (View Case Study ↗) */}
+                  <div className="pt-3 border-t border-[#D5D4CE] flex items-center justify-between gap-3">
+                    {/* Tags */}
                     <div className="flex flex-wrap gap-1.5">
                       {project.tools.slice(0, 3).map((tool, idx) => (
                         <span
                           key={idx}
-                          className="font-mono-custom text-[10px] sm:text-[11px] px-2.5 py-1 border border-[#1A1A1A] bg-[#EAE8E2] text-[#1A1A1A]"
+                          className="font-mono-custom text-[10px] sm:text-[11px] px-2 py-0.5 border border-[#D5D4CE] bg-[#EAE8E2] text-[#1A1A1A]"
                         >
                           {tool}
                         </span>
                       ))}
                     </div>
 
-                    {/* CTA Button */}
+                    {/* Minimal Textual Link CTA */}
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         onSelectProject(project);
                       }}
-                      className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#1A1A1A] text-[#F4F3EF] text-xs font-mono-custom uppercase tracking-wider hover:bg-black transition-colors cursor-pointer flex-shrink-0"
+                      className="font-mono-custom text-xs text-[#1A1A1A] hover:opacity-60 transition-opacity flex items-center gap-1 link-drawer cursor-pointer py-1 flex-shrink-0"
                     >
-                      <span>Case Study</span>
+                      <span>View Case Study</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
@@ -228,7 +219,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
       </div>
 
       {/* Interactive Dots Pagination at bottom of section */}
-      <div className="flex justify-center items-center gap-2.5 mt-8">
+      <div className="flex justify-center items-center gap-2.5">
         {PROJECTS.map((_, idx) => (
           <button
             key={idx}
