@@ -17,9 +17,6 @@ export const Hero: React.FC = () => {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="lg:col-span-4 flex flex-col justify-center"
         >
-          <span className="font-mono-custom text-xs uppercase tracking-widest text-[#666664] mb-3 block">
-            [01. CANDIDATE PROFILE]
-          </span>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tighter text-[#1A1A1A] leading-[1.05]">
             Mickael<br />LIN
           </h1>
@@ -28,30 +25,20 @@ export const Hero: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* Middle Column: Centered Profile Photo (1px sharp border, monochrome aesthetic) */}
+        {/* Middle Column: Centered Profile Photo */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="lg:col-span-4 flex justify-center items-center"
         >
-          <div className="relative w-56 h-72 sm:w-64 sm:h-80 md:w-72 md:h-96 border border-[#1A1A1A] p-2 bg-[#F4F3EF] group">
-            <div className="w-full h-full border border-[#D5D4CE] overflow-hidden bg-[#E5E3DC] relative">
-              {/* Clean Minimalist Portrait Representation */}
-              <img
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"
-                alt="Mickael LIN — Junior UX/UI Designer"
-                className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700 ease-out"
-                loading="eager"
-              />
-              <div className="absolute inset-0 bg-[#1A1A1A]/10 mix-blend-multiply pointer-events-none" />
-            </div>
-
-            {/* Corner Markers */}
-            <span className="absolute -top-1 -left-1 text-[9px] font-mono-custom text-[#1A1A1A] bg-[#F4F3EF] px-0.5">+</span>
-            <span className="absolute -top-1 -right-1 text-[9px] font-mono-custom text-[#1A1A1A] bg-[#F4F3EF] px-0.5">+</span>
-            <span className="absolute -bottom-1 -left-1 text-[9px] font-mono-custom text-[#1A1A1A] bg-[#F4F3EF] px-0.5">+</span>
-            <span className="absolute -bottom-1 -right-1 text-[9px] font-mono-custom text-[#1A1A1A] bg-[#F4F3EF] px-0.5">+</span>
+          <div className="relative w-56 h-72 sm:w-64 sm:h-80 md:w-72 md:h-96 border border-[#1A1A1A] overflow-hidden bg-[#E5E3DC] group">
+            <img
+              src="/profile.jpg"
+              alt="Mickael LIN — Junior UX/UI Designer"
+              className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
+              loading="eager"
+            />
           </div>
         </motion.div>
 
