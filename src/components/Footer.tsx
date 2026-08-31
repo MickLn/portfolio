@@ -107,17 +107,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAbout }) => {
 
         {/* Kinetic Headline Reveal */}
         <div className="my-auto py-6">
-          <div className="overflow-hidden mb-3">
-            <motion.p
-              initial={{ y: '100%' }}
-              animate={isInView ? { y: 0 } : { y: '100%' }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="font-mono-custom text-xs uppercase tracking-widest text-[#A3A3A3]"
-            >
-              [NEXT STEPS • INTERVIEWS & RECRUITMENT]
-            </motion.p>
-          </div>
-
           <div className="overflow-hidden">
             <motion.h2
               initial={{ y: '100%' }}
@@ -175,7 +164,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAbout }) => {
           <div className="flex items-center justify-between w-full md:w-auto gap-8">
             <div className="font-mono-custom text-[11px] text-[#A3A3A3]">
               <div>© {new Date().getFullYear()} MICKAEL LIN</div>
-              <div className="text-[10px] text-[#666664] mt-0.5">BUILT FOR SPEED & ACCESSIBILITY</div>
             </div>
 
             <BackToTopButton />

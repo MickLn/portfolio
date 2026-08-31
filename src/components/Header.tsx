@@ -36,19 +36,19 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAbout }) => {
           onClick={() => scrollToSection('home')}
           className="link-drawer hover:text-black transition-colors cursor-pointer py-1"
         >
-          [01] HOME
+          HOME
         </button>
         <button
           onClick={onOpenAbout}
           className="link-drawer hover:text-black transition-colors cursor-pointer py-1"
         >
-          [02] ABOUT
+          ABOUT
         </button>
         <button
           onClick={() => scrollToSection('projects')}
           className="link-drawer hover:text-black transition-colors cursor-pointer py-1"
         >
-          [03] PROJECTS
+          PROJECTS
         </button>
       </nav>
     </header>

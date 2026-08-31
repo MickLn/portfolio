@@ -39,11 +39,8 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
       {/* Section Header with Navigation Controls */}
       <div className="w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <span className="font-mono-custom text-xs uppercase tracking-widest text-[#666664] block mb-2">
-            [02. SELECTED WORK • 3D CIRCULAR CAROUSEL]
-          </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#1A1A1A]">
-            Featured Projects
+            Projects
           </h2>
         </div>
 
@@ -168,7 +165,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                     
                     {/* Index Badge */}
                     <div className="absolute top-2.5 left-2.5 px-2.5 py-1 bg-[#1A1A1A] text-[#F4F3EF] font-mono-custom text-xs uppercase tracking-wider">
-                      [{project.index}]
+                      {project.index}
                     </div>
 
                     {/* Timeline Tag */}
@@ -180,7 +177,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
                   {/* MIDDLE: Project Title, Flash Concept & Category */}
                   <div className="my-auto py-3">
                     <div className="font-mono-custom text-xs text-[#666664] uppercase tracking-wider mb-1 flex items-center gap-2">
-                      <span>[{project.category}]</span>
+                      <span>{project.category}</span>
                     </div>
 
                     <h3 className="text-2xl sm:text-3xl font-extrabold text-[#1A1A1A] tracking-tight">

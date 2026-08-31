@@ -35,7 +35,7 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({ project, onClose }
               <div className="flex justify-between items-start border-b border-[#D5D4CE] pb-6 mb-8">
                 <div>
                   <div className="flex items-center gap-2 font-mono-custom text-xs text-[#666664] uppercase mb-1">
-                    <span>[{project.index}]</span>
+                    <span>{project.index}</span>
                     <span>•</span>
                     <span>{project.category}</span>
                   </div>
@@ -80,7 +80,7 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({ project, onClose }
                 {/* 1. Problem */}
                 <div>
                   <h3 className="font-mono-custom text-xs font-bold uppercase tracking-wider text-[#666664] mb-2">
-                    [01. THE FRICTION / PROBLEM]
+                    THE FRICTION
                   </h3>
                   <p className="text-sm sm:text-base leading-relaxed text-[#1A1A1A]">
                     {project.problem}
@@ -90,7 +90,7 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({ project, onClose }
                 {/* 2. Solution */}
                 <div>
                   <h3 className="font-mono-custom text-xs font-bold uppercase tracking-wider text-[#666664] mb-2">
-                    [02. DESIGN SYSTEM & SOLUTION]
+                    THE DESIGN SYSTEM SOLUTION
                   </h3>
                   <p className="text-sm sm:text-base leading-relaxed text-[#1A1A1A]">
                     {project.solution}
@@ -100,7 +100,7 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({ project, onClose }
                 {/* 3. Measurable Results */}
                 <div>
                   <h3 className="font-mono-custom text-xs font-bold uppercase tracking-wider text-[#666664] mb-3">
-                    [03. MEASURABLE RESULTS & DELIVERABLES]
+                    DELIVERABLES & METRICS
                   </h3>
                   <div className="space-y-2">
                     {project.results.map((res, idx) => (
@@ -118,7 +118,7 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({ project, onClose }
                 {/* 4. Tools Used */}
                 <div>
                   <h3 className="font-mono-custom text-xs font-bold uppercase tracking-wider text-[#666664] mb-2">
-                    [TOOLS & METHODS]
+                    TOOLS USED
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {project.tools.map((t, idx) => (

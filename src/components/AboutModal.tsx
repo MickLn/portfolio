@@ -33,7 +33,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
             <div className="flex justify-between items-start border-b border-[#D5D4CE] pb-4 mb-6">
               <div>
                 <span className="font-mono-custom text-xs uppercase tracking-wider text-[#666664] block mb-1">
-                  [PROFILE METADATA]
+                  PROFILE METADATA
                 </span>
                 <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#1A1A1A]">
                   Mickael LIN
@@ -55,7 +55,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
             <div className="space-y-6 text-[#1A1A1A]">
               <div>
                 <h3 className="font-mono-custom text-xs uppercase tracking-wider text-[#666664] mb-2">
-                  [CORE FOCUS]
+                  CORE FOCUS
                 </h3>
                 <p className="text-sm md:text-base leading-relaxed text-[#1A1A1A]">
                   Focused on crafting high-efficiency, intuitive digital products. Combining rigorous user research, sharp visual hierarchy in Figma, fast CMS & AI web deployment, and modular system design in Notion.
@@ -64,7 +64,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
 
               <div>
                 <h3 className="font-mono-custom text-xs uppercase tracking-wider text-[#666664] mb-3">
-                  [SKILLS MATRIX]
+                  SKILLS MATRIX
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono-custom">
                   {[
