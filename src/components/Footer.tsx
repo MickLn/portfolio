@@ -54,7 +54,7 @@ const BackToTopButton: React.FC = () => {
 export const Footer: React.FC<FooterProps> = ({ onOpenAbout }) => {
   const [localTime, setLocalTime] = useState<string>('');
   const containerRef = useRef<HTMLElement>(null);
-  const isInView = useInView(containerRef, { once: true, margin: '-60px' });
+  const isInView = useInView(containerRef, { once: false, margin: '-40px' });
 
   // Update Paris / Local live clock
   useEffect(() => {
@@ -86,12 +86,12 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAbout }) => {
     <footer
       id="contact"
       ref={containerRef}
-      className="relative bg-[#141414] text-[#F4F3EF] pt-24 pb-12 px-6 md:px-12 lg:px-16 border-t border-[#2E2E2E]"
+      className="relative w-full bg-[#141414] text-[#F4F3EF] pt-24 pb-12 px-6 md:px-12 lg:px-16 min-h-[620px] flex flex-col justify-between"
     >
-      <div className="w-full max-w-7xl mx-auto flex flex-col justify-between min-h-[60vh]">
+      <div className="w-full max-w-7xl mx-auto flex flex-col justify-between flex-1">
         
         {/* Top Meta Bar in Footer */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#2E2E2E] pb-6 mb-16 gap-4 font-mono-custom text-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#2E2E2E] pb-6 mb-12 gap-4 font-mono-custom text-xs">
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse-live" />
             <span className="text-[#F4F3EF] uppercase tracking-wider font-bold">
@@ -106,8 +106,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAbout }) => {
         </div>
 
         {/* Kinetic Headline Reveal */}
-        <div className="my-auto py-8">
-          <div className="overflow-hidden mb-4">
+        <div className="my-auto py-6">
+          <div className="overflow-hidden mb-3">
             <motion.p
               initial={{ y: '100%' }}
               animate={isInView ? { y: 0 } : { y: '100%' }}
@@ -154,7 +154,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAbout }) => {
         </div>
 
         {/* Bottom Social Links & Back-To-Top */}
-        <div className="pt-16 mt-12 border-t border-[#2E2E2E] flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+        <div className="pt-12 mt-10 border-t border-[#2E2E2E] flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
           {/* Quick Links with Custom Underline Drawer Animation */}
           <div className="flex flex-wrap gap-6 sm:gap-10 font-mono-custom text-xs text-[#A3A3A3]">
             {socialLinks.map((link, idx) => (
