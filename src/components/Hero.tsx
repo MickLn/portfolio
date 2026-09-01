@@ -5,70 +5,70 @@ export const Hero: React.FC = () => {
   return (
     <section
       id="home"
-      className="min-h-screen w-full flex items-center justify-center px-6 md:px-12 lg:px-16 border-b border-[#D5D4CE] py-20"
+      className="relative min-h-screen w-full bg-[#F4F3EF] overflow-hidden flex flex-col justify-between select-none"
     >
-      {/* 3-Column Editorial Raw Layout — Perfectly Centered */}
-      <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center justify-items-center">
-        
-        {/* Left Column: Name & Target Role */}
+      {/* 1. Structural Architectural Grid Lines (1px Sharp Symmetrical Borders) */}
+      <div className="absolute top-14 sm:top-16 left-0 w-full border-b border-[#D5D4CE] pointer-events-none z-0" />
+      <div className="absolute bottom-14 sm:bottom-16 left-0 w-full border-t border-[#D5D4CE] pointer-events-none z-0" />
+      <div className="absolute top-0 left-6 sm:left-12 lg:left-16 h-full border-r border-[#D5D4CE] pointer-events-none z-0" />
+      <div className="absolute top-0 right-6 sm:right-12 lg:right-16 h-full border-l border-[#D5D4CE] pointer-events-none z-0" />
+
+      {/* Top Spacer matching Header Cell */}
+      <div className="h-14 sm:h-16 w-full flex-shrink-0" />
+
+      {/* 2. Main Center Box: Perfectly Centered Composition in Viewport */}
+      <div className="flex-1 w-full px-6 sm:px-12 lg:px-20 flex items-center justify-center py-4 z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-4 w-full flex flex-col justify-center items-start lg:text-left"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="w-fit max-w-full mx-auto flex flex-col items-center justify-center"
         >
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tighter text-[#1A1A1A] leading-[1.05]">
-            Mickael<br />LIN
+          {/* Row 1: MICKAEL (Geist font-black, balanced editorial size) */}
+          <h1 className="text-[15vw] sm:text-[13vw] md:text-[11.5vw] lg:text-[10.5vw] font-black tracking-[-0.04em] text-[#1A1A1A] leading-[0.85] uppercase w-full text-left">
+            MICKAEL
           </h1>
-          <p className="text-lg sm:text-xl font-medium tracking-tight text-[#1A1A1A] mt-4">
-            Junior UX/UI Designer
-          </p>
-        </motion.div>
 
-        {/* Middle Column: Centered Profile Photo (Sharp 1px Border) */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-4 w-full flex justify-center items-center"
-        >
-          <div className="relative w-56 h-72 sm:w-64 sm:h-80 md:w-72 md:h-96 border border-[#1A1A1A] overflow-hidden bg-[#E5E3DC] group shadow-sm">
-            <img
-              src="/profile.jpg"
-              alt="Mickael LIN — Junior UX/UI Designer"
-              className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
-              loading="eager"
-            />
-          </div>
-        </motion.div>
-
-        {/* Right Column: Apprenticeship Status (Clean, No Box, Perfectly Aligned) */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-4 w-full flex flex-col justify-center items-start lg:items-end lg:text-right"
-        >
-          <div className="flex items-center gap-2 mb-2 lg:justify-end">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse-live" />
-            <span className="font-mono-custom text-xs font-bold uppercase tracking-wider text-[#1A1A1A]">
-              STATUS: AVAILABLE
+          {/* Row 2: LIN + Embedded Portrait Photo (Full face visible, proportional height) */}
+          <div className="w-full flex items-center justify-between gap-6 sm:gap-10 md:gap-14 lg:gap-20 mt-2 sm:mt-4">
+            <span className="text-[15vw] sm:text-[13vw] md:text-[11.5vw] lg:text-[10.5vw] font-black tracking-[-0.04em] text-[#1A1A1A] leading-[0.85] uppercase">
+              LIN
             </span>
-          </div>
 
-          <div className="font-mono-custom text-sm sm:text-base font-bold text-[#1A1A1A] tracking-tight uppercase">
-            SEEKING APPRENTICESHIP
-          </div>
-          
-          <div className="font-mono-custom text-xs sm:text-sm text-[#1A1A1A] mt-1 font-semibold">
-            TIMELINE: IMMEDIATE / ASAP
-          </div>
-
-          <div className="mt-4 text-xs font-mono-custom text-[#666664]">
-            LOCATION: PARIS & REMOTE
+            {/* Embedded Portrait Photo — Full Headshot Framing, No awkward cropping */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="w-32 h-44 sm:w-44 sm:h-60 md:w-56 md:h-76 lg:w-68 lg:h-92 overflow-hidden bg-[#E5E3DC] flex-shrink-0 shadow-xs group"
+            >
+              <img
+                src="/profile.jpg"
+                alt="Mickael LIN"
+                className="w-full h-full object-cover object-[center_15%] grayscale contrast-125 group-hover:scale-105 transition-transform duration-700 ease-out"
+                loading="eager"
+              />
+            </motion.div>
           </div>
         </motion.div>
+      </div>
 
+      {/* 3. Bottom Information Bar (Space Mono, 3-column metadata) */}
+      <div className="h-14 sm:h-16 w-full px-8 sm:px-16 lg:px-20 flex items-center justify-between gap-4 font-mono-custom text-[10px] sm:text-xs z-10 flex-shrink-0">
+        {/* Left: Specializations */}
+        <div className="font-bold tracking-wider text-[#1A1A1A] uppercase">
+          UX/UI / NO-CODE / WEBDESIGN
+        </div>
+
+        {/* Center: Scroll Indicator */}
+        <div className="text-[#666664] tracking-widest uppercase hidden md:block">
+          SCROLL TO CONTINUE
+        </div>
+
+        {/* Right: Apprenticeship status with Paris */}
+        <div className="font-bold tracking-wider text-[#1A1A1A] uppercase text-right">
+          SEEKING APPRENTICESHIP - AVAILABLE NOW - PARIS
+        </div>
       </div>
     </section>
   );

@@ -17,36 +17,24 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAbout }) => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-40 pointer-events-none p-6 md:p-8 flex justify-between items-center text-xs tracking-wider uppercase font-mono-custom text-[#1A1A1A]">
-      {/* Brand / Logo Indicator */}
-      <div className="pointer-events-auto">
+    <header className="fixed top-0 left-0 w-full h-14 sm:h-16 z-40 pointer-events-none px-6 md:px-12 flex justify-center items-center text-xs tracking-wider uppercase font-mono-custom text-[#1A1A1A]">
+      {/* 3 Clickable Links — Centered in Upper Header Grid Cell */}
+      <nav className="pointer-events-auto flex items-center gap-8 md:gap-12">
         <button
           onClick={() => scrollToSection('home')}
-          className="text-left font-bold tracking-widest hover:opacity-60 transition-opacity flex items-center gap-2 group cursor-pointer"
-          aria-label="Back to top"
-        >
-          <span className="inline-block w-1.5 h-1.5 bg-[#1A1A1A] group-hover:scale-125 transition-transform" />
-          <span>MICKAEL LIN</span>
-        </button>
-      </div>
-
-      {/* 3 Direct Clickable Links — Zero Background, Fixed */}
-      <nav className="pointer-events-auto flex items-center gap-6 md:gap-10">
-        <button
-          onClick={() => scrollToSection('home')}
-          className="link-drawer hover:text-black transition-colors cursor-pointer py-1"
+          className="link-drawer hover:text-black transition-colors cursor-pointer py-1 text-[11px] sm:text-xs"
         >
           HOME
         </button>
         <button
           onClick={onOpenAbout}
-          className="link-drawer hover:text-black transition-colors cursor-pointer py-1"
+          className="link-drawer hover:text-black transition-colors cursor-pointer py-1 text-[11px] sm:text-xs"
         >
           ABOUT
         </button>
         <button
           onClick={() => scrollToSection('projects')}
-          className="link-drawer hover:text-black transition-colors cursor-pointer py-1"
+          className="link-drawer hover:text-black transition-colors cursor-pointer py-1 text-[11px] sm:text-xs"
         >
           PROJECTS
         </button>
