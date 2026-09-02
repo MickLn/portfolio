@@ -13,14 +13,14 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
       className="min-h-screen w-full border-b border-[#D5D4CE] relative bg-[#F4F3EF] flex flex-col justify-between py-12 sm:py-16 px-6 sm:px-12 lg:px-16 select-none"
     >
       <div className="w-full h-full flex-1 flex flex-col justify-between">
-        {/* Section Heading: PROJECTS (Monumental Geist Black) */}
+        {/* Section Heading: PROJECTS (Geist Black, Sharp Minimalist) */}
         <div className="mb-6 sm:mb-8 flex-shrink-0">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#1A1A1A] uppercase">
             PROJECTS
           </h2>
         </div>
 
-        {/* Projects Grid — Full Screen 3-Column Immersive Layout */}
+        {/* Projects Grid — 3-Column Immersive Sharp Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 flex-1 my-auto items-center">
           {PROJECTS.map((project) => (
             <ProjectCard
@@ -58,28 +58,30 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="relative w-full h-[380px] sm:h-[460px] md:h-[520px] lg:h-[58vh] max-h-[600px] rounded-2xl overflow-hidden cursor-pointer select-none border border-[#D5D4CE] bg-[#EAE8E2] group shadow-xs"
+      className="relative w-full h-[380px] sm:h-[460px] md:h-[520px] lg:h-[58vh] max-h-[600px] overflow-hidden cursor-pointer select-none border border-[#1A1A1A] bg-[#E5E3DC] group shadow-xs"
     >
-      {/* 1. Project Thumbnail Cover (Full Height, Blurs & Zooms on Hover) */}
+      {/* 1. Project Cover Image (B&W by default, reveals pure vivid color on hover) */}
       <img
         src={project.thumbnail}
         alt={project.title}
         className={`w-full h-full object-cover transition-all duration-700 ease-out ${
-          isHovered ? 'scale-105 blur-sm brightness-75' : 'scale-100 blur-0 brightness-100'
+          isHovered
+            ? 'grayscale-0 contrast-100 scale-105'
+            : 'grayscale contrast-125 scale-100'
         }`}
         loading="lazy"
       />
 
-      {/* 2. Matte Carbon Backdrop Overlay (DA Token: #1A1A1A) */}
+      {/* 2. Editorial Carbon Gradient Overlay (DA Token: #1A1A1A) */}
       <div
         className={`absolute inset-0 transition-opacity duration-500 ease-out ${
           isHovered
-            ? 'opacity-100 bg-[#1A1A1A]/75 backdrop-blur-xs'
+            ? 'opacity-100 bg-gradient-to-t from-[#1A1A1A]/95 via-[#1A1A1A]/40 to-transparent'
             : 'opacity-0 bg-transparent pointer-events-none'
         }`}
       />
 
-      {/* 3. Text Content Revealed on Hover (DA Tokens: Paper #F4F3EF, Space Mono, Border #D5D4CE) */}
+      {/* 3. Revealed Content (Paper #F4F3EF, Space Mono, Sharp Rectangular Tags) */}
       <div
         className={`absolute inset-x-0 bottom-0 p-6 sm:p-7 md:p-8 flex flex-col justify-end z-10 transition-all duration-400 ease-out ${
           isHovered
@@ -88,21 +90,21 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) => {
         }`}
       >
         {/* Project Title (Geist Font-Bold in Paper #F4F3EF) */}
-        <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#F4F3EF] tracking-tight uppercase leading-tight mb-2">
+        <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#F4F3EF] tracking-tight uppercase leading-tight mb-2">
           {project.title}
         </h3>
 
         {/* Category Tagline (Space Mono in Muted #D5D4CE) */}
-        <p className="font-mono-custom text-[11px] sm:text-xs font-semibold text-[#D5D4CE] tracking-wider uppercase mb-5">
+        <p className="font-mono-custom text-[11px] sm:text-xs font-bold text-[#D5D4CE] tracking-wider uppercase mb-4">
           {categoryName}
         </p>
 
-        {/* Tags in Paper Tone (#F4F3EF) with Fine 1px Border */}
+        {/* Sharp Rectangular Tags in Paper Tone (#F4F3EF) with 1px Border (Strict DA Consistency) */}
         <div className="flex flex-wrap gap-2">
           {project.tools.slice(0, 2).map((tool, idx) => (
             <span
               key={idx}
-              className="font-mono-custom text-[10px] sm:text-[11px] font-bold bg-[#F4F3EF] text-[#1A1A1A] px-3.5 py-1.5 rounded-full border border-[#D5D4CE] uppercase tracking-wider"
+              className="font-mono-custom text-[10px] sm:text-[11px] font-bold bg-[#F4F3EF] text-[#1A1A1A] px-3 py-1 border border-[#1A1A1A] uppercase tracking-wider"
             >
               {tool}
             </span>

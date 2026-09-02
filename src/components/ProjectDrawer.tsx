@@ -50,10 +50,10 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({
     <AnimatePresence>
       <motion.div
         ref={containerRef}
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 20 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
         className="fixed inset-0 z-50 bg-[#F4F3EF] overflow-y-auto select-none"
       >
         {/* 1. Sticky Navigation Bar */}
@@ -100,12 +100,12 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({
             </p>
           </motion.div>
 
-          {/* Large Immersive Cover Image */}
+          {/* Large Immersive Cover Image (Sharp 1px Border) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full h-[360px] sm:h-[480px] md:h-[560px] rounded-2xl overflow-hidden border border-[#D5D4CE] bg-[#EAE8E2] shadow-sm group"
+            className="w-full h-[360px] sm:h-[480px] md:h-[560px] overflow-hidden border border-[#1A1A1A] bg-[#E5E3DC] shadow-xs group"
           >
             <img
               src={project.thumbnail}
@@ -202,10 +202,10 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({
                       <motion.div
                         key={idx}
                         whileHover={{ scale: 1.05 }}
-                        className="flex items-center gap-2.5 font-mono-custom text-xs border border-[#D5D4CE] p-2.5 bg-[#EAE8E2] rounded-lg"
+                        className="flex items-center gap-2.5 font-mono-custom text-xs border border-[#1A1A1A] p-2.5 bg-[#EAE8E2]"
                       >
                         <div
-                          className="w-4 h-4 rounded-xs border border-[#1A1A1A]/30 flex-shrink-0 shadow-xs"
+                          className="w-4 h-4 border border-[#1A1A1A]/30 flex-shrink-0"
                           style={{ backgroundColor: color.hex }}
                         />
                         <span className="font-bold text-[#1A1A1A]">{color.hex}</span>
@@ -231,7 +231,7 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({
             )}
           </div>
 
-          {/* 3. Next Project Transition Card at Bottom */}
+          {/* 3. Next Project Transition Card at Bottom (Sharp 1px Border) */}
           <div className="pt-12 border-t border-[#D5D4CE]">
             <button
               onClick={() => {
@@ -239,7 +239,7 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({
                   onSelectProject(nextProject);
                 }
               }}
-              className="w-full group p-8 sm:p-12 border border-[#D5D4CE] rounded-2xl bg-[#EAE8E2] hover:bg-[#1A1A1A] transition-colors duration-500 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 cursor-pointer text-left"
+              className="w-full group p-8 sm:p-12 border border-[#1A1A1A] bg-[#EAE8E2] hover:bg-[#1A1A1A] transition-colors duration-500 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 cursor-pointer text-left"
             >
               <div>
                 <span className="font-mono-custom text-xs uppercase tracking-widest text-[#666664] group-hover:text-[#D5D4CE] transition-colors">
@@ -250,7 +250,7 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({
                 </h3>
               </div>
 
-              <div className="w-12 h-12 rounded-full border border-[#1A1A1A] group-hover:border-[#F4F3EF] flex items-center justify-center text-[#1A1A1A] group-hover:text-[#F4F3EF] group-hover:translate-x-2 transition-all duration-300">
+              <div className="w-12 h-12 border border-[#1A1A1A] group-hover:border-[#F4F3EF] flex items-center justify-center text-[#1A1A1A] group-hover:text-[#F4F3EF] group-hover:translate-x-2 transition-all duration-300">
                 <ArrowRight className="w-5 h-5" />
               </div>
             </button>
