@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface AboutModalProps {
   isOpen: boolean;
@@ -8,6 +9,8 @@ interface AboutModalProps {
 }
 
 export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
+  const { language, t } = useLanguage();
+
   // Prevent background scrolling when modal is open
   React.useEffect(() => {
     if (isOpen) {
@@ -19,6 +22,22 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
       document.body.style.overflow = 'unset';
     };
   }, [isOpen]);
+
+  const skills = language === 'en' ? [
+    'UX Research & User Testing',
+    'Wireframing & Information Architecture',
+    'UI Systems & Design Tokens',
+    'Interactive Prototyping in Figma',
+    'Web Design (CMS & AI Workflows)',
+    'Productivity Frameworks in Notion'
+  ] : [
+    'Recherche Utilisateur & Tests UX',
+    'Wireframing & Architecture de l’Information',
+    'Design Systems & Tokens UI',
+    'Prototypage Interactif sous Figma',
+    'Web Design (Workflows CMS & IA)',
+    'Frameworks de Productivité Notion'
+  ];
 
   return (
     <AnimatePresence>
@@ -45,13 +64,15 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
             <div className="flex justify-between items-start border-b border-[#D5D4CE] pb-4 mb-6">
               <div>
                 <span className="font-mono-custom text-xs uppercase tracking-wider text-[#666664] block mb-1">
-                  PROFILE METADATA
+                  {language === 'en' ? 'PROFILE METADATA' : 'MÉTADONNÉES DU PROFIL'}
                 </span>
                 <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#1A1A1A]">
                   Mickael LIN
                 </h2>
                 <p className="text-sm font-mono-custom text-[#1A1A1A] mt-1">
-                  Junior UX/UI Designer — Seeking Apprenticeship (Immediate / ASAP)
+                  {language === 'en'
+                    ? 'Junior UX/UI Designer — Seeking Apprenticeship (Immediate / ASAP)'
+                    : 'Junior UX/UI Designer — Recherche Alternance (Immédiate / ASAP)'}
                 </p>
               </div>
               <button
@@ -67,26 +88,21 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
             <div className="space-y-6 text-[#1A1A1A]">
               <div>
                 <h3 className="font-mono-custom text-xs uppercase tracking-wider text-[#666664] mb-2">
-                  CORE FOCUS
+                  {language === 'en' ? 'CORE FOCUS' : 'OBJECTIF PRINCIPAL'}
                 </h3>
                 <p className="text-sm md:text-base leading-relaxed text-[#1A1A1A]">
-                  Focused on crafting high-efficiency, intuitive digital products. Combining rigorous user research, sharp visual hierarchy in Figma, fast CMS & AI web deployment, and modular system design in Notion.
+                  {language === 'en'
+                    ? 'Focused on crafting high-efficiency, intuitive digital products. Combining rigorous user research, sharp visual hierarchy in Figma, fast CMS & AI web deployment, and modular system design in Notion.'
+                    : 'Dédié à la conception de produits numériques intuitifs et performants. Alliant recherche utilisateur rigoureuse, hiérarchie visuelle sous Figma, déploiement web rapide via CMS & IA, et design de systèmes modulaires sous Notion.'}
                 </p>
               </div>
 
               <div>
                 <h3 className="font-mono-custom text-xs uppercase tracking-wider text-[#666664] mb-3">
-                  SKILLS MATRIX
+                  {t('about.skills_title')}
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono-custom">
-                  {[
-                    'UX Research & User Testing',
-                    'Wireframing & Information Architecture',
-                    'UI Systems & Design Tokens',
-                    'Interactive Prototyping in Figma',
-                    'Web Design (CMS & AI Workflows)',
-                    'Productivity Frameworks in Notion'
-                  ].map((skill, index) => (
+                  {skills.map((skill, index) => (
                     <div
                       key={index}
                       className="border border-[#D5D4CE] p-2.5 flex items-center gap-2 bg-[#EAE8E2]"
@@ -103,11 +119,13 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
                 <div className="flex items-center gap-2 mb-1">
                   <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse-live" />
                   <span className="font-mono-custom text-xs font-bold uppercase tracking-wider">
-                    Current Availability
+                    {t('about.badge')}
                   </span>
                 </div>
                 <p className="text-xs text-[#666664]">
-                  Open for a UX/UI Apprenticeship contract starting immediately / ASAP. Ready to bring immediate value to design sprints and product teams.
+                  {language === 'en'
+                    ? 'Open for a UX/UI Apprenticeship contract starting immediately / ASAP. Ready to bring immediate value to design sprints and product teams.'
+                    : 'Ouvert à un contrat d’alternance UX/UI débutant immédiatement / ASAP. Prêt à apporter une valeur concrète dès les premiers sprints de design.'}
                 </p>
               </div>
 
@@ -117,14 +135,14 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
                   href="mailto:contact@mickaellin.design"
                   className="px-4 py-2.5 bg-[#1A1A1A] text-[#F4F3EF] hover:bg-black transition-colors flex items-center gap-2"
                 >
-                  <span>GET IN TOUCH</span>
+                  <span>{t('about.contact_title')}</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
                 <button
                   onClick={onClose}
                   className="px-4 py-2.5 border border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-[#F4F3EF] transition-colors cursor-pointer"
                 >
-                  CLOSE
+                  {t('about.close')}
                 </button>
               </div>
             </div>

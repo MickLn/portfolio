@@ -1,7 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 export const Hero: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <section
       id="home"
@@ -35,7 +38,7 @@ export const Hero: React.FC = () => {
               LIN
             </span>
 
-            {/* Embedded Portrait Photo — Full Headshot Framing, No awkward cropping */}
+            {/* Embedded Portrait Photo — Full Headshot Framing */}
             <motion.div
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -53,21 +56,21 @@ export const Hero: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* 3. Bottom Information Bar (Space Mono, 3-column metadata) */}
+      {/* 3. Bottom Information Bar (Space Mono, 3-column metadata with i18n support) */}
       <div className="h-14 sm:h-16 w-full px-8 sm:px-16 lg:px-20 flex items-center justify-between gap-4 font-mono-custom text-[10px] sm:text-xs z-10 flex-shrink-0">
         {/* Left: Specializations */}
         <div className="font-bold tracking-wider text-[#1A1A1A] uppercase">
-          UX/UI / NO-CODE / WEBDESIGN
+          {t('hero.role')}
         </div>
 
         {/* Center: Scroll Indicator */}
         <div className="text-[#666664] tracking-widest uppercase hidden md:block">
-          SCROLL TO CONTINUE
+          {t('hero.scroll')}
         </div>
 
         {/* Right: Apprenticeship status with Paris */}
         <div className="font-bold tracking-wider text-[#1A1A1A] uppercase text-right">
-          SEEKING APPRENTICESHIP - AVAILABLE NOW - PARIS
+          {t('hero.status')}
         </div>
       </div>
     </section>

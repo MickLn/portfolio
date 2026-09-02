@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ArrowUp, ArrowUpRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface FooterProps {
   onOpenAbout: () => void;
@@ -55,6 +56,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAbout }) => {
   const [localTime, setLocalTime] = useState<string>('');
   const containerRef = useRef<HTMLElement>(null);
   const isInView = useInView(containerRef, { once: false, margin: '-40px' });
+  const { language } = useLanguage();
 
   // Update Paris / Local live clock
   useEffect(() => {
@@ -95,7 +97,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAbout }) => {
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse-live" />
             <span className="text-[#F4F3EF] uppercase tracking-wider font-bold">
-              STATUS: AVAILABLE FOR APPRENTICESHIP (ASAP)
+              {language === 'en'
+                ? 'STATUS: AVAILABLE FOR APPRENTICESHIP (ASAP)'
+                : 'STATUT : DISPONIBLE POUR ALTERNANCE (ASAP)'}
             </span>
           </div>
 
@@ -114,7 +118,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAbout }) => {
               transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter text-[#F4F3EF] leading-[0.95]"
             >
-              Let's work together.
+              {language === 'en' ? "Let's work together." : 'Créons ensemble.'}
             </motion.h2>
           </div>
 
@@ -129,14 +133,14 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAbout }) => {
                 href="mailto:contact@mickaellin.design?subject=UX/UI Apprenticeship Opportunity"
                 className="inline-flex items-center gap-3 px-6 py-3.5 bg-[#F4F3EF] text-[#1A1A1A] font-mono-custom text-xs uppercase tracking-wider font-bold hover:bg-white hover:scale-[1.02] transition-all duration-200"
               >
-                <span>INITIATE CONTACT</span>
+                <span>{language === 'en' ? 'INITIATE CONTACT' : 'PRENDRE CONTACT'}</span>
                 <ArrowUpRight className="w-4 h-4" />
               </a>
               <button
                 onClick={onOpenAbout}
                 className="inline-flex items-center gap-2 px-6 py-3.5 border border-[#D5D4CE]/40 text-[#F4F3EF] font-mono-custom text-xs uppercase tracking-wider hover:border-[#F4F3EF] transition-colors cursor-pointer"
               >
-                <span>VIEW PROFILE SUMMARY</span>
+                <span>{language === 'en' ? 'VIEW PROFILE SUMMARY' : 'VOIR LE PROFIL'}</span>
               </button>
             </motion.div>
           </div>

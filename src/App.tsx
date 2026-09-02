@@ -6,13 +6,15 @@ import { ProjectDrawer } from './components/ProjectDrawer';
 import { AboutModal } from './components/AboutModal';
 import { Footer } from './components/Footer';
 import { PageTransition } from './components/PageTransition';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { ProjectItem } from './data/projects';
 
-export const App: React.FC = () => {
+const PortfolioContent: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [isAboutOpen, setIsAboutOpen] = useState<boolean>(false);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
   const [transitionProjectName, setTransitionProjectName] = useState<string>('');
+  const { language } = useLanguage();
 
   // Handle cinematic curtain transition when selecting a project
   const handleOpenProject = (project: ProjectItem) => {
@@ -30,7 +32,7 @@ export const App: React.FC = () => {
 
   // Handle cinematic curtain transition when closing case study
   const handleCloseProject = () => {
-    setTransitionProjectName('PROJECTS');
+    setTransitionProjectName(language === 'en' ? 'PROJECTS' : 'PROJETS');
     setIsTransitioning(true);
 
     setTimeout(() => {
@@ -50,7 +52,7 @@ export const App: React.FC = () => {
         projectName={transitionProjectName}
       />
 
-      {/* 1. Minimalist Header — Fixed, Zero Background */}
+      {/* 1. Minimalist Header — Fixed, Zero Background, EN | FR Switcher on Right */}
       <Header onOpenAbout={() => setIsAboutOpen(true)} />
 
       {/* Main Content Flow — Slides above the sticky footer (Curtain Reveal) */}
@@ -72,6 +74,7 @@ export const App: React.FC = () => {
         project={selectedProject}
         onClose={handleCloseProject}
         onSelectProject={handleOpenProject}
+        onOpenAbout={() => setIsAboutOpen(true)}
       />
 
       {/* Minimal About Profile Modal */}
@@ -80,6 +83,14 @@ export const App: React.FC = () => {
         onClose={() => setIsAboutOpen(false)}
       />
     </div>
+  );
+};
+
+export const App: React.FC = () => {
+  return (
+    <LanguageProvider>
+      <PortfolioContent />
+    </LanguageProvider>
   );
 };
 

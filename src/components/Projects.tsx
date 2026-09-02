@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PROJECTS, ProjectItem } from '../data/projects';
+import { useLanguage } from '../context/LanguageContext';
 
 interface ProjectsProps {
   onSelectProject: (project: ProjectItem) => void;
 }
 
 export const Projects: React.FC<ProjectsProps> = ({ onSelectProject }) => {
+  const { t } = useLanguage();
+
   return (
     <section
       id="projects"
       className="min-h-screen w-full border-b border-[#D5D4CE] relative bg-[#F4F3EF] flex flex-col justify-between py-12 sm:py-16 px-6 sm:px-12 lg:px-16 select-none"
     >
       <div className="w-full h-full flex-1 flex flex-col justify-between">
-        {/* Section Heading: PROJECTS (Geist Black, Sharp Minimalist) */}
+        {/* Section Heading: PROJECTS / PROJETS (Geist Black, Sharp Minimalist) */}
         <div className="mb-6 sm:mb-8 flex-shrink-0">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#1A1A1A] uppercase">
-            PROJECTS
+            {t('projects.title')}
           </h2>
         </div>
 
@@ -45,9 +48,10 @@ interface ProjectCardProps {
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { language } = useLanguage();
 
-  // Category name formatted
-  const categoryName = project.category.split('/')[0].trim().toUpperCase();
+  // Category name formatted for current language
+  const categoryName = project.category[language].split('/')[0].trim().toUpperCase();
 
   return (
     <motion.div
@@ -99,7 +103,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) => {
           {categoryName}
         </p>
 
-        {/* Sharp Rectangular Tags in Paper Tone (#F4F3EF) with 1px Border (Strict DA Consistency) */}
+        {/* Sharp Rectangular Tags in Paper Tone (#F4F3EF) with 1px Border */}
         <div className="flex flex-wrap gap-2">
           {project.tools.slice(0, 2).map((tool, idx) => (
             <span
