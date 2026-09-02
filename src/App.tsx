@@ -12,52 +12,42 @@ export const App: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [isAboutOpen, setIsAboutOpen] = useState<boolean>(false);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
-  const [transitionData, setTransitionData] = useState<{ name: string; category: string }>({
-    name: '',
-    category: '',
-  });
+  const [transitionProjectName, setTransitionProjectName] = useState<string>('');
 
   // Handle cinematic curtain transition when selecting a project
   const handleOpenProject = (project: ProjectItem) => {
-    setTransitionData({
-      name: project.title,
-      category: project.category,
-    });
+    setTransitionProjectName(project.title);
     setIsTransitioning(true);
 
     setTimeout(() => {
       setSelectedProject(project);
-    }, 400);
+    }, 350);
 
     setTimeout(() => {
       setIsTransitioning(false);
-    }, 900);
+    }, 800);
   };
 
   // Handle cinematic curtain transition when closing case study
   const handleCloseProject = () => {
-    setTransitionData({
-      name: 'PROJECTS',
-      category: 'SELECTED WORK',
-    });
+    setTransitionProjectName('PROJECTS');
     setIsTransitioning(true);
 
     setTimeout(() => {
       setSelectedProject(null);
-    }, 400);
+    }, 350);
 
     setTimeout(() => {
       setIsTransitioning(false);
-    }, 900);
+    }, 800);
   };
 
   return (
     <div className="min-h-screen bg-[#141414] text-[#1A1A1A] relative selection:bg-[#1A1A1A] selection:text-[#F4F3EF]">
-      {/* Cinematic Curtain Page Transition Overlay */}
+      {/* Cinematic Paper Curtain Page Transition Overlay */}
       <PageTransition
         isActive={isTransitioning}
-        projectName={transitionData.name}
-        category={transitionData.category}
+        projectName={transitionProjectName}
       />
 
       {/* 1. Minimalist Header — Fixed, Zero Background */}

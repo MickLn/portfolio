@@ -16,7 +16,7 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Prevent background scrolling & scroll to top when opening or switching project
+  // Prevent background scrolling & scroll to top on open/switch
   useEffect(() => {
     if (project) {
       document.body.style.overflow = 'hidden';
@@ -50,23 +50,23 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({
     <AnimatePresence>
       <motion.div
         ref={containerRef}
-        initial={{ opacity: 0, y: 25 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 20 }}
-        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+        exit={{ opacity: 0, y: 15 }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         className="fixed inset-0 z-50 bg-[#F4F3EF] overflow-y-auto select-none"
       >
-        {/* 1. Sticky Navigation Bar */}
-        <div className="sticky top-0 left-0 w-full bg-[#F4F3EF]/90 backdrop-blur-md border-b border-[#D5D4CE] z-30 px-6 sm:px-12 lg:px-20 h-16 sm:h-20 flex items-center justify-between">
+        {/* 1. Minimalist Top Bar (Sticky, 1px Border) */}
+        <div className="sticky top-0 left-0 w-full bg-[#F4F3EF]/95 backdrop-blur-md border-b border-[#D5D4CE] z-30 px-6 sm:px-12 lg:px-20 h-16 sm:h-20 flex items-center justify-between">
           <button
             onClick={onClose}
-            className="group inline-flex items-center gap-2.5 font-mono-custom text-xs font-bold uppercase tracking-wider text-[#1A1A1A] hover:opacity-60 transition-opacity cursor-pointer py-2"
+            className="group inline-flex items-center gap-2 font-mono-custom text-xs font-bold uppercase tracking-wider text-[#1A1A1A] hover:opacity-60 transition-opacity cursor-pointer py-2"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
             <span>BACK TO PROJECTS</span>
           </button>
 
-          <span className="font-mono-custom text-xs text-[#666664] tracking-widest uppercase hidden sm:block">
+          <span className="font-mono-custom text-xs text-[#666664] tracking-widest uppercase hidden md:block">
             {project.category}
           </span>
 
@@ -79,159 +79,124 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({
           </button>
         </div>
 
-        {/* 2. Main Full-Screen Case Study Content */}
-        <div className="w-full max-w-6xl mx-auto px-6 sm:px-12 lg:px-20 py-12 sm:py-16 space-y-12 sm:space-y-16">
+        {/* 2. Main Editorial Case Study Flow (Asymmetrical Lookbook Layout) */}
+        <div className="w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 py-12 sm:py-16 space-y-16">
           
-          {/* Hero Header Block */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="space-y-4"
-          >
-            <span className="font-mono-custom text-xs text-[#666664] uppercase tracking-widest font-bold">
+          {/* Editorial Header Block */}
+          <div className="border-b border-[#D5D4CE] pb-12 space-y-4">
+            <span className="font-mono-custom text-xs text-[#666664] uppercase tracking-widest font-bold block">
               {project.category}
             </span>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-[#1A1A1A] uppercase leading-[0.95]">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-[#1A1A1A] uppercase leading-[0.9]">
               {project.title}
             </h1>
-            <p className="text-lg sm:text-xl text-[#1A1A1A] max-w-3xl leading-relaxed font-normal pt-2">
+            <p className="text-xl sm:text-2xl text-[#1A1A1A] font-normal max-w-3xl leading-relaxed pt-2">
               {project.tagline}
             </p>
-          </motion.div>
+          </div>
 
-          {/* Large Immersive Cover Image (Sharp 1px Border) */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full h-[360px] sm:h-[480px] md:h-[560px] overflow-hidden border border-[#1A1A1A] bg-[#E5E3DC] shadow-xs group"
-          >
-            <img
-              src={project.thumbnail}
-              alt={project.title}
-              className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-102 transition-all duration-700 ease-out"
-            />
-          </motion.div>
-
-          {/* Metadata Grid (ROLE, CONTEXT, TOOLS) */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-6 border-y border-[#D5D4CE] py-6 font-mono-custom text-xs"
-          >
-            <div>
-              <span className="text-[#666664] block text-[10px] uppercase tracking-wider mb-1">ROLE</span>
-              <span className="text-[#1A1A1A] font-bold text-sm block">{project.metadataBar.role}</span>
-            </div>
-            <div>
-              <span className="text-[#666664] block text-[10px] uppercase tracking-wider mb-1">CONTEXT</span>
-              <span className="text-[#1A1A1A] font-bold text-sm block">{project.metadataBar.context}</span>
-            </div>
-            <div>
-              <span className="text-[#666664] block text-[10px] uppercase tracking-wider mb-1">TOOLS</span>
-              <span className="text-[#1A1A1A] font-bold text-sm block">{project.metadataBar.tools}</span>
-            </div>
-          </motion.div>
-
-          {/* 2-Column Editorial Content Flow */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 pt-4">
+          {/* Asymmetrical 2-Column Grid (Left: Sticky Meta / Right: Story & Visuals) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             
-            {/* Left Column: Problem & Solution (Geist) */}
-            <div className="lg:col-span-7 space-y-12">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <h2 className="font-mono-custom text-xs font-bold uppercase tracking-wider text-[#666664] mb-3">
-                  THE PROBLEM
-                </h2>
+            {/* Left Column: Metadata & Specifications (Sticky Sidebar) */}
+            <div className="lg:col-span-4 lg:sticky lg:top-28 space-y-10 border-b lg:border-b-0 pb-10 lg:pb-0 font-mono-custom">
+              {/* Project Meta Details */}
+              <div className="space-y-6">
+                <div>
+                  <span className="text-[#666664] text-[10px] uppercase tracking-wider block mb-1">ROLE</span>
+                  <span className="text-[#1A1A1A] font-bold text-sm block">{project.metadataBar.role}</span>
+                </div>
+                <div>
+                  <span className="text-[#666664] text-[10px] uppercase tracking-wider block mb-1">CONTEXT</span>
+                  <span className="text-[#1A1A1A] font-bold text-sm block">{project.metadataBar.context}</span>
+                </div>
+                <div>
+                  <span className="text-[#666664] text-[10px] uppercase tracking-wider block mb-1">TOOLS</span>
+                  <span className="text-[#1A1A1A] font-bold text-sm block">{project.metadataBar.tools}</span>
+                </div>
+              </div>
+
+              {/* Design System Tokens (Integrated seamlessly) */}
+              {project.brandAndDesignSystem && (
+                <div className="pt-8 border-t border-[#D5D4CE] space-y-6">
+                  <div>
+                    <span className="text-[#666664] text-[10px] uppercase tracking-wider block mb-3">PALETTE</span>
+                    <div className="flex flex-wrap gap-2.5">
+                      {project.brandAndDesignSystem.colorPalette.map((color, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-center gap-2 border border-[#1A1A1A] px-2.5 py-1.5 bg-[#EAE8E2] text-xs"
+                        >
+                          <div
+                            className="w-3 h-3 border border-[#1A1A1A]/30 flex-shrink-0"
+                            style={{ backgroundColor: color.hex }}
+                          />
+                          <span className="font-bold text-[#1A1A1A] text-[11px]">{color.hex}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="text-[#666664] text-[10px] uppercase tracking-wider block mb-2">TYPOGRAPHY</span>
+                    <div className="space-y-1 text-xs font-bold text-[#1A1A1A]">
+                      {project.brandAndDesignSystem.typography.map((type, idx) => (
+                        <div key={idx}>{type.name}</div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Right Column: Visual Showcase & Storytelling */}
+            <div className="lg:col-span-8 space-y-14">
+              
+              {/* Proportional Showcase Image (Compact, Sharp 1px Border) */}
+              <div className="w-full aspect-[16/10] max-h-[460px] overflow-hidden border border-[#1A1A1A] bg-[#E5E3DC] group">
+                <img
+                  src={project.thumbnail}
+                  alt={project.title}
+                  className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-102 transition-all duration-700 ease-out"
+                />
+              </div>
+
+              {/* 01. The Problem */}
+              <div className="space-y-3">
+                <h3 className="font-mono-custom text-xs font-bold uppercase tracking-wider text-[#666664]">
+                  01 / THE PROBLEM
+                </h3>
                 <p className="text-base sm:text-lg leading-relaxed text-[#1A1A1A]">
                   {project.problem}
                 </p>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <h2 className="font-mono-custom text-xs font-bold uppercase tracking-wider text-[#666664] mb-3">
-                  THE SOLUTION
-                </h2>
+              {/* 02. The Solution */}
+              <div className="space-y-3">
+                <h3 className="font-mono-custom text-xs font-bold uppercase tracking-wider text-[#666664]">
+                  02 / THE SOLUTION
+                </h3>
                 <p className="text-base sm:text-lg leading-relaxed text-[#1A1A1A]">
                   {project.solution}
                 </p>
-              </motion.div>
-            </div>
+              </div>
 
-            {/* Right Column: Brand & Design System (Geist & Space Mono) */}
-            {project.brandAndDesignSystem && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="lg:col-span-5 space-y-8 border-t lg:border-t-0 lg:border-l border-[#D5D4CE] pt-8 lg:pt-0 lg:pl-12"
-              >
-                <h2 className="font-mono-custom text-xs font-bold uppercase tracking-wider text-[#666664]">
-                  BRAND & DESIGN SYSTEM
-                </h2>
-
-                {/* Concept */}
-                <div>
-                  <span className="font-mono-custom text-[11px] font-bold uppercase tracking-wider text-[#1A1A1A] block mb-2">
-                    Concept
-                  </span>
-                  <p className="text-sm sm:text-base leading-relaxed text-[#1A1A1A]">
+              {/* 03. Concept Note */}
+              {project.brandAndDesignSystem && (
+                <div className="space-y-3 pt-4 border-t border-[#D5D4CE]">
+                  <h3 className="font-mono-custom text-xs font-bold uppercase tracking-wider text-[#666664]">
+                    03 / BRAND CONCEPT
+                  </h3>
+                  <p className="text-base leading-relaxed text-[#1A1A1A]">
                     {project.brandAndDesignSystem.concept}
                   </p>
                 </div>
+              )}
 
-                {/* Color Palette (HEX only) */}
-                <div>
-                  <span className="font-mono-custom text-[11px] font-bold uppercase tracking-wider text-[#1A1A1A] block mb-3">
-                    Color Palette
-                  </span>
-                  <div className="flex flex-wrap gap-3">
-                    {project.brandAndDesignSystem.colorPalette.map((color, idx) => (
-                      <motion.div
-                        key={idx}
-                        whileHover={{ scale: 1.05 }}
-                        className="flex items-center gap-2.5 font-mono-custom text-xs border border-[#1A1A1A] p-2.5 bg-[#EAE8E2]"
-                      >
-                        <div
-                          className="w-4 h-4 border border-[#1A1A1A]/30 flex-shrink-0"
-                          style={{ backgroundColor: color.hex }}
-                        />
-                        <span className="font-bold text-[#1A1A1A]">{color.hex}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Typography (Line by line, clean) */}
-                <div>
-                  <span className="font-mono-custom text-[11px] font-bold uppercase tracking-wider text-[#1A1A1A] block mb-2">
-                    Typography
-                  </span>
-                  <div className="space-y-1.5 font-mono-custom text-sm text-[#1A1A1A]">
-                    {project.brandAndDesignSystem.typography.map((type, idx) => (
-                      <div key={idx} className="font-semibold">
-                        {type.name}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            )}
+            </div>
           </div>
 
-          {/* 3. Next Project Transition Card at Bottom (Sharp 1px Border) */}
+          {/* 3. Bottom Next Case Study Link */}
           <div className="pt-12 border-t border-[#D5D4CE]">
             <button
               onClick={() => {
@@ -239,19 +204,19 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({
                   onSelectProject(nextProject);
                 }
               }}
-              className="w-full group p-8 sm:p-12 border border-[#1A1A1A] bg-[#EAE8E2] hover:bg-[#1A1A1A] transition-colors duration-500 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 cursor-pointer text-left"
+              className="w-full group p-8 sm:p-10 border border-[#1A1A1A] bg-[#EAE8E2] hover:bg-[#1A1A1A] transition-colors duration-500 flex items-center justify-between cursor-pointer text-left"
             >
               <div>
-                <span className="font-mono-custom text-xs uppercase tracking-widest text-[#666664] group-hover:text-[#D5D4CE] transition-colors">
-                  NEXT CASE STUDY
+                <span className="font-mono-custom text-xs uppercase tracking-widest text-[#666664] group-hover:text-[#D5D4CE] transition-colors block mb-1">
+                  NEXT CASE STUDY →
                 </span>
-                <h3 className="text-2xl sm:text-4xl font-extrabold text-[#1A1A1A] group-hover:text-[#F4F3EF] tracking-tight uppercase mt-2 transition-colors">
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-[#1A1A1A] group-hover:text-[#F4F3EF] tracking-tight uppercase transition-colors">
                   {nextProject.title}
                 </h3>
               </div>
 
-              <div className="w-12 h-12 border border-[#1A1A1A] group-hover:border-[#F4F3EF] flex items-center justify-center text-[#1A1A1A] group-hover:text-[#F4F3EF] group-hover:translate-x-2 transition-all duration-300">
-                <ArrowRight className="w-5 h-5" />
+              <div className="w-10 h-10 border border-[#1A1A1A] group-hover:border-[#F4F3EF] flex items-center justify-center text-[#1A1A1A] group-hover:text-[#F4F3EF] group-hover:translate-x-1.5 transition-all duration-300">
+                <ArrowRight className="w-4 h-4" />
               </div>
             </button>
           </div>
