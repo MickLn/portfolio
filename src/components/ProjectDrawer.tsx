@@ -1,20 +1,24 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { ProjectItem, PROJECTS } from '../data/projects';
+import { useLanguage } from '../context/LanguageContext';
 
 interface ProjectDrawerProps {
   project: ProjectItem | null;
   onClose: () => void;
   onSelectProject?: (project: ProjectItem) => void;
+  onOpenAbout?: () => void;
 }
 
 export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({
   project,
   onClose,
   onSelectProject,
+  onOpenAbout,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { language, setLanguage, t } = useLanguage();
 
   // Prevent background scrolling & scroll to top on open/switch
   useEffect(() => {
@@ -42,182 +46,270 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({
 
   if (!project) return null;
 
-  // Find next project
+  // Find previous and next projects
   const currentIndex = PROJECTS.findIndex((p) => p.id === project.id);
+  const prevProject = PROJECTS[(currentIndex - 1 + PROJECTS.length) % PROJECTS.length];
   const nextProject = PROJECTS[(currentIndex + 1) % PROJECTS.length];
+
+  const handleNavClick = (sectionId: string) => {
+    onClose();
+    setTimeout(() => {
+      if (sectionId === 'home') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
 
   return (
     <AnimatePresence>
       <motion.div
         ref={containerRef}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 15 }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         className="fixed inset-0 z-50 bg-[#F4F3EF] overflow-y-auto select-none"
       >
-        {/* 1. Minimalist Top Bar (Sticky, 1px Border) */}
-        <div className="sticky top-0 left-0 w-full bg-[#F4F3EF]/95 backdrop-blur-md border-b border-[#D5D4CE] z-30 px-6 sm:px-12 lg:px-20 h-16 sm:h-20 flex items-center justify-between">
+        {/* 1. Unified Minimalist Header — Identical Navigation to Main Page */}
+        <header className="sticky top-0 left-0 w-full h-14 sm:h-16 z-40 bg-[#F4F3EF]/95 backdrop-blur-md border-b border-[#D5D4CE] px-6 sm:px-12 lg:px-16 flex justify-between items-center text-xs tracking-wider uppercase font-mono-custom text-[#1A1A1A]">
+          {/* Left: Back to Projects Link */}
           <button
             onClick={onClose}
-            className="group inline-flex items-center gap-2 font-mono-custom text-xs font-bold uppercase tracking-wider text-[#1A1A1A] hover:opacity-60 transition-opacity cursor-pointer py-2"
+            className="group inline-flex items-center gap-2 font-mono-custom text-xs font-bold uppercase tracking-wider text-[#1A1A1A] hover:opacity-60 transition-opacity cursor-pointer py-1"
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
-            <span>BACK TO PROJECTS</span>
+            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform duration-300" />
+            <span className="hidden sm:inline">{t('drawer.back')}</span>
+            <span className="sm:hidden">BACK</span>
           </button>
 
-          <span className="font-mono-custom text-xs text-[#666664] tracking-widest uppercase hidden md:block">
-            {project.category}
-          </span>
+          {/* Center: 3 Navigation Tabs from Main Header */}
+          <nav className="flex items-center gap-6 sm:gap-10">
+            <button
+              onClick={() => handleNavClick('home')}
+              className="link-drawer hover:text-black transition-colors cursor-pointer py-1 text-[11px] sm:text-xs font-bold"
+            >
+              {t('nav.home')}
+            </button>
+            <button
+              onClick={() => {
+                if (onOpenAbout) onOpenAbout();
+              }}
+              className="link-drawer hover:text-black transition-colors cursor-pointer py-1 text-[11px] sm:text-xs font-bold"
+            >
+              {t('nav.about')}
+            </button>
+            <button
+              onClick={() => handleNavClick('projects')}
+              className="link-drawer hover:text-black transition-colors cursor-pointer py-1 text-[11px] sm:text-xs font-bold"
+            >
+              {t('nav.projects')}
+            </button>
+          </nav>
 
-          <button
-            onClick={onClose}
-            className="p-2 border border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-[#F4F3EF] transition-colors cursor-pointer"
-            aria-label="Close case study"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
+          {/* Right: Language Switcher (EN | FR) */}
+          <div className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-mono-custom">
+            <button
+              onClick={() => setLanguage('en')}
+              className={`cursor-pointer transition-colors py-1 px-0.5 ${
+                language === 'en'
+                  ? 'font-bold text-[#1A1A1A] underline underline-offset-4 decoration-1 decoration-[#1A1A1A]'
+                  : 'font-normal text-[#666664] hover:text-[#1A1A1A]'
+              }`}
+              aria-label="Switch language to English"
+            >
+              EN
+            </button>
 
-        {/* 2. Main Editorial Case Study Flow (Asymmetrical Lookbook Layout) */}
-        <div className="w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 py-12 sm:py-16 space-y-16">
+            <span className="text-[#D5D4CE] select-none">|</span>
+
+            <button
+              onClick={() => setLanguage('fr')}
+              className={`cursor-pointer transition-colors py-1 px-0.5 ${
+                language === 'fr'
+                  ? 'font-bold text-[#1A1A1A] underline underline-offset-4 decoration-1 decoration-[#1A1A1A]'
+                  : 'font-normal text-[#666664] hover:text-[#1A1A1A]'
+              }`}
+              aria-label="Changer la langue en Français"
+            >
+              FR
+            </button>
+          </div>
+        </header>
+
+        {/* 2. Restrained & Refined Case Study Content Container */}
+        <div className="w-full max-w-6xl mx-auto px-6 sm:px-12 lg:px-16 py-10 sm:py-16 space-y-12 sm:space-y-16">
           
-          {/* Editorial Header Block */}
-          <div className="border-b border-[#D5D4CE] pb-12 space-y-4">
-            <span className="font-mono-custom text-xs text-[#666664] uppercase tracking-widest font-bold block">
-              {project.category}
+          {/* Header Block — Restrained Typography Scale */}
+          <div className="space-y-4 border-b border-[#D5D4CE] pb-8">
+            <span className="font-mono-custom text-xs font-bold uppercase tracking-widest text-[#666664] block">
+              {project.category[language]}
             </span>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-[#1A1A1A] uppercase leading-[0.9]">
+            
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-[#1A1A1A] uppercase leading-tight">
               {project.title}
             </h1>
-            <p className="text-xl sm:text-2xl text-[#1A1A1A] font-normal max-w-3xl leading-relaxed pt-2">
-              {project.tagline}
+
+            <p className="text-base sm:text-lg text-[#1A1A1A] font-normal max-w-3xl leading-relaxed">
+              {project.tagline[language]}
             </p>
           </div>
 
-          {/* Asymmetrical 2-Column Grid (Left: Sticky Meta / Right: Story & Visuals) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            
-            {/* Left Column: Metadata & Specifications (Sticky Sidebar) */}
-            <div className="lg:col-span-4 lg:sticky lg:top-28 space-y-10 border-b lg:border-b-0 pb-10 lg:pb-0 font-mono-custom">
-              {/* Project Meta Details */}
-              <div className="space-y-6">
-                <div>
-                  <span className="text-[#666664] text-[10px] uppercase tracking-wider block mb-1">ROLE</span>
-                  <span className="text-[#1A1A1A] font-bold text-sm block">{project.metadataBar.role}</span>
-                </div>
-                <div>
-                  <span className="text-[#666664] text-[10px] uppercase tracking-wider block mb-1">CONTEXT</span>
-                  <span className="text-[#1A1A1A] font-bold text-sm block">{project.metadataBar.context}</span>
-                </div>
-                <div>
-                  <span className="text-[#666664] text-[10px] uppercase tracking-wider block mb-1">TOOLS</span>
-                  <span className="text-[#1A1A1A] font-bold text-sm block">{project.metadataBar.tools}</span>
-                </div>
-              </div>
-
-              {/* Design System Tokens (Integrated seamlessly) */}
-              {project.brandAndDesignSystem && (
-                <div className="pt-8 border-t border-[#D5D4CE] space-y-6">
-                  <div>
-                    <span className="text-[#666664] text-[10px] uppercase tracking-wider block mb-3">PALETTE</span>
-                    <div className="flex flex-wrap gap-2.5">
-                      {project.brandAndDesignSystem.colorPalette.map((color, idx) => (
-                        <div
-                          key={idx}
-                          className="flex items-center gap-2 border border-[#1A1A1A] px-2.5 py-1.5 bg-[#EAE8E2] text-xs"
-                        >
-                          <div
-                            className="w-3 h-3 border border-[#1A1A1A]/30 flex-shrink-0"
-                            style={{ backgroundColor: color.hex }}
-                          />
-                          <span className="font-bold text-[#1A1A1A] text-[11px]">{color.hex}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <span className="text-[#666664] text-[10px] uppercase tracking-wider block mb-2">TYPOGRAPHY</span>
-                    <div className="space-y-1 text-xs font-bold text-[#1A1A1A]">
-                      {project.brandAndDesignSystem.typography.map((type, idx) => (
-                        <div key={idx}>{type.name}</div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
+          {/* Metadata Grid (Compact 4-Column Architectural Ribbon) */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 border-y border-[#D5D4CE] py-4 font-mono-custom text-xs gap-4">
+            <div>
+              <span className="text-[#666664] text-[10px] uppercase tracking-wider block mb-1">{t('drawer.role')}</span>
+              <span className="text-[#1A1A1A] font-bold text-xs sm:text-sm block">{project.metadataBar.role[language]}</span>
             </div>
-
-            {/* Right Column: Visual Showcase & Storytelling */}
-            <div className="lg:col-span-8 space-y-14">
-              
-              {/* Proportional Showcase Image (Compact, Sharp 1px Border) */}
-              <div className="w-full aspect-[16/10] max-h-[460px] overflow-hidden border border-[#1A1A1A] bg-[#E5E3DC] group">
-                <img
-                  src={project.thumbnail}
-                  alt={project.title}
-                  className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-102 transition-all duration-700 ease-out"
-                />
-              </div>
-
-              {/* 01. The Problem */}
-              <div className="space-y-3">
-                <h3 className="font-mono-custom text-xs font-bold uppercase tracking-wider text-[#666664]">
-                  01 / THE PROBLEM
-                </h3>
-                <p className="text-base sm:text-lg leading-relaxed text-[#1A1A1A]">
-                  {project.problem}
-                </p>
-              </div>
-
-              {/* 02. The Solution */}
-              <div className="space-y-3">
-                <h3 className="font-mono-custom text-xs font-bold uppercase tracking-wider text-[#666664]">
-                  02 / THE SOLUTION
-                </h3>
-                <p className="text-base sm:text-lg leading-relaxed text-[#1A1A1A]">
-                  {project.solution}
-                </p>
-              </div>
-
-              {/* 03. Concept Note */}
-              {project.brandAndDesignSystem && (
-                <div className="space-y-3 pt-4 border-t border-[#D5D4CE]">
-                  <h3 className="font-mono-custom text-xs font-bold uppercase tracking-wider text-[#666664]">
-                    03 / BRAND CONCEPT
-                  </h3>
-                  <p className="text-base leading-relaxed text-[#1A1A1A]">
-                    {project.brandAndDesignSystem.concept}
-                  </p>
-                </div>
-              )}
-
+            <div>
+              <span className="text-[#666664] text-[10px] uppercase tracking-wider block mb-1">{t('drawer.timeline')}</span>
+              <span className="text-[#1A1A1A] font-bold text-xs sm:text-sm block">{project.metadataBar.context[language]}</span>
+            </div>
+            <div>
+              <span className="text-[#666664] text-[10px] uppercase tracking-wider block mb-1">{t('drawer.tools')}</span>
+              <span className="text-[#1A1A1A] font-bold text-xs sm:text-sm block">{project.metadataBar.tools}</span>
+            </div>
+            <div>
+              <span className="text-[#666664] text-[10px] uppercase tracking-wider block mb-1">{t('drawer.discipline')}</span>
+              <span className="text-[#1A1A1A] font-bold text-xs sm:text-sm block">{project.metadataBar.discipline[language]}</span>
             </div>
           </div>
 
-          {/* 3. Bottom Next Case Study Link */}
-          <div className="pt-12 border-t border-[#D5D4CE]">
-            <button
-              onClick={() => {
-                if (onSelectProject) {
-                  onSelectProject(nextProject);
-                }
-              }}
-              className="w-full group p-8 sm:p-10 border border-[#1A1A1A] bg-[#EAE8E2] hover:bg-[#1A1A1A] transition-colors duration-500 flex items-center justify-between cursor-pointer text-left"
-            >
-              <div>
-                <span className="font-mono-custom text-xs uppercase tracking-widest text-[#666664] group-hover:text-[#D5D4CE] transition-colors block mb-1">
-                  NEXT CASE STUDY →
+          {/* Visual Showcase (Proportionate Height & 1px Border) */}
+          <div className="w-full h-[320px] sm:h-[420px] md:h-[480px] overflow-hidden border border-[#1A1A1A] bg-[#E5E3DC] group shadow-xs">
+            <img
+              src={project.thumbnail}
+              alt={project.title}
+              className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-102 transition-all duration-700 ease-out"
+            />
+          </div>
+
+          {/* Narrative Content: 2-Column Problem & Solution Flow */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 pt-2">
+            {/* The Problem */}
+            <div className="space-y-3">
+              <span className="font-mono-custom text-xs font-bold uppercase tracking-wider text-[#666664] block">
+                {t('drawer.friction')}
+              </span>
+              <h3 className="text-xl sm:text-2xl font-bold text-[#1A1A1A] tracking-tight uppercase leading-snug">
+                {t('drawer.friction_sub')}
+              </h3>
+              <p className="text-sm sm:text-base text-[#1A1A1A] leading-relaxed font-normal pt-1">
+                {project.problem[language]}
+              </p>
+            </div>
+
+            {/* The Solution */}
+            <div className="space-y-3">
+              <span className="font-mono-custom text-xs font-bold uppercase tracking-wider text-[#666664] block">
+                {t('drawer.solution')}
+              </span>
+              <h3 className="text-xl sm:text-2xl font-bold text-[#1A1A1A] tracking-tight uppercase leading-snug">
+                {t('drawer.solution_sub')}
+              </h3>
+              <p className="text-sm sm:text-base text-[#1A1A1A] leading-relaxed font-normal pt-1">
+                {project.solution[language]}
+              </p>
+            </div>
+          </div>
+
+          {/* Brand Architecture & Design Tokens (Compact & Refined) */}
+          {project.brandAndDesignSystem && (
+            <div className="border-t border-[#D5D4CE] pt-10 space-y-8">
+              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+                <span className="font-mono-custom text-xs font-bold uppercase tracking-wider text-[#666664]">
+                  {t('drawer.brand')}
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-[#1A1A1A] group-hover:text-[#F4F3EF] tracking-tight uppercase transition-colors">
-                  {nextProject.title}
-                </h3>
+                <p className="font-mono-custom text-xs text-[#666664] max-w-xl">
+                  {project.brandAndDesignSystem.concept[language]}
+                </p>
               </div>
 
-              <div className="w-10 h-10 border border-[#1A1A1A] group-hover:border-[#F4F3EF] flex items-center justify-center text-[#1A1A1A] group-hover:text-[#F4F3EF] group-hover:translate-x-1.5 transition-all duration-300">
-                <ArrowRight className="w-4 h-4" />
+              {/* Color Palette Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {project.brandAndDesignSystem.colorPalette.map((color, idx) => (
+                  <div
+                    key={idx}
+                    className="border border-[#1A1A1A] p-4 flex flex-col justify-between h-24 sm:h-28"
+                    style={{ backgroundColor: color.hex }}
+                  >
+                    <span
+                      className={`font-mono-custom text-[11px] font-bold uppercase tracking-wider ${
+                        color.hex === '#FAF3E0' || color.hex === '#FFFFFF' || color.hex === '#F4F3EF'
+                          ? 'text-[#1A1A1A]'
+                          : 'text-[#F4F3EF]'
+                      }`}
+                    >
+                      {color.name}
+                    </span>
+
+                    <div className="flex items-baseline justify-between border-t border-current/20 pt-2">
+                      <span
+                        className={`font-mono-custom text-xs font-extrabold ${
+                          color.hex === '#FAF3E0' || color.hex === '#FFFFFF' || color.hex === '#F4F3EF'
+                            ? 'text-[#1A1A1A]'
+                            : 'text-[#F4F3EF]'
+                        }`}
+                      >
+                        {color.hex}
+                      </span>
+                      <span
+                        className={`font-mono-custom text-[10px] uppercase tracking-wider ${
+                          color.hex === '#FAF3E0' || color.hex === '#FFFFFF' || color.hex === '#F4F3EF'
+                            ? 'text-[#1A1A1A]/70'
+                            : 'text-[#F4F3EF]/70'
+                        }`}
+                      >
+                        {color.desc[language]}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
+
+              {/* Typography Specimen */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {project.brandAndDesignSystem.typography.map((type, idx) => (
+                  <div key={idx} className="border border-[#1A1A1A] p-5 bg-[#EAE8E2] space-y-2">
+                    <div className="flex items-center justify-between border-b border-[#D5D4CE] pb-2">
+                      <span className="font-mono-custom text-[10px] font-bold uppercase tracking-wider text-[#666664]">
+                        {t('drawer.typeface')} {idx + 1}
+                      </span>
+                      <span className="font-mono-custom text-[10px] text-[#1A1A1A] font-bold">
+                        {type.desc[language]}
+                      </span>
+                    </div>
+                    <div className="text-2xl sm:text-3xl font-black text-[#1A1A1A] tracking-tight">
+                      {type.name}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 3. Streamlined Minimalist Project Navigation (No Big CTA) */}
+          <div className="border-t border-[#D5D4CE] pt-8 pb-12 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono-custom text-xs select-none">
+            <button
+              onClick={() => {
+                if (onSelectProject) onSelectProject(prevProject);
+              }}
+              className="group inline-flex items-center gap-2 text-[#666664] hover:text-[#1A1A1A] transition-colors cursor-pointer py-2"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+              <span>← {prevProject.title}</span>
+            </button>
+
+            <button
+              onClick={() => {
+                if (onSelectProject) onSelectProject(nextProject);
+              }}
+              className="group inline-flex items-center gap-2 font-bold text-[#1A1A1A] hover:opacity-60 transition-opacity cursor-pointer py-2"
+            >
+              <span>{nextProject.title} →</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
 
