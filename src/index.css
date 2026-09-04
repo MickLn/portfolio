@@ -11,6 +11,7 @@
 
 :root {
   --bg-paper: #F4F3EF;
+  --bg-surface: #EAE8E2;
   --text-carbon: #1A1A1A;
   --text-muted: #666664;
   --border-sharp: #D5D4CE;
@@ -21,11 +22,21 @@
   --font-space: 'Space Mono', monospace;
 }
 
+.dark, [data-theme="dark"] {
+  --bg-paper: #121212;
+  --bg-surface: #1A1A1A;
+  --text-carbon: #F4F3EF;
+  --text-muted: #8E8E8A;
+  --border-sharp: #2A2A2A;
+  --border-carbon: #F4F3EF;
+}
+
 body {
   background-color: var(--bg-paper);
   color: var(--text-carbon);
   font-family: var(--font-geist);
   overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 /* Monospace font utility */
