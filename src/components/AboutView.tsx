@@ -4,6 +4,7 @@ import { Menu, X, FileText, Mail } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { Footer } from './Footer';
+import { getAssetUrl } from '../utils/assets';
 
 interface AboutViewProps {
   isOpen: boolean;
@@ -126,19 +127,19 @@ export const AboutView: React.FC<AboutViewProps> = ({
 
   const galleryImages = [
     {
-      src: '/about/food-table.jpg',
+      src: getAssetUrl('/about/food-table.jpg'),
       alt: 'Gastronomie & Table de partage',
     },
     {
-      src: '/about/paris-eiffel.jpg',
+      src: getAssetUrl('/about/paris-eiffel.jpg'),
       alt: 'Paris & Tour Eiffel perspective aérienne',
     },
     {
-      src: '/about/sunset-road.jpg',
+      src: getAssetUrl('/about/sunset-road.jpg'),
       alt: 'Coucher de soleil écarlate',
     },
     {
-      src: '/about/pool-architecture.jpg',
+      src: getAssetUrl('/about/pool-architecture.jpg'),
       alt: 'Architecture pastel & teintes estivales',
     },
   ];
@@ -322,7 +323,7 @@ export const AboutView: React.FC<AboutViewProps> = ({
                 <div className="pt-6 space-y-4 font-mono-custom text-xs">
                   <div className="grid grid-cols-2 gap-3">
                     <a
-                      href="/cv-mickael-lin.pdf"
+                      href={getAssetUrl('/cv-mickael-lin.pdf')}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-3 border border-[var(--border-carbon)] flex items-center justify-center gap-2 font-bold uppercase text-center"

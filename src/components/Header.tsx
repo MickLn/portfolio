@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, FileText, Mail } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
+import { getAssetUrl } from '../utils/assets';
 
 interface HeaderProps {
   onOpenAbout: () => void;
@@ -159,7 +160,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenAbout }) => {
             <div className="pt-6 space-y-4 font-mono-custom text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <a
-                  href="/cv-mickael-lin.pdf"
+                  href={getAssetUrl('/cv-mickael-lin.pdf')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3 border border-[var(--border-carbon)] flex items-center justify-center gap-2 font-bold uppercase text-center"

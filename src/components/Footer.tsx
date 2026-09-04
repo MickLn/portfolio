@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ArrowUp, FileText, Mail } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { getAssetUrl } from '../utils/assets';
 
 interface FooterProps {
   onOpenAbout: () => void;
@@ -50,7 +51,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAbout }) => {
     },
     {
       label: 'CV (PDF)',
-      href: '/cv-mickael-lin.pdf',
+      href: getAssetUrl('/cv-mickael-lin.pdf'),
       external: true,
     },
   ];
@@ -105,7 +106,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAbout }) => {
 
             {/* Direct CV PDF Link */}
             <a
-              href="/cv-mickael-lin.pdf"
+              href={getAssetUrl('/cv-mickael-lin.pdf')}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-3 border border-[#D5D4CE]/40 text-[#F4F3EF] font-bold hover:border-[#F4F3EF] hover:bg-[#F4F3EF]/10 transition-colors"

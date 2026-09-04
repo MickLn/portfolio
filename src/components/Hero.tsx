@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
+import { getAssetUrl } from '../utils/assets';
 
 export const Hero: React.FC = () => {
   const { t } = useLanguage();
@@ -46,7 +47,7 @@ export const Hero: React.FC = () => {
               className="w-32 h-44 sm:w-44 sm:h-60 md:w-56 md:h-76 lg:w-68 lg:h-92 overflow-hidden bg-[var(--bg-surface)] flex-shrink-0 shadow-xs border border-[var(--border-sharp)] transition-colors duration-300"
             >
               <img
-                src="/profile.jpg"
+                src={getAssetUrl('/profile.jpg')}
                 alt="Mickael LIN"
                 className="w-full h-full object-cover object-[center_15%] grayscale contrast-125"
                 loading="eager"

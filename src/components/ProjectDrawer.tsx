@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Menu, X, FileText, Mail } from 'lu
 import { ProjectItem, PROJECTS } from '../data/projects';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
+import { getAssetUrl } from '../utils/assets';
 
 interface ProjectDrawerProps {
   project: ProjectItem | null;
@@ -232,7 +233,7 @@ export const ProjectDrawer: React.FC<ProjectDrawerProps> = ({
               <div className="pt-6 space-y-4 font-mono-custom text-xs">
                 <div className="grid grid-cols-2 gap-3">
                   <a
-                    href="/cv-mickael-lin.pdf"
+                    href={getAssetUrl('/cv-mickael-lin.pdf')}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 border border-[var(--border-carbon)] flex items-center justify-center gap-2 font-bold uppercase text-center"

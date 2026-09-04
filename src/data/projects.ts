@@ -1,3 +1,5 @@
+import { getAssetUrl } from '../utils/assets';
+
 export interface ProjectPart {
   number: string;
   tag: {
@@ -29,6 +31,11 @@ export interface ProjectItem {
     en: string;
     fr: string;
   };
+  year: string;
+  flashRole: {
+    en: string;
+    fr: string;
+  };
   flashConcept: {
     en: string;
     fr: string;
@@ -41,7 +48,6 @@ export interface ProjectItem {
   thumbnail: string;
   screens?: string[];
   overviewImage?: string;
-  parts?: ProjectPart[];
   externalLink?: {
     label: {
       en: string;
@@ -90,7 +96,8 @@ export interface ProjectItem {
     en: string;
     fr: string;
   };
-  takeaway?: {
+  parts?: ProjectPart[];
+  takeaway: {
     en: string;
     fr: string;
   };
@@ -110,12 +117,17 @@ export const PROJECTS: ProjectItem[] = [
     index: '01',
     title: 'Pansies',
     category: {
-      en: 'MOBILE PRODUCT DESIGN & AI WORKFLOWS',
-      fr: 'DESIGN PRODUIT MOBILE & WORKFLOWS IA'
+      en: 'AI Audio & Productivity',
+      fr: 'IA Vocale & Productivité'
     },
     tagline: {
-      en: 'Instant voice-to-structured-ideas mobile workspace designed to turn chaotic brain dumps into clear actions.',
-      fr: 'Application mobile de capture vocale instantanée transformant les pensées spontanées en actions claires.'
+      en: 'AI Vocal Assistant & Brain-Dumps Organizer',
+      fr: 'Assistant vocal IA & Organisation de flux de pensées'
+    },
+    year: '2025',
+    flashRole: {
+      en: 'UX/UI Designer',
+      fr: 'UX/UI Designer'
     },
     flashConcept: {
       en: 'Voice-to-structured-ideas mobile workspace turning brain dumps into action.',
@@ -126,13 +138,13 @@ export const PROJECTS: ProjectItem[] = [
       fr: 'Sprint 4 jours / Fin 2025'
     },
     tools: ['Figma'],
-    thumbnail: '/projects/pansies/cover.png?v=2',
+    thumbnail: getAssetUrl('/projects/pansies/cover.png?v=2'),
     screens: [
-      '/projects/pansies/screen-splash.jpg?v=2',
-      '/projects/pansies/screen-player.jpg?v=2',
-      '/projects/pansies/screen-list.jpg?v=2'
+      getAssetUrl('/projects/pansies/screen-splash.jpg?v=2'),
+      getAssetUrl('/projects/pansies/screen-player.jpg?v=2'),
+      getAssetUrl('/projects/pansies/screen-list.jpg?v=2')
     ],
-    overviewImage: '/projects/pansies/figma-board.jpg?v=2',
+    overviewImage: getAssetUrl('/projects/pansies/figma-board.jpg?v=2'),
     metadataBar: {
       role: {
         en: 'UX/UI Designer',
@@ -206,6 +218,11 @@ export const PROJECTS: ProjectItem[] = [
       en: 'Collectible figurines e-commerce store with live search filtering and seamless product exploration.',
       fr: 'Site e-commerce de figurines de collection avec recherche dynamique et parcours d’achat épuré.'
     },
+    year: '2025',
+    flashRole: {
+      en: 'Web Designer & Integrator',
+      fr: 'Web Designer & Intégrateur'
+    },
     flashConcept: {
       en: 'Collectible figurines e-commerce store with live search filtering.',
       fr: 'Site e-commerce de figurines avec recherche dynamique et parcours fluide.'
@@ -215,13 +232,13 @@ export const PROJECTS: ProjectItem[] = [
       fr: 'Projet académique / Fév 2025'
     },
     tools: ['Figma', 'WordPress'],
-    thumbnail: '/projects/popfig/cover.png?v=3',
+    thumbnail: getAssetUrl('/projects/popfig/cover.png?v=3'),
     screens: [
-      '/projects/popfig/screen-catalog.jpg?v=3',
-      '/projects/popfig/screen-product.jpg?v=3',
-      '/projects/popfig/screen-cart.png?v=3'
+      getAssetUrl('/projects/popfig/screen-catalog.jpg?v=3'),
+      getAssetUrl('/projects/popfig/screen-product.jpg?v=3'),
+      getAssetUrl('/projects/popfig/screen-cart.png?v=3')
     ],
-    overviewImage: '/projects/popfig/figma-board.jpg?v=3',
+    overviewImage: getAssetUrl('/projects/popfig/figma-board.jpg?v=3'),
     metadataBar: {
       role: {
         en: 'Web Designer & Integrator',
@@ -295,6 +312,11 @@ export const PROJECTS: ProjectItem[] = [
       en: 'Proactive redesign of online takeout ordering, cross-selling modules, admin dashboard, and transactional emails.',
       fr: 'Refonte proactive du parcours de commande à emporter, cross-selling, espace d’administration et emails transactionnels.'
     },
+    year: '2026',
+    flashRole: {
+      en: 'UX/UI & Webdesigner',
+      fr: 'UX/UI & Webdesigner'
+    },
     flashConcept: {
       en: 'Restaurant web redesign with online ordering and cross-selling.',
       fr: 'Refonte web pour restaurant avec commande en ligne et cross-selling.'
@@ -304,13 +326,13 @@ export const PROJECTS: ProjectItem[] = [
       fr: '2026'
     },
     tools: ['Figma', 'IA'],
-    thumbnail: '/projects/sushilin/cover.png?v=5',
+    thumbnail: getAssetUrl('/projects/sushilin/cover.png?v=5'),
     screens: [
-      '/projects/sushilin/mobile-catalog.png?v=2',
-      '/projects/sushilin/mobile-cart-crossell.png?v=2',
-      '/projects/sushilin/email-confirmation.png?v=2'
+      getAssetUrl('/projects/sushilin/mobile-catalog.png?v=2'),
+      getAssetUrl('/projects/sushilin/mobile-cart-crossell.png?v=2'),
+      getAssetUrl('/projects/sushilin/email-confirmation.png?v=2')
     ],
-    overviewImage: '/projects/sushilin/screen-menu.png?v=3',
+    overviewImage: getAssetUrl('/projects/sushilin/screen-menu.png?v=3'),
     externalLink: {
       label: {
         en: 'VISIT LIVE SITE',
@@ -391,6 +413,11 @@ export const PROJECTS: ProjectItem[] = [
       en: 'Modular Notion templates engineered for daily nutrition tracking and Street Art collection gamification.',
       fr: 'Templates Notion modulaires conçus pour le suivi nutritionnel et la gamification de Street Art.'
     },
+    year: '2026',
+    flashRole: {
+      en: 'No-Code Designer',
+      fr: 'No-Code Designer'
+    },
     flashConcept: {
       en: 'Modular Notion workspaces: Nutrition Tracker & Street Art Gamification.',
       fr: 'Templates Notion : Suivi nutritionnel & Gamification Street Art.'
@@ -400,7 +427,7 @@ export const PROJECTS: ProjectItem[] = [
       fr: '2026'
     },
     tools: ['Notion'],
-    thumbnail: '/projects/notion/cover.svg?v=6',
+    thumbnail: getAssetUrl('/projects/notion/cover.svg?v=6'),
     externalLink: {
       label: {
         en: 'VIEW NOTION PROFILE',
@@ -460,12 +487,12 @@ export const PROJECTS: ProjectItem[] = [
           en: 'A structured food logging system designed for weight management (loss, gain, or maintenance). It records meals across key time slots, uses dynamic formulas to calculate calories and macronutrients (proteins, carbs, fats, fibers) against target quotas, and tracks weight trends over time.',
           fr: 'Un système complet pour gérer son alimentation au quotidien (perte, prise de masse ou maintien). Il enregistre les repas par moment de la journée, utilise des formules pour calculer automatiquement les calories et les macronutriments (protéines, glucides, lipides, fibres) par rapport aux quotas cibles, et suit l’évolution quotidienne du poids.'
         },
-        bannerImage: '/projects/notion/assiette-banner.jpg',
-        mainImage: '/projects/notion/assiette-journal.png',
+        bannerImage: getAssetUrl('/projects/notion/assiette-banner.jpg'),
+        mainImage: getAssetUrl('/projects/notion/assiette-journal.png'),
         screens: [
-          '/projects/notion/assiette-quotas.png',
-          '/projects/notion/assiette-evolution.png',
-          '/projects/notion/assiette-references.png'
+          getAssetUrl('/projects/notion/assiette-quotas.png'),
+          getAssetUrl('/projects/notion/assiette-evolution.png'),
+          getAssetUrl('/projects/notion/assiette-references.png')
         ]
       },
       {
@@ -482,8 +509,8 @@ export const PROJECTS: ProjectItem[] = [
           en: 'An urban mosaic tracking workspace inspired by the street artist Invader. Beyond cataloging photographed artworks with metadata (points, city, date), the dashboard introduces customized unlockable achievements, completion progress gauges, and tiered player ranks based on the global score.',
           fr: 'Un espace dédié au recensement des mosaïques urbaines de l’artiste Invader. En plus de documenter les œuvres flashées avec leurs caractéristiques (points, ville, date), le dashboard intègre un système de succès déblocables, des jauges de complétion et des grades qui évoluent selon le score total.'
         },
-        bannerImage: '/projects/notion/invaders-banner.jpg',
-        mainImage: '/projects/notion/invaders-dashboard.png'
+        bannerImage: getAssetUrl('/projects/notion/invaders-banner.jpg'),
+        mainImage: getAssetUrl('/projects/notion/invaders-dashboard.png')
       }
     ],
     takeaway: {
