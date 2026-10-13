@@ -1347,41 +1347,166 @@ function Step({ label, children }: { label: T; children: ReactNode }) {
   )
 }
 
-// A screenshot that opens full screen: a real button, so keyboard users can zoom too
+// A screenshot that opens full screen: a real button, so keyboard users can zoom too.
+// In a device frame, an image taller than the frame scrolls inside it (long page captures).
 function Shot({
   src,
   alt,
   caption,
   onZoom,
+  frame,
   className = "",
 }: {
   src: string
   alt: string
   caption?: T
   onZoom: () => void
+  frame?: "desktop" | "mobile"
   className?: string
 }) {
   const t = useT()
-  return (
-    <figure className={className}>
-      <button
-        type="button"
-        onClick={onZoom}
-        aria-label={`${t(b("Agrandir", "Enlarge"))} : ${alt}`}
-        className="group relative block w-full cursor-zoom-in overflow-hidden bg-fg/[0.04]"
-      >
-        <img
-          src={src}
-          alt={alt}
-          loading="lazy"
-          className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.01]"
-        />
-        <span className="pointer-events-none absolute bottom-3 right-3 bg-carbon/80 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-paper opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+  const [tall, setTall] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const limit = frame === "mobile" ? 19.5 / 9 : 10 / 16 // frame height / width
+  const hint =
+    "pointer-events-none absolute bottom-3 bg-carbon/80 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-paper backdrop-blur-sm"
+  const body = (
+    <button
+      type="button"
+      onClick={onZoom}
+      aria-label={`${t(b("Agrandir", "Enlarge"))} : ${alt}`}
+      className="group relative block w-full cursor-zoom-in overflow-hidden bg-fg/[0.04]"
+    >
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        onLoad={(e) =>
+          frame &&
+          setTall(
+            // 15% margin: a few pixels taller is not worth a scroll box
+            e.currentTarget.naturalHeight / e.currentTarget.naturalWidth > limit * 1.15,
+          )
+        }
+        className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.01]"
+      />
+      {!tall && (
+        <span
+          className={`${hint} right-3 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100`}
+        >
           {t(b("Agrandir +", "Enlarge +"))}
         </span>
-      </button>
+      )}
+    </button>
+  )
+  return (
+    <figure className={className}>
+      {frame ? (
+        <div
+          className={`relative overflow-hidden border border-line ${
+            frame === "mobile" ? "rounded-[1.6rem]" : ""
+          }`}
+        >
+          {frame === "desktop" && (
+            <div aria-hidden className="flex h-7 items-center gap-1.5 border-b border-line px-3">
+              {[0, 1, 2].map((d) => (
+                <span key={d} className="h-2 w-2 rounded-full bg-fg/20" />
+              ))}
+            </div>
+          )}
+          <div
+            onScroll={() => setScrolled(true)}
+            tabIndex={tall ? 0 : undefined}
+            role={tall ? "region" : undefined}
+            aria-label={tall ? `${alt} (${t(b("défilable", "scrollable"))})` : undefined}
+            className={
+              tall
+                ? `${frame === "mobile" ? "aspect-[9/19.5]" : "aspect-[16/10]"} overflow-y-auto [scrollbar-width:thin]`
+                : ""
+            }
+          >
+            {body}
+          </div>
+          {tall && !scrolled && (
+            <span aria-hidden className={`${hint} left-1/2 -translate-x-1/2`}>
+              {t(b("Défiler ↓", "Scroll ↓"))}
+            </span>
+          )}
+        </div>
+      ) : (
+        body
+      )}
       {caption && <figcaption className={`mt-3 ${caseLabel}`}>{t(caption)}</figcaption>}
     </figure>
+  )
+}
+
+// Several workspaces in one project: the visitor picks the one to look at
+function Templates({
+  templates,
+  zoomTo,
+}: {
+  templates: ProjectTemplate[]
+  zoomTo: (z: Zoom) => void
+}) {
+  const t = useT()
+  const [i, setI] = useState(0)
+  const tpl = templates[i]
+  return (
+    <div className="grid gap-8">
+      <div
+        role="group"
+        aria-label={t(b("Choisir un template", "Choose a template"))}
+        className="flex flex-wrap gap-x-8 gap-y-3 border-b border-line"
+      >
+        {templates.map((x, j) => (
+          <button
+            key={x.id}
+            type="button"
+            aria-pressed={i === j}
+            onClick={() => setI(j)}
+            className={`-mb-px border-b-2 pb-3 text-[clamp(1.25rem,2.4vw,2rem)] font-bold uppercase leading-none tracking-[-0.04em] transition-colors ${
+              i === j ? "border-signal text-fg" : "border-transparent text-muted hover:text-fg"
+            }`}
+          >
+            {x.title}
+          </button>
+        ))}
+      </div>
+      <p className={caseText}>{t(tpl.desc)}</p>
+      <div className="grid gap-6 md:grid-cols-12">
+        {tpl.items.map((it) => (
+          <Shot
+            key={it.src}
+            src={it.src}
+            alt={it.alt}
+            caption={it.title}
+            frame="desktop"
+            className={it.span ?? "md:col-span-12"}
+            onZoom={() =>
+              zoomTo({ src: it.src, alt: it.alt, title: `${tpl.title} — ${t(it.title)}` })
+            }
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// Long captures (a whole page) open at reading width and scroll; the rest fit the screen
+function ZoomedImage({ src, alt }: { src: string; alt: string }) {
+  const [long, setLong] = useState(false)
+  return (
+    <img
+      src={src}
+      alt={alt}
+      onLoad={(e) =>
+        setLong(e.currentTarget.naturalHeight / e.currentTarget.naturalWidth > 2.5)
+      }
+      className={`${
+        long ? "h-auto w-full max-w-3xl self-start" : "max-h-[82vh] max-w-full object-contain"
+      } shadow-2xl border border-paper/15`}
+    />
   )
 }
 
@@ -1421,6 +1546,7 @@ function ScreenRuns({
               src={s.src}
               alt={s.alt}
               caption={s.caption}
+              frame={s.aspect}
               className={!run.mobile && i === 0 && run.items.length % 2 ? "md:col-span-2" : ""}
               onZoom={() => zoomTo({ src: s.src, alt: s.alt, title: t(s.caption) })}
             />
@@ -1630,34 +1756,9 @@ function CaseStudy({
 
               <Step label={b("Le résultat", "The result")}>
                 {p.screens && <ScreenRuns screens={p.screens} zoomTo={setZoomImage} />}
-                {p.templates?.map((tpl) => (
-                  <div key={tpl.id} className="grid gap-6">
-                    <div>
-                      <h3 className="text-[clamp(1.75rem,4vw,3.25rem)] font-bold uppercase leading-[0.9] tracking-[-0.045em]">
-                        {tpl.title}
-                      </h3>
-                      <p className={`mt-4 ${caseText}`}>{t(tpl.desc)}</p>
-                    </div>
-                    <div className="grid gap-6 md:grid-cols-12">
-                      {tpl.items.map((it) => (
-                        <Shot
-                          key={it.src}
-                          src={it.src}
-                          alt={it.alt}
-                          caption={it.title}
-                          className={it.span ?? "md:col-span-12"}
-                          onZoom={() =>
-                            setZoomImage({
-                              src: it.src,
-                              alt: it.alt,
-                              title: `${tpl.title} — ${t(it.title)}`,
-                            })
-                          }
-                        />
-                      ))}
-                    </div>
-                  </div>
-                ))}
+                {p.templates && (
+                  <Templates key={p.slug} templates={p.templates} zoomTo={setZoomImage} />
+                )}
                 <p className={`border-t border-line pt-6 ${caseText}`}>{t(p.result)}</p>
               </Step>
 
@@ -1705,11 +1806,7 @@ function CaseStudy({
             className="flex-1 flex items-center justify-center p-2 md:p-6 overflow-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <img
-              src={zoomImage.src}
-              alt={zoomImage.alt}
-              className="max-h-[82vh] max-w-full object-contain shadow-2xl border border-paper/15"
-            />
+            <ZoomedImage key={zoomImage.src} src={zoomImage.src} alt={zoomImage.alt} />
           </div>
         </div>
       )}
