@@ -9,53 +9,8 @@ import {
   type CSSProperties,
   type ReactNode,
 } from "react"
-import projectsShot from "./assets/projects-shot.png"
 
 /* ---------- Utilities ---------- */
-
-type Rect = [number, number, number, number] // x, y, w, h in % of the source image
-
-// Displays a region of a larger image, always covering its container.
-function Crop({
-  src,
-  rect,
-  ratio,
-  alt = "",
-  className = "",
-}: {
-  src: string
-  rect: Rect
-  ratio: number
-  alt?: string
-  className?: string
-}) {
-  const [x, y, w, h] = rect
-  return (
-    <div
-      className={`relative overflow-hidden [container-type:size] ${className}`}
-    >
-      <div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden"
-        style={{
-          width: `max(100cqw, calc(100cqh * ${ratio}))`,
-          aspectRatio: ratio,
-        }}
-      >
-        <img
-          src={src}
-          alt={alt}
-          className="absolute max-w-none"
-          style={{
-            width: `${10000 / w}%`,
-            height: `${10000 / h}%`,
-            left: `${(-x * 100) / w}%`,
-            top: `${(-y * 100) / h}%`,
-          }}
-        />
-      </div>
-    </div>
-  )
-}
 
 function Logo({ className = "" }: { className?: string }) {
   return (
@@ -518,571 +473,407 @@ const LINKS = {
   strava: "https://www.strava.com/athletes/135239970",
 }
 
-// Image with graceful fallback when the file isn't in /public yet
-function Img({
-  src,
-  alt,
-  className = "",
-  fallback,
-}: {
-  src: string
-  alt: string
-  className?: string
-  fallback?: ReactNode
-}) {
-  const [err, setErr] = useState(false)
-  if (err && fallback) return <>{fallback}</>
-  return (
-    <img
-      src={src}
-      alt={alt}
-      loading="lazy"
-      onError={() => setErr(true)}
-      className={className}
-    />
-  )
-}
-
 /* ---------- Data ---------- */
 
 type Page = "home" | "about"
-type Cat = "all" | "branding" | "web" | "nocode"
-const catLabel: Record<Cat, T> = {
-  all: b("Tous", "All"),
-  branding: b("Branding", "Branding"),
-  web: b("Webdesign", "Webdesign"),
-  nocode: b("No-code", "No-code"),
-}
 
-const CARD_Y = 27.95
-const CARD_H = 52.85
-const cardRect = (x: number): Rect => [x, CARD_Y, 22.05, CARD_H]
-
-type ProjectTemplateItem = {
+type ProjectScreen = {
   src: string
   alt: string
-  title: T
-  desc?: T
-  span?: string
+  caption: T
+  aspect: "mobile" | "desktop"
 }
 
 type ProjectTemplate = {
   id: string
   title: string
-  subtitle: T
-  banner: string
-  items: ProjectTemplateItem[]
-}
-
-type ProjectScreen = {
-  src: string
-  alt: string
-  title: T
-  desc?: T
-  aspect?: "mobile" | "desktop"
-}
-
-type ProjectBoard = {
-  src: string
-  alt: string
-  title: T
-  subtitle?: T
-  desc?: T
-  badge?: string
+  desc: T
+  items: { src: string; alt: string; title: T; span?: string }[]
 }
 
 type Project = {
   slug: string
   id: string
   title: string
-  cat: Exclude<Cat, "all">
-  tags: T
   year: string
   bg: string
-  rect: Rect
-  coverExt: string
-  coverSrc?: string
-  coverFit?: "cover" | "contain"
-  span: string
-  aspect: string
-  speed: number
-  light?: boolean
+  coverSrc: string
+  tags: T
+  summary: T
   role: T
-  context: T
-  problem: T
-  solution: T
-  palette: string[]
-  fonts: string[]
-  takeaways: T[]
-  templates?: ProjectTemplate[]
-  board?: ProjectBoard
+  team: T
+  duration: T
+  tools: string
+  link?: { href: string; label: T }
+  context: T[]
+  choices: T[]
+  credit?: T
+  logo?: string
+  colors?: [string, string][] // [name, hex]
+  fonts?: string[]
+  board?: { src: string; alt: string; caption: T }
   screens?: ProjectScreen[]
+  templates?: ProjectTemplate[]
+  result: T
 }
 
 const projects: Project[] = [
   {
     slug: "pansies",
-    coverSrc: "/projects/pansies/screen-home.png",
     id: "01",
     title: "Pansies",
-    cat: "branding",
     year: "2025",
-    bg: "#5B2366",
-    rect: cardRect(3.65),
-    coverExt: "png",
-    tags: b("IA vocale · Identité · UX/UI", "Voice AI · Identity · UX/UI"),
-    span: "md:col-span-7 md:row-span-2",
-    aspect: "aspect-[4/5] md:aspect-auto md:h-full",
-    speed: -0.04,
-    role: b(
-      "UX/UI Designer — identité, parcours & maquettes",
-      "UX/UI Designer — identity, flows & mockups",
+    bg: "#E8DEF8",
+    coverSrc: "/projects/pansies/figma-board.png",
+    tags: b("IA vocale & productivité", "AI audio & productivity"),
+    summary: b(
+      "Assistant vocal IA & organisation de flux de pensées.",
+      "AI vocal assistant & brain-dumps organizer.",
     ),
-    context: b(
-      "Pansies est un assistant vocal basé sur l'IA. Il fallait créer une identité chaleureuse et une interface qui rende la voix aussi lisible qu'un écran.",
-      "Pansies is an AI voice assistant. The goal was a warm identity and an interface that makes voice as readable as a screen.",
+    role: b("UX/UI Designer", "UX/UI Designer"),
+    team: b("Groupe de 3", "Team of 3"),
+    duration: b(
+      "Sprint de 4 jours et demi (fin 2025)",
+      "4.5-day sprint (late 2025)",
     ),
-    problem: b(
-      "Les assistants vocaux paraissent froids et opaques : l'utilisateur ne sait pas ce que l'IA a compris.",
-      "Voice assistants feel cold and opaque: users never know what the AI understood.",
-    ),
-    solution: b(
-      "Une pensée comme symbole de confiance, une transcription en temps réel et des états visuels clairs (écoute, réflexion, réponse).",
-      "A pansy as a symbol of trust, live transcription and clear visual states (listening, thinking, answering).",
-    ),
-    palette: ["#5B2366", "#B84FD1", "#E2B13C", "#FBF6EA"],
-    fonts: ["Montserrat", "Inter"],
-    takeaways: [
+    tools: "Figma",
+    context: [
       b(
-        "Concevoir des états d'interface pour un produit sans écran.",
-        "Designing interface states for a screenless product.",
+        "Le brief : concevoir l'interface d'une application mobile. Notre groupe de trois a choisi une application vocale pour s'enregistrer, avec un système de notifications.",
+        "The brief: design the interface of a mobile app. Our team of three chose a voice-recording app with a notification system.",
       ),
       b(
-        "Une identité forte simplifie l'onboarding.",
-        "A strong identity simplifies onboarding.",
+        "Lors d'un sprint intensif de 4 jours et demi, nous avons constaté que noter une idée spontanée sur mobile est souvent freiné par la saisie au clavier et le tri manuel dans des dossiers. L'utilisateur perd son élan avant même d'avoir structuré sa pensée.",
+        "During a fast-paced 4.5-day sprint, we identified that capturing spontaneous thoughts on mobile is often interrupted by slow text inputs, rigid folders, and friction. Users lose momentum before structuring their raw ideas.",
       ),
     ],
-    board: {
-      src: "/projects/pansies/figma-board.png",
-      alt: "Pansies — Architecture & Flux Figma",
-      title: b(
-        "Architecture globale & Parcours utilisateur",
-        "Global architecture & User flow",
+    choices: [
+      b(
+        "Nous avons conçu Pansies autour d'une interaction unique : l'enregistrement vocal immédiat. L'application convertit la voix en notes structurées, tâches et synthèses prêtes à l'action. J'ai particulièrement travaillé sur les parcours de capture rapide, la hiérarchie des cartes, les micro-interactions de validation et les boutons d'action (CTA).",
+        "We designed Pansies around a single gesture: instant audio capture. The interface processes raw speech into structured notes, tasks, and summaries with zero manual sorting. I focused on the quick-capture flows, the card hierarchy, the validation micro-interactions and the call-to-action buttons.",
       ),
-      subtitle: b(
-        "Écosystème Figma · 11 écrans conçus",
-        "Figma ecosystem · 11 screens designed",
+      b(
+        "Une palette douce lavande et fusain qui évoque la sérénité, associée à des formes douces pour limiter la fatigue visuelle lors des sessions de capture quotidienne.",
+        "A soothing lavender and charcoal palette designed to evoke calm, paired with soft organic shapes that reduce visual fatigue during daily capture.",
       ),
-      desc: b(
-        "Vue d'ensemble de l'application : onboarding, connexion, configuration des préférences, mémos vocaux, modes clair/sombre et lecteur interactif.",
-        "Application overview: onboarding, sign-in, preferences setup, voice memos, light/dark modes and interactive audio player.",
-      ),
-    },
+    ],
+    credit: b(
+      "Logo, couleurs et typographies : réalisés par une coéquipière.",
+      "Logo, colours and typefaces: created by a teammate.",
+    ),
+    logo: "/projects/pansies/cover.png",
+    colors: [
+      ["Soft Lavender", "#E8DEF8"],
+      ["Charcoal Dark", "#1D1B20"],
+      ["Deep Violet", "#61286C"],
+    ],
+    fonts: ["Cabinet Grotesk", "Geist Sans"],
     screens: [
       {
         src: "/projects/pansies/screen-home.png",
         alt: "Pansies — Écran d'accueil & Connexion",
-        title: b("01 / Accueil & Connexion", "01 / Welcome & Sign-in"),
-        desc: b(
-          "Un univers rassurant centré sur l'emblème floral et la promesse : « Pour éviter toute fuite de pensées ».",
-          "A reassuring space centered on the floral emblem and brand promise: « To prevent any thought leaks ».",
-        ),
+        aspect: "mobile",
+        caption: b("Accueil & connexion", "Welcome & sign-in"),
       },
       {
         src: "/projects/pansies/screen-list.jpg",
         alt: "Pansies — Liste des mémos vocaux",
-        title: b("02 / Liste des mémos vocaux", "02 / Voice memos list"),
-        desc: b(
-          "Hiérarchie claire, recherche textuelle rapide, bascule de vues et accès instantané à la réécoute.",
-          "Clear hierarchy, quick text search, view toggles and immediate playback access.",
-        ),
+        aspect: "mobile",
+        caption: b("Liste des mémos vocaux", "Voice memos list"),
       },
       {
         src: "/projects/pansies/screen-player.jpg",
         alt: "Pansies — Lecteur audio & Transcription",
-        title: b(
-          "03 / Lecteur & Transcription IA",
-          "03 / Player & AI transcription",
-        ),
-        desc: b(
-          "Visualisation dynamique de l'enregistrement, bouton de transcription instantanée et organisation par catégories (Idées, Projets).",
-          "Dynamic audio playback visualization, one-tap AI transcription and category organization (Ideas, Projects).",
-        ),
+        aspect: "mobile",
+        caption: b("Lecteur & transcription IA", "Player & AI transcription"),
       },
     ],
+    result: b(
+      "Travailler sur un sprint de 4 jours et demi m'a appris à prioriser sans compromis sur l'essentiel : concentrer l'effort sur le parcours de capture principal pour livrer un prototype mobile tactile, cohérent et immédiatement fluide.",
+      "Working under a tight 4.5-day sprint reinforced the necessity of ruthless prioritization. Focusing on the core capture flow over edge cases allowed us to deliver an intuitive and tactile mobile prototype.",
+    ),
   },
   {
     slug: "popfig",
-    coverSrc: "/projects/popfig/screen-catalog.png",
     id: "02",
-    title: "Pop Fig",
-    cat: "branding",
+    title: "PopFig",
     year: "2025",
-    bg: "#FFBDB2",
-    rect: cardRect(27.2),
-    coverExt: "png",
-    coverFit: "contain",
-    light: true,
-    tags: b("E-commerce · Figurines", "E-commerce · Figurines"),
-    span: "md:col-span-5 md:mt-28",
-    aspect: "aspect-[4/3]",
-    speed: 0.06,
-    role: b(
-      "Designer — identité, e-commerce & prototype Figma",
-      "Designer — identity, e-commerce & Figma prototype",
+    bg: "#FFBCB3",
+    coverSrc: "/projects/popfig/screen-catalog.png",
+    tags: b(
+      "Webdesign e-commerce & intégration CMS",
+      "E-commerce webdesign & CMS integration",
     ),
-    context: b(
-      "Pop Fig est une boutique en ligne de figurines de collection, pensée pour les passionnés comme pour les curieux.",
-      "Pop Fig is an online store for collectible figurines, built for collectors and newcomers alike.",
+    summary: b(
+      "Site e-commerce de figurines de collection avec recherche dynamique et parcours d'achat épuré.",
+      "Collectible figurines e-commerce store with live search filtering and seamless product exploration.",
     ),
-    problem: b(
-      "Des catalogues saturés où il est difficile de trouver une pièce et de lui faire confiance.",
-      "Cluttered catalogues where finding and trusting a piece is hard.",
+    role: b("Web Designer & Intégrateur", "Web Designer & Integrator"),
+    team: b("Solo", "Solo"),
+    duration: b(
+      "4 jours et demi · projet d'études (2025)",
+      "4.5 days · academic project (2025)",
     ),
-    solution: b(
-      "Un logo-mannequin ludique, des fiches produit centrées sur l'objet et un parcours d'achat en trois étapes.",
-      "A playful mannequin logo, object-first product pages and a three-step checkout.",
-    ),
-    palette: ["#FFBDB2", "#111111", "#FFFFFF", "#FF6F0F"],
-    fonts: ["Outfit", "Geist Mono"],
-    takeaways: [
+    tools: "Figma · WordPress · WooCommerce · Elementor Pro",
+    context: [
       b(
-        "Le ton d'une marque se joue jusque dans les micro-interactions.",
-        "Brand tone lives in micro-interactions.",
+        "Le brief : créer un site e-commerce. J'ai choisi les figurines de collection, parce que j'en collectionne. L'objectif était d'offrir une expérience d'achat fluide, aérée et intuitive. Je me suis inspiré des codes visuels de Pop Mart pour leur approche épurée qui valorise immédiatement chaque pièce de collection.",
+        "The brief: build an e-commerce site. I chose collectible figurines because I collect them myself. The goal was a clean, intuitive and smooth shopping experience. I drew inspiration from Pop Mart's minimalist visual language, which keeps the focus entirely on each collectible.",
       ),
-      b("Tester tôt le tunnel de commande.", "Test the checkout early."),
     ],
+    choices: [
+      b(
+        "Côté fonctionnalités, le site structure un catalogue varié avec une barre de recherche dynamique qui filtre les figurines instantanément dès la frappe. J'ai conçu une fiche produit immersive (visuels grand format, spécifications techniques, matière, sélecteur rapide) et un tunnel d'ajout au panier direct pour minimiser les étapes avant la commande.",
+        "The shop features a diverse collectible catalog equipped with a live search bar that filters products in real time as the user types. I designed a focused product page (high-resolution zoom, material specs, instant quantity selector) and an effortless cart flow to minimize friction from discovery to checkout.",
+      ),
+      b(
+        "Un univers graphique qui associe la douceur d'un rose saumon à la clarté d'un blanc cassé, pour une expérience pop et chaleureuse sans jamais surcharger la lecture des produits.",
+        "A visual identity blending a soft salmon pink with crisp off-white tones, creating an inviting pop universe while keeping the focus on collectible details.",
+      ),
+    ],
+    logo: "/projects/popfig/cover.png",
+    colors: [
+      ["Salmon Pink", "#FFBCB3"],
+      ["Off-White", "#F8F8F8"],
+      ["Carbon Black", "#1A1A1A"],
+    ],
+    fonts: ["Bebas Neue", "Work Sans"],
     board: {
       src: "/projects/popfig/figma-board.jpg",
-      alt: "Pop Fig — Board Figma & Système graphique",
-      title: b(
-        "Système visuel & Collections de figurines",
-        "Visual System & Figurine Collections",
+      alt: "PopFig — Board Figma & système graphique",
+      caption: b(
+        "Le board Figma : système visuel et collections",
+        "The Figma board: visual system and collections",
       ),
-      subtitle: b(
-        "Écosystème Figma · Univers Bearbrick, KAWS, Labubu & Pop Mart",
-        "Figma ecosystem · Bearbrick, KAWS, Labubu & Pop Mart world",
-      ),
-      desc: b(
-        "Direction artistique contrastée sur fond pêche poudré : palette pastel, typographie de caractère, moodboard de figurines d'art et composants e-commerce réutilisables.",
-        "Contrasting art direction on a soft peach background: pastel palette, bold typography, art toy moodboard, and reusable e-commerce UI components.",
-      ),
-      badge: "Figma Design System",
     },
     screens: [
       {
         src: "/projects/popfig/screen-catalog.png",
-        alt: "Pop Fig — Catalogue & Nouveautés",
+        alt: "PopFig — Catalogue & Nouveautés",
         aspect: "desktop",
-        title: b("01 / Catalogue & Nouveautés", "01 / Catalog & New arrivals"),
-        desc: b(
-          "Grille épurée valorisant les pièces de collection (Skullpanda, Dimoo, KAWS, Bearbrick) avec micro-interactions au survol et call-to-actions doux.",
-          "Clean grid spotlighting collectible figures (Skullpanda, Dimoo, KAWS, Bearbrick) with interactive hover states and soft CTAs.",
-        ),
+        caption: b("Catalogue & nouveautés", "Catalog & new arrivals"),
       },
       {
         src: "/projects/popfig/screen-product.jpg",
-        alt: "Pop Fig — Fiche produit BE@RBRICK Arcane Jinx",
+        alt: "PopFig — Fiche produit",
         aspect: "desktop",
-        title: b(
-          "02 / Fiche produit & Spécifications",
-          "02 / Product page & Specs",
-        ),
-        desc: b(
-          "Présentation immersive avec galerie multi-vues, détails techniques (taille 70cm, ABS), repères de rareté et bouton d'ajout au panier direct.",
-          "Immersive showcase with multi-angle gallery, technical specs (70cm height, ABS), rarity tags, and one-click add to cart.",
-        ),
+        caption: b("Fiche produit & spécifications", "Product page & specs"),
       },
       {
         src: "/projects/popfig/screen-cart.png",
-        alt: "Pop Fig — Panier & Tunnel d'achat",
+        alt: "PopFig — Panier & Tunnel d'achat",
         aspect: "desktop",
-        title: b("03 / Panier & Tunnel d'achat", "03 / Cart & Checkout flow"),
-        desc: b(
-          "Tunnel épuré sur fond rose poudré avec récapitulatif détaillé des pièces, application instantanée de code promo et calcul transparent du total.",
-          "Refined checkout flow on powdered blush background featuring clear item breakdown, instant promo coupon field, and transparent totals.",
-        ),
+        caption: b("Panier & tunnel d'achat", "Cart & checkout flow"),
       },
     ],
+    result: b(
+      "Mon tout premier site e-commerce conçu et intégré sous WordPress (WooCommerce et Elementor Pro). Ce projet m'a permis de relier concrètement l'UX et l'UI : structurer la recherche en temps réel, optimiser le parcours d'achat et concevoir une fiche produit claire, tout en respectant une identité visuelle affirmée.",
+      "My very first e-commerce store, designed and built on WordPress (WooCommerce and Elementor Pro). It bridged UX research with practical UI execution: structuring live filtering, streamlining the buying journey, and designing intuitive product pages within a cohesive brand identity.",
+    ),
   },
   {
     slug: "sushilin",
-    coverSrc: "/projects/sushilin/screen-hero.png",
     id: "03",
     title: "Sushi Lin",
-    cat: "web",
-    year: "2024",
-    bg: "#1B2457",
-    rect: cardRect(50.75),
-    coverExt: "png",
-    coverFit: "contain",
-    tags: b("Refonte · Site restaurant", "Redesign · Restaurant website"),
-    span: "md:col-span-5 md:col-start-8 md:-mt-10",
-    aspect: "aspect-square",
-    speed: -0.02,
-    role: b(
-      "Webdesigner — refonte, mobile-first & menu digital",
-      "Webdesigner — redesign, mobile-first & digital menu",
+    year: "2026",
+    bg: "#1E2442",
+    coverSrc: "/projects/sushilin/screen-hero.png",
+    tags: b(
+      "Refonte webdesign & e-commerce restauration",
+      "E-commerce redesign & restaurant UI",
     ),
-    context: b(
-      "Refonte du site d'un restaurant japonais : la majorité des visites viennent du mobile, juste avant de réserver.",
-      "Redesign of a Japanese restaurant's website: most visits come from mobile, right before booking.",
+    summary: b(
+      "Refonte proactive du parcours de commande à emporter, cross-selling, espace d'administration et emails transactionnels.",
+      "Proactive redesign of online takeout ordering, cross-selling modules, admin dashboard, and transactional emails.",
     ),
-    problem: b(
-      "Un ancien site lent, un menu en PDF illisible sur téléphone et aucune réservation en ligne.",
-      "A slow old site, a PDF menu unreadable on phones and no online booking.",
+    role: b("UX/UI & Webdesigner", "UX/UI & Webdesigner"),
+    team: b("Solo", "Solo"),
+    duration: b(
+      "1 semaine · projet proactif (2026)",
+      "1 week · proactive project (2026)",
     ),
-    solution: b(
-      "Un menu digital filtrable, un bouton de réservation toujours visible et une identité élégante bleu nuit / rose.",
-      "A filterable digital menu, an always-visible booking button and an elegant navy / pink identity.",
-    ),
-    palette: ["#1B2457", "#E2457A", "#FFFFFF", "#0E1330"],
-    fonts: ["Playfair Display", "Urbanist"],
-    takeaways: [
+    tools: "Figma · IA (Antigravity)",
+    link: {
+      href: "https://mickln.github.io/sushi_lin/",
+      label: b("Voir le site en ligne", "Visit live site"),
+    },
+    context: [
       b(
-        "Le mobile-first change la hiérarchie du contenu.",
-        "Mobile-first changes content hierarchy.",
-      ),
-      b(
-        "Un menu lisible vaut mieux que de belles photos.",
-        "A readable menu beats beautiful photos.",
+        "Aucun brief : refonte complète pour le restaurant japonais Sushi Lin (Les Clayes-sous-Bois), partie de ma propre initiative. L'objectif était de moderniser leur présence en ligne et de fluidifier la commande à emporter avec un parcours de conversion épuré, pour éviter que les clients ne se perdent dans le catalogue. Interface, backend et mentions légales inclus, le tout réalisé en une semaine.",
+        "No brief: a complete redesign for the Japanese restaurant Sushi Lin (Les Clayes-sous-Bois), started on my own initiative. The goal was to modernise their online presence and streamline takeout ordering with a clean conversion flow, so customers don't get lost in the catalogue. Front end, backend and legal notices included, all done in one week.",
       ),
     ],
-    board: {
-      src: "/projects/sushilin/screen-hero.png",
-      alt: "Sushi Lin — Direction artistique & Accueil",
-      title: b(
-        "Direction artistique & Accueil immersif",
-        "Art Direction & Immersive Landing",
+    choices: [
+      b(
+        "Conception mobile-first avec navigation rapide par catégories et pastilles portions claires. Intégration d'un module de cross-selling au moment du panier (« Pour accompagner votre repas ») pour suggérer des accompagnements (boissons, raviolis gyoza) et augmenter le panier moyen. Le site intègre également la réservation de table en ligne et la génération automatique d'un email de confirmation détaillé pour le client et le restaurant.",
+        "Designed with a mobile-first philosophy featuring intuitive category carousels and clear portion badges. Integrated a dedicated cross-selling module at checkout to recommend drink and side pairings, alongside online table reservations and automated confirmation emails.",
       ),
-      subtitle: b(
-        "Refonte Web & Mobile · Restaurant japonais aux Clayes-sous-Bois",
-        "Web & Mobile redesign · Japanese restaurant in Les Clayes-sous-Bois",
+      b(
+        "Une palette de couleurs directement inspirée de la salle du restaurant et de leur carte (Bleu Nuit indigo, Rose poudré et Blanc riz), associant tradition japonaise et modernité épurée.",
+        "A color palette directly inspired by the restaurant interior and printed menu (Midnight Indigo, Powder Pink, and Rice White), paired with traditional Japanese typography.",
       ),
-      desc: b(
-        "Hero header photographique en clair-obscur, typographie japonaise verticale « 絶品お料理 » et call-to-actions prioritaires vers la commande à emporter et la réservation.",
-        "Moody photographic hero header, vertical Japanese typography « 絶品お料理 », and high-priority CTAs for take-away ordering and table reservations.",
-      ),
-      badge: "Web & Mobile Ecosystem",
-    },
+    ],
+    logo: "/projects/sushilin/logo-badge.png",
+    colors: [
+      ["Indigo Dark", "#1E2442"],
+      ["Powder Pink", "#FFD2E5"],
+      ["Rice White", "#FDFBFA"],
+    ],
+    fonts: ["Shippori Mincho", "Outfit"],
     screens: [
       {
         src: "/projects/sushilin/mobile-catalog.png",
         alt: "Sushi Lin — Menu digital mobile & Réductions",
         aspect: "mobile",
-        title: b(
-          "01 / Menu mobile-first & Remise à emporter",
-          "01 / Mobile-first menu & Take-away discount",
-        ),
-        desc: b(
-          "Navigation tactile par catégories horizontales, mise en avant du bandeau -10% immédiat et cartes plats détaillant portions et allergènes.",
-          "Touch navigation with horizontal category tabs, -10% discount banner, and dish cards specifying portion sizes and allergens.",
+        caption: b(
+          "Menu mobile-first & remise à emporter",
+          "Mobile-first menu & takeaway discount",
         ),
       },
       {
         src: "/projects/sushilin/mobile-cart-crossell.png",
         alt: "Sushi Lin — Panier mobile & Suggestions gourmandes",
         aspect: "mobile",
-        title: b(
-          "02 / Panier interactif & Ventes croisées",
-          "02 / Interactive cart & Cross-selling",
-        ),
-        desc: b(
-          "Tiroir panier rétractable avec carrousel de compléments (boissons, gyozas), calcul en temps réel de la remise -10% et bouton de validation immédiat.",
-          "Sliding cart drawer with cross-sell suggestions (drinks, gyozas), real-time 10% discount calculation, and prominent checkout CTA.",
+        caption: b(
+          "Panier interactif & ventes croisées",
+          "Interactive cart & cross-selling",
         ),
       },
       {
         src: "/projects/sushilin/email-confirmation.png",
         alt: "Sushi Lin — Reçu & Confirmation de commande",
         aspect: "mobile",
-        title: b(
-          "03 / Reçu de commande & Suivi de retrait",
-          "03 / Order receipt & Pickup confirmation",
-        ),
-        desc: b(
-          "Ticket clair et rassurant : numéro d'ordre, heure précise de retrait, ventilation des plats, options de sauces choisies et coordonnées du restaurant.",
-          "Clean order ticket: order ID, exact pickup time slot, line items breakdown, sauce choices, and restaurant contact details.",
+        caption: b(
+          "Reçu de commande & suivi de retrait",
+          "Order receipt & pickup confirmation",
         ),
       },
       {
         src: "/projects/sushilin/screen-menu.png",
         alt: "Sushi Lin — Carte desktop & Filtrage rapide",
         aspect: "desktop",
-        title: b(
-          "04 / Carte desktop & Navigation par catégories",
-          "04 / Desktop menu & Category filtering",
-        ),
-        desc: b(
-          "Sidebar latérale organisant 235 références en catégories clés (Entrées, Menus, Sushis, Makis...) avec recherche rapide et ajouts instantanés.",
-          "Sidebar indexing 235 menu items into key categories (Starters, Menus, Sushi, Rolls...) with fast category switching and quick adds.",
+        caption: b(
+          "Carte desktop & navigation par catégories",
+          "Desktop menu & category filtering",
         ),
       },
       {
         src: "/projects/sushilin/screen-reservation.png",
         alt: "Sushi Lin — Réservation de table en ligne",
         aspect: "desktop",
-        title: b(
-          "05 / Réservation de table en direct",
-          "05 / Direct online table booking",
-        ),
-        desc: b(
-          "Formulaire épuré réduisant l'abandon : choix de la date, créneau midi/soir, nombre de couverts et demandes particulières en un écran.",
-          "Frictionless booking form: date picker, lunch/dinner slot selector, party size, and dietary notes in a clean single step.",
+        caption: b(
+          "Réservation de table en direct",
+          "Direct online table booking",
         ),
       },
       {
         src: "/projects/sushilin/screen-location.png",
         alt: "Sushi Lin — Horaires, Accès & Contact",
         aspect: "desktop",
-        title: b(
-          "06 / Horaires, Accès & Informations pratiques",
-          "06 / Hours, Directions & Practical info",
-        ),
-        desc: b(
-          "Triptyque d'informations essentielles (ouverture 7j/7, commandes téléphoniques, adresse) accompagné d'une carte interactive Google Maps.",
-          "Three-pillar practical block (open 7 days a week, phone orders, street address) paired with interactive Google Maps integration.",
+        caption: b(
+          "Horaires, accès & informations pratiques",
+          "Hours, directions & practical info",
         ),
       },
     ],
+    result: b(
+      "Développement de l'interface et intégration d'un espace d'administration permettant au restaurateur de modifier les prix, ajouter des plats et gérer les fermetures exceptionnelles. Pour la partie backend (domaine qui m'était inconnu), j'ai travaillé avec l'assistance d'outils IA (Antigravity) pour structurer la logique de données. Des tests utilisateurs ont ensuite permis de valider la fluidité du tunnel d'achat.",
+      "Built the interface and a custom admin dashboard that lets the restaurant owner edit prices, add dishes and manage exceptional closures. For the backend, a domain that was new to me, I worked with AI tools (Antigravity) to structure the data logic. User testing then validated the smoothness of the ordering flow.",
+    ),
   },
   {
     slug: "notion",
-    coverSrc: "/projects/notion/assiette-banner.jpg",
     id: "04",
     title: "Notion Workspaces",
-    cat: "nocode",
-    year: "2024",
+    year: "2026",
     bg: "#FFFFFF",
-    rect: cardRect(74.35),
-    coverExt: "svg",
-    light: true,
-    tags: b("Systèmes · Templates", "Systems · Templates"),
-    span: "md:col-span-6 md:col-start-4 md:mt-16",
-    aspect: "aspect-[16/10]",
-    speed: 0.05,
-    role: b(
-      "Concepteur no-code — architecture & templates",
-      "No-code builder — architecture & templates",
+    coverSrc: "/projects/notion/assiette-banner.jpg",
+    tags: b(
+      "Templates Notion & systèmes no-code",
+      "Notion templates & no-code systems",
     ),
-    context: b(
-      "Une série d’espaces Notion pour organiser études, projets et vie perso, publiés sur mon profil Notion.",
-      "A series of Notion workspaces to organise studies, projects and personal life, published on my Notion profile.",
+    summary: b(
+      "Templates Notion modulaires conçus pour le suivi nutritionnel et la gamification de Street Art.",
+      "Modular Notion templates engineered for daily nutrition tracking and Street Art collection gamification.",
     ),
-    problem: b(
-      "Des espaces vite désordonnés, des informations dupliquées et des pages impossibles à maintenir.",
-      "Workspaces that get messy fast, duplicated data and pages impossible to maintain.",
-    ),
-    solution: b(
-      "Des bases de données relationnelles, des formules et des vues filtrées pour un système modulaire et durable.",
-      "Relational databases, formulas and filtered views for a modular, lasting system.",
-    ),
-    palette: ["#FFFFFF", "#191919", "#787774", "#F1F1EF"],
-    fonts: ["Inter", "Geist Mono"],
-    takeaways: [
+    role: b("No-Code Designer", "No-Code Designer"),
+    team: b("Solo", "Solo"),
+    duration: b("Projets personnels (2026)", "Personal projects (2026)"),
+    tools: "Notion",
+    link: {
+      href: LINKS.notion,
+      label: b("Voir mon profil Notion", "View Notion profile"),
+    },
+    context: [
       b(
-        "Le no-code est d'abord de l'architecture d'information.",
-        "No-code is information architecture first.",
-      ),
-      b(
-        "Documenter un template, c’est le rendre utilisable.",
-        "Documenting a template makes it usable.",
+        "Passionné par l'écosystème Notion, je conçois des templates pour structurer mes habitudes, mes loisirs et mon quotidien. Chaque workspace est pensé pour fonctionner à 100 % sur le plan gratuit de Notion (sans extension payante ni abonnement IA), afin de rester léger, accessible et duplicable en un clic.",
+        "Passionate about Notion, I design templates to structure personal habits, daily routines, and hobbies. Each workspace is intentionally built to operate 100% on Notion's free plan, requiring zero paid add-ons or AI subscriptions, making them lightweight, accessible, and instantly duplicable.",
       ),
     ],
+    choices: [],
     templates: [
       {
         id: "assiette",
         title: "Mon Assiette",
-        subtitle: b(
-          "Suivi de poids & architecture de l'assiette",
-          "Weight tracking & plate architecture",
+        desc: b(
+          "Un système complet pour gérer son alimentation au quotidien (perte, prise de masse ou maintien). Il enregistre les repas par moment de la journée, utilise des formules pour calculer automatiquement les calories et les macronutriments (protéines, glucides, lipides, fibres) par rapport aux quotas cibles, et suit l'évolution quotidienne du poids.",
+          "A structured food logging system designed for weight management (loss, gain, or maintenance). It records meals across key time slots, uses dynamic formulas to calculate calories and macronutrients (proteins, carbs, fats, fibers) against target quotas, and tracks weight trends over time.",
         ),
-        banner: "/projects/notion/assiette-banner.jpg",
         items: [
           {
             src: "/projects/notion/assiette-journal.png",
-            alt: "Journal de bord",
+            alt: "Mon Assiette — Journal de bord",
             title: b("Journal de bord quotidien", "Daily food journal"),
-            desc: b(
-              "Suivi granulaire par repas (petit-déjeuner, déjeuner, collation, dîner) avec calcul automatique des calories, protéines, glucides, lipides et fibres.",
-              "Granular meal tracking (breakfast, lunch, snack, dinner) with automated calculation of calories, protein, carbs, fat and fiber.",
-            ),
             span: "md:col-span-12",
           },
           {
             src: "/projects/notion/assiette-quotas.png",
-            alt: "Quotas nutritionnels",
+            alt: "Mon Assiette — Quotas nutritionnels",
             title: b("Quotas & validation", "Quotas & validation"),
-            desc: b(
-              "Jauge de progression quotidienne et validation automatique des cibles en kcal et macronutriments.",
-              "Daily progress bar and automatic validation of kcal and macronutrient targets.",
-            ),
             span: "md:col-span-6",
           },
           {
             src: "/projects/notion/assiette-evolution.png",
-            alt: "Évolution du poids",
+            alt: "Mon Assiette — Évolution du poids",
             title: b("Évolution & dynamique", "Evolution & momentum"),
-            desc: b(
-              "Analyse comparative quotidienne et globale pour identifier la dynamique de progression.",
-              "Daily and cumulative comparative analysis to gauge progress momentum.",
-            ),
             span: "md:col-span-6",
           },
           {
             src: "/projects/notion/assiette-references.png",
-            alt: "Base de données Références",
+            alt: "Mon Assiette — Base de données Références",
             title: b("Base de données Références", "Reference food database"),
-            desc: b(
-              "Catalogue relationnel des aliments, catégories (légumes, féculents, protéines), types (végétal/animal) et valeurs nutritionnelles aux 100g.",
-              "Relational food database indexing categories, types (plant/animal) and 100g nutritional values.",
-            ),
             span: "md:col-span-12",
           },
         ],
       },
       {
         id: "invaders",
-        title: "Pixel Art Collection",
-        subtitle: b(
-          "Collection indépendante du jeu Flash Invaders & succès",
-          "Independent Flash Invaders game collection & achievements",
+        title: "Invaders",
+        desc: b(
+          "Un espace dédié au recensement des mosaïques urbaines de l'artiste Invader. En plus de documenter les œuvres flashées avec leurs caractéristiques (points, ville, date), le dashboard intègre un système de succès déblocables, des jauges de complétion et des grades qui évoluent selon le score total.",
+          "An urban mosaic tracking workspace inspired by the street artist Invader. Beyond cataloging photographed artworks with metadata (points, city, date), the dashboard introduces customized unlockable achievements, completion progress gauges, and tiered player ranks based on the global score.",
         ),
-        banner: "/projects/notion/invaders-banner.jpg",
         items: [
           {
             src: "/projects/notion/invaders-dashboard.png",
-            alt: "Invaders Dashboard",
+            alt: "Invaders — Dashboard",
             title: b(
-              "Dashboard complet de collection & succès",
-              "Comprehensive collection & achievement dashboard",
-            ),
-            desc: b(
-              "Architecture complète combinant le profil joueur ML (rang pilote, score global, villes conquises), la galerie visuelle des Invaders capturés et le système de succès débloquables.",
-              "Full system combining ML player profile (pilot rank, total score, conquered cities), visual gallery of captured Invaders and unlockable achievements.",
+              "Dashboard de collection & succès",
+              "Collection & achievement dashboard",
             ),
             span: "md:col-span-12",
           },
         ],
       },
     ],
+    result: b(
+      "Ces deux templates reposent sur des bases de données interconnectées (Relations & Rollups) et des formules conditionnelles pour automatiser les calculs sans aucun outil payant. Cette pratique m'a permis de perfectionner ma vision de l'architecture de données, de l'ergonomie de saisie et de la clarté d'information.",
+      "Both workspaces leverage relational databases (Relations & Rollups) combined with conditional formulas to compute progress without external tools. This practice deepened my understanding of data architecture, friction-free input flows, and clean information hierarchy.",
+    ),
   },
 ]
 
-
-function Cover({
-  p,
-  className = "",
-  fit,
-}: {
-  p: Project
-  className?: string
-  fit?: "cover" | "contain"
-}) {
-  const isSvg = !p.coverSrc && p.coverExt === "svg"
-  const actualFit = p.coverSrc
-    ? "cover"
-    : (fit ?? p.coverFit ?? (isSvg ? "contain" : "cover"))
+function Cover({ p, className = "" }: { p: Project; className?: string }) {
   return (
     <div
       className={`overflow-hidden ${
@@ -1090,23 +881,11 @@ function Cover({
       } ${className}`}
       style={{ background: p.bg }}
     >
-      <Img
-        src={p.coverSrc ?? `/projects/${p.slug}/cover.${p.coverExt}`}
+      <img
+        src={p.coverSrc}
         alt={p.title}
-        className={`absolute inset-0 h-full w-full ${
-          actualFit === "contain"
-            ? "object-contain p-6 md:p-10"
-            : "object-cover object-top"
-        }`}
-        fallback={
-          <Crop
-            src={projectsShot}
-            rect={p.rect}
-            ratio={0.666}
-            alt={p.title}
-            className="absolute inset-0"
-          />
-        }
+        loading="lazy"
+        className="absolute inset-0 h-full w-full object-cover object-top"
       />
     </div>
   )
@@ -1536,27 +1315,110 @@ function Projects({ open }: { open: (p: Project) => void }) {
 /* ---------- Case study ---------- */
 
 const caseLabel = "font-mono text-[11px] uppercase tracking-[0.12em] text-muted"
+const caseText = "text-xl md:text-2xl leading-snug tracking-tight max-w-3xl"
 
-function Block({
-  n,
-  title,
-  children,
+// Black or paper text, whichever reads better on a swatch
+const ink = (hex: string) => {
+  const [R, G, B] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16))
+  return R * 0.299 + G * 0.587 + B * 0.114 > 150 ? "#1a1915" : "#f4f3ef"
+}
+
+type Zoom = { src: string; alt: string; title?: string }
+
+// One label per step, kept in view on the left while its content scrolls
+function Step({ label, children }: { label: T; children: ReactNode }) {
+  const t = useT()
+  return (
+    <section className="mt-24 grid gap-6 md:mt-36 md:grid-cols-12">
+      <p className={`${caseLabel} md:col-span-3 md:sticky md:top-24 md:self-start`}>
+        {t(label)}
+      </p>
+      <div className="grid gap-10 md:col-span-9">{children}</div>
+    </section>
+  )
+}
+
+// A screenshot that opens full screen: a real button, so keyboard users can zoom too
+function Shot({
+  src,
+  alt,
+  caption,
+  onZoom,
+  className = "",
 }: {
-  n: string
-  title: T
-  children: ReactNode
+  src: string
+  alt: string
+  caption?: T
+  onZoom: () => void
+  className?: string
 }) {
   const t = useT()
   return (
-    <section className="grid md:grid-cols-12 gap-6 border-t border-line pt-6 mt-20">
-      <div className="md:col-span-3">
-        <p className={caseLabel}>{n}</p>
-        <h3 className="mt-2 text-2xl font-bold uppercase tracking-[-0.03em]">
-          {t(title)}
-        </h3>
-      </div>
-      <div className="md:col-span-9">{children}</div>
-    </section>
+    <figure className={className}>
+      <button
+        type="button"
+        onClick={onZoom}
+        aria-label={`${t(b("Agrandir", "Enlarge"))} : ${alt}`}
+        className="group relative block w-full cursor-zoom-in overflow-hidden bg-fg/[0.04]"
+      >
+        <img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.01]"
+        />
+        <span className="pointer-events-none absolute bottom-3 right-3 bg-carbon/80 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-paper opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+          {t(b("Agrandir +", "Enlarge +"))}
+        </span>
+      </button>
+      {caption && <figcaption className={`mt-3 ${caseLabel}`}>{t(caption)}</figcaption>}
+    </figure>
+  )
+}
+
+// Consecutive screens of the same kind share a row: phones side by side, desktops in pairs
+function ScreenRuns({
+  screens,
+  zoomTo,
+}: {
+  screens: ProjectScreen[]
+  zoomTo: (z: Zoom) => void
+}) {
+  const t = useT()
+  const runs = screens.reduce<{ mobile: boolean; items: ProjectScreen[] }[]>(
+    (acc, s) => {
+      const mobile = s.aspect === "mobile"
+      const last = acc[acc.length - 1]
+      if (last && last.mobile === mobile) last.items.push(s)
+      else acc.push({ mobile, items: [s] })
+      return acc
+    },
+    [],
+  )
+  return (
+    <>
+      {runs.map((run, r) => (
+        <div
+          key={r}
+          className={
+            run.mobile
+              ? "grid grid-cols-2 gap-6 md:grid-cols-3"
+              : "grid gap-6 md:grid-cols-2"
+          }
+        >
+          {run.items.map((s, i) => (
+            <Shot
+              key={s.src}
+              src={s.src}
+              alt={s.alt}
+              caption={s.caption}
+              className={!run.mobile && i === 0 && run.items.length % 2 ? "md:col-span-2" : ""}
+              onZoom={() => zoomTo({ src: s.src, alt: s.alt, title: t(s.caption) })}
+            />
+          ))}
+        </div>
+      ))}
+    </>
   )
 }
 
@@ -1571,16 +1433,16 @@ function CaseStudy({
 }) {
   const t = useT()
   const ref = useRef<HTMLDivElement>(null)
-  const [zoomImage, setZoomImage] = useState<{
-    src: string
-    alt: string
-    title?: string
-  } | null>(null)
+  const closeBtn = useRef<HTMLButtonElement>(null)
+  const [zoomImage, setZoomImage] = useState<Zoom | null>(null)
   useEffect(() => {
     if (!p) return
     ref.current?.scrollTo(0, 0)
     document.body.style.overflow = "hidden"
+    // Keyboard users land in the panel instead of on the page behind it
+    const f = requestAnimationFrame(() => closeBtn.current?.focus({ preventScroll: true }))
     return () => {
+      cancelAnimationFrame(f)
       document.body.style.overflow = ""
     }
   }, [p])
@@ -1594,8 +1456,6 @@ function CaseStudy({
     window.addEventListener("keydown", k)
     return () => window.removeEventListener("keydown", k)
   }, [p, onClose, zoomImage])
-
-  const label = caseLabel
 
   return (
     <div
@@ -1614,17 +1474,17 @@ function CaseStudy({
         ref={ref}
         role="dialog"
         aria-modal="true"
-        className={`absolute inset-y-0 right-0 w-full lg:w-[92vw] overflow-y-auto bg-bg text-fg transition-transform duration-700 ease-[cubic-bezier(.7,0,.2,1)] ${
+        aria-label={p?.title}
+        className={`absolute inset-y-0 right-0 w-full overflow-y-auto bg-bg text-fg transition-transform duration-700 ease-[cubic-bezier(.7,0,.2,1)] ${
           p ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {p && (
           <>
             <div className="sticky top-0 z-10 flex h-14 items-center justify-between border-b border-line bg-bg/85 backdrop-blur-md px-5 md:px-14 font-mono text-[11px] uppercase tracking-[0.12em]">
-              <span>
-                {p.id} / {p.title}
-              </span>
+              <span>{p.title}</span>
               <button
+                ref={closeBtn}
                 onClick={onClose}
                 className="flex items-center gap-2 hover:text-signal"
               >
@@ -1634,398 +1494,161 @@ function CaseStudy({
             </div>
 
             <div className="px-5 md:px-14 pt-12 pb-24">
-              <div className="grid md:grid-cols-12 gap-6 items-end">
-                <div className="md:col-span-8">
-                  <p className={label}>
-                    {t(p.tags)} · {p.year}
+              <h2 className="text-[clamp(3rem,10vw,9rem)] font-bold uppercase leading-[0.85] tracking-[-0.06em]">
+                {p.title}
+              </h2>
+
+              <div className="mt-8 grid items-end gap-8 md:grid-cols-12">
+                <div className="md:col-span-7">
+                  <p className="text-[clamp(1.4rem,2.4vw,2.2rem)] leading-tight tracking-[-0.02em]">
+                    {t(p.summary)}
                   </p>
-                  <h2 className="mt-4 text-[clamp(3rem,9vw,8.5rem)] font-bold uppercase leading-[0.85] tracking-[-0.06em]">
-                    {p.title}
-                  </h2>
+                  {p.link && (
+                    <a
+                      href={p.link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-6 inline-flex items-center gap-2 border border-fg/30 px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.12em] transition-colors hover:border-[var(--blue)] hover:bg-[var(--blue)] hover:text-bg"
+                    >
+                      {t(p.link.label)} <Arrow className="h-3.5 w-3.5" />
+                    </a>
+                  )}
                 </div>
-                <dl className="md:col-span-4 grid grid-cols-2 gap-4 font-mono text-[11px] uppercase tracking-[0.12em]">
-                  <div>
-                    <dt className="text-muted">{t(b("Rôle", "Role"))}</dt>
-                    <dd className="mt-1 normal-case tracking-normal text-sm font-sans">
-                      {t(p.role)}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-muted">
-                      {t(b("Catégorie", "Category"))}
-                    </dt>
-                    <dd className="mt-1">{t(catLabel[p.cat])}</dd>
-                  </div>
+                <dl className="grid grid-cols-2 gap-x-6 gap-y-4 md:col-span-5">
+                  {(
+                    [
+                      [b("Rôle", "Role"), t(p.role)],
+                      [b("Équipe", "Team"), t(p.team)],
+                      [b("Durée", "Duration"), t(p.duration)],
+                      [b("Outils", "Tools"), p.tools],
+                    ] as [T, string][]
+                  ).map(([k, v]) => (
+                    <div key={k.fr}>
+                      <dt className={caseLabel}>{t(k)}</dt>
+                      <dd className="mt-1 text-sm">{v}</dd>
+                    </div>
+                  ))}
                 </dl>
               </div>
 
-              <Cover
-                p={p}
-                fit="contain"
-                className="mt-12 aspect-[16/8] w-full"
-              />
+              <Cover p={p} className="mt-12 aspect-[16/8] w-full" />
 
-              <Block n="01" title={b("Contexte & rôle", "Context & role")}>
-                <p className="text-xl md:text-2xl leading-snug tracking-tight max-w-3xl">
-                  {t(p.context)}
-                </p>
-              </Block>
+              <Step label={b("Le contexte", "Context")}>
+                {p.context.map((c) => (
+                  <p key={c.fr} className={caseText}>
+                    {t(c)}
+                  </p>
+                ))}
+              </Step>
 
-              <Block
-                n="02"
-                title={b("Problème & solution", "Problem & solution")}
-              >
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="border border-line p-6">
-                    <p className={label}>{t(b("Problème", "Problem"))}</p>
-                    <p className="mt-4 text-lg leading-relaxed">
-                      {t(p.problem)}
+              {(p.choices.length > 0 || p.colors || p.board) && (
+                <Step label={b("Mes choix", "My choices")}>
+                  {p.choices.map((c) => (
+                    <p key={c.fr} className={caseText}>
+                      {t(c)}
                     </p>
-                  </div>
-                  <div className="bg-fg text-bg p-6">
-                    <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-signal">
-                      Solution
-                    </p>
-                    <p className="mt-4 text-lg leading-relaxed">
-                      {t(p.solution)}
-                    </p>
-                  </div>
-                </div>
-              </Block>
-
-              <Block
-                n="03"
-                title={
-                  p.templates
-                    ? b("Systèmes & Templates", "Systems & Templates")
-                    : p.screens
-                      ? b("Architecture & Écrans", "Architecture & Screens")
-                      : b("Galerie d'écrans", "Screens")
-                }
-              >
-                {p.templates && p.templates.length > 0 ? (
-                  <div className="space-y-16">
-                    {p.templates.map((tpl, idx) => (
-                      <div
-                        key={tpl.id}
-                        className="border border-line bg-fg/[0.02]"
-                      >
-                        <div className="p-6 md:p-8 border-b border-line flex flex-col md:flex-row md:items-end justify-between gap-4">
-                          <div>
-                            <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-signal">
-                              0{idx + 1} / Template
-                            </span>
-                            <h3 className="mt-2 text-2xl md:text-3xl font-bold tracking-tight uppercase">
-                              {tpl.title}
-                            </h3>
-                            <p className="mt-1 text-sm md:text-base text-fg/70 font-mono tracking-tight">
-                              {t(tpl.subtitle)}
-                            </p>
-                          </div>
-                          <span className="self-start md:self-auto font-mono text-[10px] uppercase tracking-[0.14em] px-3 py-1 border border-line bg-bg">
-                            Notion System
-                          </span>
-                        </div>
-
-                        <div className="border-b border-line bg-carbon overflow-hidden">
+                  ))}
+                  {(p.logo || p.colors || p.fonts) && (
+                    <div className="grid gap-6 md:grid-cols-[1fr_1.2fr_1fr]">
+                      {p.logo && (
+                        <div className="aspect-[4/5] overflow-hidden bg-fg/[0.04]">
                           <img
-                            src={tpl.banner}
-                            alt={`${tpl.title} Banner`}
-                            className="w-full object-cover max-h-56"
+                            src={p.logo}
+                            alt={`${p.title} — logo`}
+                            loading="lazy"
+                            className="h-full w-full object-cover"
                           />
                         </div>
-
-                        <div className="p-6 md:p-8">
-                          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                            {tpl.items.map((item, i) => (
-                              <div
-                                key={i}
-                                className={`${item.span || "md:col-span-12"} flex flex-col border border-line bg-bg group`}
-                              >
-                                <div
-                                  className="relative overflow-hidden cursor-zoom-in bg-fg/[0.04]"
-                                  onClick={() =>
-                                    setZoomImage({
-                                      src: item.src,
-                                      alt: item.alt,
-                                      title: `${tpl.title} — ${t(item.title)}`,
-                                    })
-                                  }
-                                >
-                                  <img
-                                    src={item.src}
-                                    alt={item.alt}
-                                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.01]"
-                                    loading="lazy"
-                                  />
-                                  <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-carbon/80 text-paper font-mono text-[10px] uppercase tracking-[0.12em] px-2.5 py-1 backdrop-blur-sm pointer-events-none">
-                                    {t(b("Agrandir +", "Enlarge +"))}
-                                  </div>
-                                </div>
-                                <div className="p-4 border-t border-line">
-                                  <div className="flex items-center justify-between gap-2">
-                                    <h4 className="font-bold text-base tracking-tight">
-                                      {t(item.title)}
-                                    </h4>
-                                    <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
-                                      0{i + 1}
-                                    </span>
-                                  </div>
-                                  {item.desc && (
-                                    <p className="mt-2 text-xs md:text-sm text-fg/70 leading-relaxed font-sans">
-                                      {t(item.desc)}
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-
-                    <div className="border border-line bg-fg text-bg p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-                      <div>
-                        <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-signal">
-                          Templates publics
-                        </p>
-                        <h4 className="mt-1 text-xl font-bold tracking-tight">
-                          {t(
-                            b(
-                              "Retrouvez tous mes templates sur Notion",
-                              "Explore all my templates on Notion",
-                            ),
-                          )}
-                        </h4>
-                        <p className="mt-1 text-xs opacity-75 font-mono">
-                          @mickln_ · Systèmes & Architecture No-code
-                        </p>
-                      </div>
-                      <a
-                        href={LINKS.notion}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-2 border border-bg/40 px-5 py-3 font-mono text-xs uppercase tracking-[0.12em] hover:bg-bg hover:text-fg transition-colors"
-                      >
-                        <span>{t(b("Ouvrir Notion", "Open Notion"))}</span>
-                        <span>↗</span>
-                      </a>
+                      )}
+                      {p.colors && (
+                        <ul className="grid min-h-48 grid-cols-2 grid-rows-[3fr_2fr] gap-3 font-mono text-[11px] uppercase tracking-[0.12em]">
+                          {p.colors.map(([name, hex], i) => (
+                            <li
+                              key={hex}
+                              className={`flex flex-col justify-end gap-1 border border-line p-3 ${
+                                i === 0 ? "col-span-2" : ""
+                              }`}
+                              style={{ background: hex, color: ink(hex) }}
+                            >
+                              <span>{name}</span>
+                              <span>{hex}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      {p.fonts && (
+                        <ul className="flex flex-col justify-between border-t border-line">
+                          {p.fonts.map((f) => (
+                            <li
+                              key={f}
+                              className="flex items-baseline justify-between gap-4 border-b border-line py-4"
+                            >
+                              <span className="text-5xl font-semibold leading-none tracking-tight md:text-6xl">
+                                Aa
+                              </span>
+                              <span className={`${caseLabel} text-right`}>{f}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
-                  </div>
-                ) : p.screens && p.screens.length > 0 ? (
-                  <div className="space-y-12">
-                    {p.board && (
-                      <div className="border border-line bg-fg/[0.02]">
-                        <div className="p-6 md:p-8 border-b border-line flex flex-col md:flex-row md:items-end justify-between gap-4">
-                          <div>
-                            <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-signal">
-                              00 / Architecture
-                            </span>
-                            <h3 className="mt-2 text-2xl md:text-3xl font-bold tracking-tight uppercase">
-                              {t(p.board.title)}
-                            </h3>
-                            {p.board.subtitle && (
-                              <p className="mt-1 text-sm md:text-base text-fg/70 font-mono tracking-tight">
-                                {t(p.board.subtitle)}
-                              </p>
-                            )}
-                            {p.board.desc && (
-                              <p className="mt-2 text-xs md:text-sm text-muted max-w-2xl font-sans">
-                                {t(p.board.desc)}
-                              </p>
-                            )}
-                          </div>
-                          <span className="self-start md:self-auto font-mono text-[10px] uppercase tracking-[0.14em] px-3 py-1 border border-line bg-bg">
-                            {p.board.badge ?? "Figma Ecosystem"}
-                          </span>
-                        </div>
+                  )}
+                  {p.credit && <p className={caseLabel}>{t(p.credit)}</p>}
+                  {p.board && (
+                    <Shot
+                      src={p.board.src}
+                      alt={p.board.alt}
+                      caption={p.board.caption}
+                      onZoom={() =>
+                        setZoomImage({
+                          src: p.board!.src,
+                          alt: p.board!.alt,
+                          title: `${p.title} — ${t(p.board!.caption)}`,
+                        })
+                      }
+                    />
+                  )}
+                </Step>
+              )}
 
-                        <div
-                          className="relative overflow-hidden cursor-zoom-in bg-carbon/95 group"
-                          onClick={() =>
+              <Step label={b("Le résultat", "The result")}>
+                {p.screens && <ScreenRuns screens={p.screens} zoomTo={setZoomImage} />}
+                {p.templates?.map((tpl) => (
+                  <div key={tpl.id} className="grid gap-6">
+                    <div>
+                      <h3 className="text-[clamp(1.75rem,4vw,3.25rem)] font-bold uppercase leading-[0.9] tracking-[-0.045em]">
+                        {tpl.title}
+                      </h3>
+                      <p className={`mt-4 ${caseText}`}>{t(tpl.desc)}</p>
+                    </div>
+                    <div className="grid gap-6 md:grid-cols-12">
+                      {tpl.items.map((it) => (
+                        <Shot
+                          key={it.src}
+                          src={it.src}
+                          alt={it.alt}
+                          caption={it.title}
+                          className={it.span ?? "md:col-span-12"}
+                          onZoom={() =>
                             setZoomImage({
-                              src: p.board!.src,
-                              alt: p.board!.alt,
-                              title: `${p.title} — ${t(p.board!.title)}`,
+                              src: it.src,
+                              alt: it.alt,
+                              title: `${tpl.title} — ${t(it.title)}`,
                             })
                           }
-                        >
-                          <img
-                            src={p.board.src}
-                            alt={p.board.alt}
-                            className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.01]"
-                            loading="lazy"
-                          />
-                          <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-carbon/80 text-paper font-mono text-[10px] uppercase tracking-[0.12em] px-2.5 py-1 backdrop-blur-sm pointer-events-none">
-                            {t(b("Agrandir le board +", "Enlarge board +"))}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    <div>
-                      <div className="mb-6 flex items-baseline justify-between border-b border-line pb-3">
-                        <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-signal">
-                          01 / Maquettes & Parcours
-                        </span>
-                        <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
-                          {p.screens.length}{" "}
-                          {t(b("écrans détaillés", "detailed screens"))}
-                        </span>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {p.screens.map((screen, i) => {
-                          const isDesktop = screen.aspect === "desktop"
-                          return (
-                            <div
-                              key={i}
-                              className="flex flex-col border border-line bg-bg group"
-                            >
-                              <div
-                                className={`relative overflow-hidden cursor-zoom-in border-b border-line flex items-center justify-center transition-colors ${
-                                  isDesktop
-                                    ? "p-4 md:p-6 bg-fg/[0.02] dark:bg-fg/[0.03] aspect-[16/11]"
-                                    : "p-6 md:p-8 bg-fg/[0.02] dark:bg-fg/[0.04] min-h-[340px]"
-                                }`}
-                                onClick={() =>
-                                  setZoomImage({
-                                    src: screen.src,
-                                    alt: screen.alt,
-                                    title: `${p.title} — ${t(screen.title)}`,
-                                  })
-                                }
-                              >
-                                <img
-                                  src={screen.src}
-                                  alt={screen.alt}
-                                  className={`w-full transition-transform duration-500 group-hover:scale-[1.02] ${
-                                    isDesktop
-                                      ? "h-full max-h-full object-contain rounded-lg shadow-md border border-line/40"
-                                      : "max-w-[240px] h-auto object-contain rounded-2xl shadow-xl border border-line/50"
-                                  }`}
-                                  loading="lazy"
-                                />
-                                <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-carbon/80 text-paper font-mono text-[10px] uppercase tracking-[0.12em] px-2.5 py-1 backdrop-blur-sm pointer-events-none">
-                                  {t(b("Agrandir +", "Enlarge +"))}
-                                </div>
-                              </div>
-                              <div className="p-5 flex-1 flex flex-col justify-between">
-                                <div>
-                                  <div className="flex items-center justify-between gap-2">
-                                    <h4 className="font-bold text-base tracking-tight">
-                                      {t(screen.title)}
-                                    </h4>
-                                    <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
-                                      0{i + 1}
-                                    </span>
-                                  </div>
-                                  {screen.desc && (
-                                    <p className="mt-2 text-xs md:text-sm text-fg/70 leading-relaxed font-sans">
-                                      {t(screen.desc)}
-                                    </p>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          )
-                        })}
-                      </div>
+                        />
+                      ))}
                     </div>
                   </div>
-                ) : (
-                  <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
-                    {[1, 2, 3, 4].map((n, i) => (
-                      <div
-                        key={n}
-                        className={`${["md:col-span-4", "md:col-span-2", "md:col-span-2", "md:col-span-4"][i]} ${
-                          i % 3 === 0
-                            ? "aspect-[16/10]"
-                            : "aspect-[3/4] md:aspect-auto"
-                        } col-span-2 bg-fg/[0.05] border border-line overflow-hidden cursor-zoom-in group relative`}
-                        onClick={() =>
-                          setZoomImage({
-                            src: `/projects/${p.slug}/screen-${n}.jpg`,
-                            alt: `${p.title} — ${n}`,
-                          })
-                        }
-                      >
-                        <Img
-                          src={`/projects/${p.slug}/screen-${n}.jpg`}
-                          alt={`${p.title} — ${n}`}
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                          fallback={
-                            <div className="h-full min-h-40 grid place-items-center font-mono text-[11px] uppercase tracking-[0.12em] text-muted">
-                              screen-{n}.jpg
-                            </div>
-                          }
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </Block>
-              <Block n="04" title={b("Direction artistique", "Art direction")}>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="grid grid-cols-4 gap-2">
-                    {p.palette.map((c) => (
-                      <div key={c}>
-                        <div
-                          className="aspect-[3/4] border border-line"
-                          style={{ background: c }}
-                        />
-                        <p className="mt-2 font-mono text-[11px] uppercase">
-                          {c}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="space-y-4">
-                    {p.fonts.map((f, i) => (
-                      <div
-                        key={f}
-                        className="border-t border-line pt-3 flex items-baseline justify-between gap-4"
-                      >
-                        <span className="text-5xl font-semibold tracking-tight">
-                          Aa
-                        </span>
-                        <span className="text-right">
-                          <span className="block text-lg font-semibold">
-                            {f}
-                          </span>
-                          <span className={label}>
-                            {i === 0
-                              ? t(b("Titres", "Headings"))
-                              : t(b("Texte", "Body"))}
-                          </span>
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </Block>
-
-              <Block n="05" title={b("Bilan", "Takeaways")}>
-                <ul className="space-y-4">
-                  {p.takeaways.map((k, i) => (
-                    <li
-                      key={i}
-                      className="flex gap-6 text-xl md:text-2xl tracking-tight"
-                    >
-                      <span className="font-mono text-sm text-signal pt-2">
-                        0{i + 1}
-                      </span>
-                      {t(k)}
-                    </li>
-                  ))}
-                </ul>
-              </Block>
+                ))}
+                <p className={`border-t border-line pt-6 ${caseText}`}>{t(p.result)}</p>
+              </Step>
 
               <button
                 onClick={onNext}
                 className="group mt-24 w-full border-t border-line pt-6 flex items-end justify-between text-left"
               >
-                <span className={label}>
+                <span className={caseLabel}>
                   {t(b("Projet suivant", "Next project"))}
                 </span>
                 <span className="text-4xl md:text-7xl font-bold uppercase tracking-[-0.05em] group-hover:text-signal transition-colors">
@@ -2041,6 +1664,7 @@ function CaseStudy({
         <div
           role="dialog"
           aria-modal="true"
+          aria-label={zoomImage.title || zoomImage.alt}
           className="fixed inset-0 z-[100] flex flex-col bg-carbon/95 text-paper backdrop-blur-md p-4 md:p-8"
           onClick={() => setZoomImage(null)}
         >
@@ -2052,6 +1676,7 @@ function CaseStudy({
               {zoomImage.title || zoomImage.alt}
             </span>
             <button
+              autoFocus
               onClick={() => setZoomImage(null)}
               className="flex items-center gap-2 hover:text-signal transition-colors px-3 py-1 border border-paper/30"
             >
