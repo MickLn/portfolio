@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Papier Coton, Encre Ardoise, Orange Signal, Bleu Klein, Azur Brumeux */
+  --color-paper: #f4f3ef;
+  --color-paper2: var(--bg2);
+  --color-carbon: #1a1915;
+  --color-signal: #ff6f0f;
+  --color-klein: #002fa7;
+  --color-azur: #6b8bff;
+  --color-ink: #1a1915;
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --font-sans: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
+}
+
+/* Muted text = solid tint of fg, ≥ 4.5:1 on bg (6.2:1 light, 6.4:1 dark) */
+:root {
+  --bg: #f4f3ef;
+  --bg2: color-mix(in srgb, var(--fg) 5%, var(--bg));
+  --fg: #1a1915;
+  --muted: #5b5a56;
+  --blue: #002fa7;
+  --line: rgb(26 25 21 / 0.14);
+}
+.dark {
+  --bg: #1a1915;
+  --fg: #f4f3ef;
+  --muted: #9d9c98;
+  --blue: #6b8bff;
+  --line: rgb(244 243 239 / 0.12);
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Custom pointer (Souris.svg at 24px + shadow), tip 1px from the top-left corner */
+  --cursor: url("/cursor.svg") 1 1;
+  cursor: var(--cursor), auto;
+}
+/* Over an orange background: blue (azur in dark), set from App.tsx */
+html.cursor-alt { --cursor: url("/cursor-blue.svg") 1 1; }
+html.dark.cursor-alt { --cursor: url("/cursor-azur.svg") 1 1; }
+/* The browser's default styles give these their own cursor. Inherit (not a new value) so the cursor doesn't reload and flash the system one between elements */
+a, button, [role="button"], label, summary {
+  cursor: inherit;
+}
+
+body {
+  background: var(--bg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-signal);
+  color: var(--color-paper);
+}
+
+/* Scroll-triggered reveals */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.9s cubic-bezier(0.2, 0.7, 0.1, 1),
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+.reveal.split {
+  opacity: 1;
+  transform: none;
+  overflow: hidden;
+  padding-bottom: 0.04em;
+}
+.reveal.split > span {
+  transform: translateY(105%);
+  transition: transform 1.1s cubic-bezier(0.7, 0, 0.1, 1);
+  transition-delay: inherit;
+}
+.reveal.split.is-in > span {
+  transform: none;
+}
+
+/* Page curtains */
+.curtains {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+.curtain {
+  position: absolute;
+  inset: 0;
+  transform: translateY(100%);
+}
+.curtains.closing .curtain {
+  animation: curtain-in 0.75s cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+.curtains.opening .curtain {
+  transform: translateY(0);
+  animation: curtain-out 0.9s cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+.curtains.closing .curtain:nth-child(2) { animation-delay: 0.08s; }
+.curtains.closing .curtain:nth-child(3) { animation-delay: 0.16s; }
+.curtains.opening .curtain:nth-child(3) { animation-delay: 0.1s; }
+.curtains.opening .curtain:nth-child(2) { animation-delay: 0.18s; }
+.curtains.opening .curtain:nth-child(1) { animation-delay: 0.26s; }
+.curtains:not(.idle) { pointer-events: all; }
+.curtain-logo { animation: logo-pop 0.9s ease both; }
+
+@keyframes curtain-in {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@keyframes curtain-out {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100%); }
+}
+@keyframes logo-pop {
+  0% { opacity: 0; transform: scale(0.8) rotate(-8deg); }
+  50% { opacity: 1; transform: none; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee { animation: none; }
+  .reveal, .reveal.split > span { transform: none; opacity: 1; transition: none; }
+  .curtain { animation-duration: 0.01s !important; }
+}

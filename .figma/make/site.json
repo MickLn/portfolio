@@ -1,0 +1,15 @@
+{
+  "title": "Mickael LIN - Portfolio",
+  "description": "Portfolio de Mickael LIN, étudiant en Création Digitale & Design d'Interface à l'ESD Paris, à la recherche d'une alternance en UX/UI, webdesign et intégration No-code.",
+  "language": "fr",
+  "icons": {
+    "icon": "/favicon.svg"
+  },
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
