@@ -469,7 +469,7 @@ const b = (fr: string, en: string): T => ({ fr, en })
 const LINKS = {
   email: "mickael.lin.etud@gmail.com",
   linkedin: "https://www.linkedin.com/in/mickael-lin/",
-  cv: "/cv-mickael-lin.pdf",
+  cv: "cv-mickael-lin.pdf",
   notion: "https://www.notion.com/fr/@mickln_",
   strava: "https://www.strava.com/athletes/135239970",
 }
@@ -525,7 +525,7 @@ const projects: Project[] = [
     title: "Pansies",
     year: "2025",
     bg: "#E8DEF8",
-    coverSrc: "/projects/pansies/figma-board.png",
+    coverSrc: "projects/pansies/figma-board.png",
     tags: b("IA vocale & productivité", "AI audio & productivity"),
     summary: b(
       "Assistant vocal IA & organisation de flux de pensées.",
@@ -562,7 +562,7 @@ const projects: Project[] = [
       "Logo, couleurs et typographies : réalisés par une coéquipière.",
       "Logo, colours and typefaces: created by a teammate.",
     ),
-    logo: "/projects/pansies/cover.png",
+    logo: "projects/pansies/cover.png",
     colors: [
       ["Soft Lavender", "#E8DEF8"],
       ["Charcoal Dark", "#1D1B20"],
@@ -571,19 +571,19 @@ const projects: Project[] = [
     fonts: ["Cabinet Grotesk", "Geist Sans"],
     screens: [
       {
-        src: "/projects/pansies/screen-home.png",
+        src: "projects/pansies/screen-home.png",
         alt: "Pansies — Écran d'accueil & Connexion",
         aspect: "mobile",
         caption: b("Accueil & connexion", "Welcome & sign-in"),
       },
       {
-        src: "/projects/pansies/screen-list.jpg",
+        src: "projects/pansies/screen-list.jpg",
         alt: "Pansies — Liste des mémos vocaux",
         aspect: "mobile",
         caption: b("Liste des mémos vocaux", "Voice memos list"),
       },
       {
-        src: "/projects/pansies/screen-player.jpg",
+        src: "projects/pansies/screen-player.jpg",
         alt: "Pansies — Lecteur audio & Transcription",
         aspect: "mobile",
         caption: b("Lecteur & transcription IA", "Player & AI transcription"),
@@ -600,7 +600,7 @@ const projects: Project[] = [
     title: "PopFig",
     year: "2025",
     bg: "#FFBCB3",
-    coverSrc: "/projects/popfig/screen-catalog.png",
+    coverSrc: "projects/popfig/screen-catalog.png",
     tags: b(
       "Webdesign e-commerce & intégration CMS",
       "E-commerce webdesign & CMS integration",
@@ -632,7 +632,7 @@ const projects: Project[] = [
         "A visual identity blending a soft salmon pink with crisp off-white tones, creating an inviting pop universe while keeping the focus on collectible details.",
       ),
     ],
-    logo: "/projects/popfig/cover.png",
+    logo: "projects/popfig/cover.png",
     colors: [
       ["Salmon Pink", "#FFBCB3"],
       ["Off-White", "#F8F8F8"],
@@ -640,7 +640,7 @@ const projects: Project[] = [
     ],
     fonts: ["Bebas Neue", "Work Sans"],
     board: {
-      src: "/projects/popfig/figma-board.jpg",
+      src: "projects/popfig/figma-board.jpg",
       alt: "PopFig — Board Figma & système graphique",
       caption: b(
         "Le board Figma : système visuel et collections",
@@ -649,19 +649,19 @@ const projects: Project[] = [
     },
     screens: [
       {
-        src: "/projects/popfig/screen-catalog.png",
+        src: "projects/popfig/screen-catalog.png",
         alt: "PopFig — Catalogue & Nouveautés",
         aspect: "desktop",
         caption: b("Catalogue & nouveautés", "Catalog & new arrivals"),
       },
       {
-        src: "/projects/popfig/screen-product.jpg",
+        src: "projects/popfig/screen-product.jpg",
         alt: "PopFig — Fiche produit",
         aspect: "desktop",
         caption: b("Fiche produit & spécifications", "Product page & specs"),
       },
       {
-        src: "/projects/popfig/screen-cart.png",
+        src: "projects/popfig/screen-cart.png",
         alt: "PopFig — Panier & Tunnel d'achat",
         aspect: "desktop",
         caption: b("Panier & tunnel d'achat", "Cart & checkout flow"),
@@ -678,7 +678,7 @@ const projects: Project[] = [
     title: "Sushi Lin",
     year: "2026",
     bg: "#1E2442",
-    coverSrc: "/projects/sushilin/screen-hero.png",
+    coverSrc: "projects/sushilin/screen-hero.png",
     tags: b(
       "Refonte webdesign & e-commerce restauration",
       "E-commerce redesign & restaurant UI",
@@ -714,7 +714,7 @@ const projects: Project[] = [
         "A color palette directly inspired by the restaurant interior and printed menu (Midnight Indigo, Powder Pink, and Rice White), paired with traditional Japanese typography.",
       ),
     ],
-    logo: "/projects/sushilin/logo-badge.png",
+    logo: "projects/sushilin/logo-badge.png",
     colors: [
       ["Indigo Dark", "#1E2442"],
       ["Powder Pink", "#FFD2E5"],
@@ -723,7 +723,7 @@ const projects: Project[] = [
     fonts: ["Shippori Mincho", "Outfit"],
     screens: [
       {
-        src: "/projects/sushilin/mobile-catalog.png",
+        src: "projects/sushilin/mobile-catalog.png",
         alt: "Sushi Lin — Menu digital mobile & Réductions",
         aspect: "mobile",
         caption: b(
@@ -732,7 +732,7 @@ const projects: Project[] = [
         ),
       },
       {
-        src: "/projects/sushilin/mobile-cart-crossell.png",
+        src: "projects/sushilin/mobile-cart-crossell.png",
         alt: "Sushi Lin — Panier mobile & Suggestions gourmandes",
         aspect: "mobile",
         caption: b(
@@ -741,7 +741,7 @@ const projects: Project[] = [
         ),
       },
       {
-        src: "/projects/sushilin/email-confirmation.png",
+        src: "projects/sushilin/email-confirmation.png",
         alt: "Sushi Lin — Reçu & Confirmation de commande",
         aspect: "mobile",
         caption: b(
@@ -750,7 +750,7 @@ const projects: Project[] = [
         ),
       },
       {
-        src: "/projects/sushilin/screen-menu.png",
+        src: "projects/sushilin/screen-menu.png",
         alt: "Sushi Lin — Carte desktop & Filtrage rapide",
         aspect: "desktop",
         caption: b(
@@ -759,7 +759,7 @@ const projects: Project[] = [
         ),
       },
       {
-        src: "/projects/sushilin/screen-reservation.png",
+        src: "projects/sushilin/screen-reservation.png",
         alt: "Sushi Lin — Réservation de table en ligne",
         aspect: "desktop",
         caption: b(
@@ -768,7 +768,7 @@ const projects: Project[] = [
         ),
       },
       {
-        src: "/projects/sushilin/screen-location.png",
+        src: "projects/sushilin/screen-location.png",
         alt: "Sushi Lin — Horaires, Accès & Contact",
         aspect: "desktop",
         caption: b(
@@ -788,7 +788,7 @@ const projects: Project[] = [
     title: "Notion Workspaces",
     year: "2026",
     bg: "#FFFFFF",
-    coverSrc: "/projects/notion/assiette-banner.jpg",
+    coverSrc: "projects/notion/assiette-banner.jpg",
     tags: b(
       "Templates Notion & systèmes no-code",
       "Notion templates & no-code systems",
@@ -822,25 +822,25 @@ const projects: Project[] = [
         ),
         items: [
           {
-            src: "/projects/notion/assiette-journal.png",
+            src: "projects/notion/assiette-journal.png",
             alt: "Mon Assiette — Journal de bord",
             title: b("Journal de bord quotidien", "Daily food journal"),
             span: "md:col-span-12",
           },
           {
-            src: "/projects/notion/assiette-quotas.png",
+            src: "projects/notion/assiette-quotas.png",
             alt: "Mon Assiette — Quotas nutritionnels",
             title: b("Quotas & validation", "Quotas & validation"),
             span: "md:col-span-6",
           },
           {
-            src: "/projects/notion/assiette-evolution.png",
+            src: "projects/notion/assiette-evolution.png",
             alt: "Mon Assiette — Évolution du poids",
             title: b("Évolution & dynamique", "Evolution & momentum"),
             span: "md:col-span-6",
           },
           {
-            src: "/projects/notion/assiette-references.png",
+            src: "projects/notion/assiette-references.png",
             alt: "Mon Assiette — Base de données Références",
             title: b("Base de données Références", "Reference food database"),
             span: "md:col-span-12",
@@ -856,7 +856,7 @@ const projects: Project[] = [
         ),
         items: [
           {
-            src: "/projects/notion/invaders-dashboard.png",
+            src: "projects/notion/invaders-dashboard.png",
             alt: "Invaders — Dashboard",
             title: b(
               "Dashboard de collection & succès",
@@ -965,7 +965,7 @@ function Nav({
                 onClick={() => setLang(l)}
                 className={
                   lang === l
-                    ? "text-fg underline underline-offset-4"
+                    ? "text-fg underline decoration-signal underline-offset-4"
                     : "text-muted hover:text-fg"
                 }
               >
@@ -1096,12 +1096,16 @@ function Footer({ go }: { go: Go }) {
   )
 }
 
-const Portrait = ({ className = "" }: { className?: string }) => (
-  <img
-    src="/profile/profile.jpg"
-    alt="Mickael Lin"
-    className={`object-cover object-top ${className}`}
-  />
+const Portrait = ({
+  src = "profile/profile.jpg",
+  alt = "Mickael Lin",
+  className = "",
+}: {
+  src?: string
+  alt?: string
+  className?: string
+}) => (
+  <img src={src} alt={alt} className={`object-cover object-top ${className}`} />
 )
 
 /* ---------- Home ---------- */
@@ -1818,32 +1822,32 @@ function CaseStudy({
 
 const photos = [
   {
-    src: "/about/food-table.jpg",
+    src: "about/food-table.jpg",
     alt: b("Table de restaurant", "Restaurant table"),
   },
   {
-    src: "/about/paris-eiffel.jpg",
+    src: "about/paris-eiffel.jpg",
     alt: b("Paris vu du ciel", "Paris from above"),
   },
-  { src: "/about/sunset-road.jpg", alt: b("Coucher de soleil", "Sunset") },
+  { src: "about/sunset-road.jpg", alt: b("Coucher de soleil", "Sunset") },
   {
-    src: "/about/pool-architecture.jpg",
+    src: "about/pool-architecture.jpg",
     alt: b("Piscine et arches", "Pool and arches"),
   },
   {
-    src: "/about/donburi-karaage.jpg",
+    src: "about/donburi-karaage.jpg",
     alt: b("Donburi karaage", "Karaage donburi"),
   },
   {
-    src: "/about/dessert-gastronomique.jpg",
+    src: "about/dessert-gastronomique.jpg",
     alt: b("Dessert gastronomique", "Gastronomic dessert"),
   },
   {
-    src: "/about/medaille-finisher.jpg",
+    src: "about/medaille-finisher.jpg",
     alt: b("Médaille finisher", "Finisher medal"),
   },
   {
-    src: "/about/running-quais-seine.jpg",
+    src: "about/running-quais-seine.jpg",
     alt: b("Running quais de Seine", "Running along the Seine"),
   },
 ]
@@ -2167,7 +2171,16 @@ function About() {
             </Reveal>
           </div>
           <Reveal delay={200} className="md:col-span-4 md:order-first">
-            <Portrait className="aspect-[4/5] w-full" />
+            <Portrait
+              src="about/portrait-etretat.jpg"
+              alt={t(
+                b(
+                  "Mickael Lin au coucher du soleil à Étretat",
+                  "Mickael Lin at sunset in Étretat",
+                ),
+              )}
+              className="aspect-[4/5] w-full"
+            />
           </Reveal>
         </div>
 
