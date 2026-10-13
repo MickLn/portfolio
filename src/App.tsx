@@ -9,6 +9,7 @@ import {
   type CSSProperties,
   type ReactNode,
 } from "react"
+import { flushSync } from "react-dom"
 
 /* ---------- Utilities ---------- */
 
@@ -1227,7 +1228,11 @@ function Hero({ go }: { go: Go }) {
   )
 }
 
-function Projects({ open }: { open: (p: Project) => void }) {
+function Projects({
+  open,
+}: {
+  open: (p: Project, row?: HTMLElement) => void
+}) {
   const t = useT()
   const [hover, setHover] = useState<number | null>(null)
   const previewRef = useRef<HTMLDivElement>(null)
@@ -1264,14 +1269,18 @@ function Projects({ open }: { open: (p: Project) => void }) {
               className="border-b border-line"
             >
               <button
-                  onClick={() => open(p)}
+                  data-project={p.slug}
+                  onClick={(e) => {
+                    setHover(null)
+                    open(p, e.currentTarget)
+                  }}
                   onMouseEnter={() => setHover(i)}
                   onFocus={() => setHover(i)}
                   onBlur={() => setHover(null)}
                   className="grid w-full grid-cols-12 items-baseline gap-4 py-5 md:py-6 text-left"
                 >
                   <h3 className="col-span-12 md:col-span-7 text-[clamp(1.75rem,4vw,3.25rem)] font-bold uppercase leading-[0.9] tracking-[-0.045em]">
-                    {p.title}
+                    <Words text={p.title} />
                   </h3>
                   <span className="col-span-8 md:col-span-3 font-mono text-[11px] uppercase tracking-[0.12em] text-muted">
                     {t(p.tags)}
@@ -1424,10 +1433,12 @@ function ScreenRuns({
 
 function CaseStudy({
   p,
+  view,
   onClose,
   onNext,
 }: {
   p: Project | null
+  view: View
   onClose: () => void
   onNext: () => void
 }) {
@@ -1435,17 +1446,26 @@ function CaseStudy({
   const ref = useRef<HTMLDivElement>(null)
   const closeBtn = useRef<HTMLButtonElement>(null)
   const [zoomImage, setZoomImage] = useState<Zoom | null>(null)
+  // Layout effect: the title must sit at the top before the transition measures it
+  useLayoutEffect(() => {
+    ref.current?.scrollTo(0, 0)
+  }, [p])
   useEffect(() => {
     if (!p) return
-    ref.current?.scrollTo(0, 0)
     document.body.style.overflow = "hidden"
-    // Keyboard users land in the panel instead of on the page behind it
-    const f = requestAnimationFrame(() => closeBtn.current?.focus({ preventScroll: true }))
     return () => {
-      cancelAnimationFrame(f)
       document.body.style.overflow = ""
     }
   }, [p])
+  const shown = view === "shown"
+  useEffect(() => {
+    // Keyboard users land in the page instead of on the list behind it
+    if (shown) closeBtn.current?.focus({ preventScroll: true })
+  }, [shown])
+  // Everything but the title fades: the title is what travels to and from the list
+  const fade = `transition-[opacity,translate] duration-500 ${
+    shown ? "opacity-100 translate-y-0 delay-100" : "opacity-0 translate-y-4"
+  }`
   useEffect(() => {
     if (!p) return
     const k = (e: KeyboardEvent) => {
@@ -1459,29 +1479,22 @@ function CaseStudy({
 
   return (
     <div
-      aria-hidden={!p}
-      className={`fixed inset-0 z-[80] transition-visibility ${
-        p ? "visible" : "invisible delay-700"
+      ref={ref}
+      role="dialog"
+      aria-modal="true"
+      aria-label={p?.title}
+      aria-hidden={!p || view === "hidden"}
+      className={`fixed inset-0 z-[80] overflow-y-auto bg-bg text-fg ${
+        p && view !== "hidden" ? "visible" : "invisible"
       }`}
     >
-      <div
-        onClick={onClose}
-        className={`absolute inset-0 bg-carbon/60 transition-opacity duration-500 ${
-          p ? "opacity-100" : "opacity-0"
-        }`}
-      />
-      <div
-        ref={ref}
-        role="dialog"
-        aria-modal="true"
-        aria-label={p?.title}
-        className={`absolute inset-y-0 right-0 w-full overflow-y-auto bg-bg text-fg transition-transform duration-700 ease-[cubic-bezier(.7,0,.2,1)] ${
-          p ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
         {p && (
           <>
-            <div className="sticky top-0 z-10 flex h-14 items-center justify-between border-b border-line bg-bg/85 backdrop-blur-md px-5 md:px-14 font-mono text-[11px] uppercase tracking-[0.12em]">
+            <div
+              className={`sticky top-0 z-10 flex h-14 items-center justify-between border-b border-line bg-bg/85 backdrop-blur-md px-5 md:px-14 font-mono text-[11px] uppercase tracking-[0.12em] transition-opacity duration-500 ${
+                shown ? "opacity-100" : "opacity-0"
+              }`}
+            >
               <span>{p.title}</span>
               <button
                 ref={closeBtn}
@@ -1494,10 +1507,14 @@ function CaseStudy({
             </div>
 
             <div className="px-5 md:px-14 pt-12 pb-24">
-              <h2 className="text-[clamp(3rem,10vw,9rem)] font-bold uppercase leading-[0.85] tracking-[-0.06em]">
-                {p.title}
+              <h2
+                data-case-title
+                className="text-[clamp(3rem,10vw,9rem)] font-bold uppercase leading-[0.85] tracking-[-0.06em]"
+              >
+                <Words text={p.title} />
               </h2>
 
+              <div className={fade}>
               <div className="mt-8 grid items-end gap-8 md:grid-cols-12">
                 <div className="md:col-span-7">
                   <p className="text-[clamp(1.4rem,2.4vw,2.2rem)] leading-tight tracking-[-0.02em]">
@@ -1656,10 +1673,10 @@ function CaseStudy({
                   →
                 </span>
               </button>
+              </div>
             </div>
           </>
         )}
-      </div>
       {zoomImage && (
         <div
           role="dialog"
@@ -2138,6 +2155,188 @@ function About() {
   )
 }
 
+/* ---------- Project transition ---------- */
+
+type View = "hidden" | "shown" | "leaving"
+type Box = Record<string, string>
+
+const FLY_MS = 700
+const FLY_EASE = "cubic-bezier(.7,0,.2,1)"
+const FULL: Box = { left: "0px", top: "0px", width: "100vw", height: "100vh" }
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
+const rectBox = (r: DOMRect): Box => ({
+  left: `${r.left}px`,
+  top: `${r.top}px`,
+  width: `${r.width}px`,
+  height: `${r.height}px`,
+})
+// One box per word: a long title wraps differently in the list and on the page, so each word travels on its own
+const wordBoxes = (el: Element | null): Box[] =>
+  [...(el?.querySelectorAll("[data-w]") ?? [])].map((w) => {
+    const r = w.getBoundingClientRect()
+    const c = getComputedStyle(w)
+    return {
+      left: `${r.left}px`,
+      top: `${r.top}px`,
+      fontSize: c.fontSize,
+      letterSpacing: c.letterSpacing,
+    }
+  })
+
+// Title split into words so the project transition can move each one
+function Words({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(" ").map((w, i) => (
+        <Fragment key={i}>
+          {i > 0 && " "}
+          <span data-w>{w}</span>
+        </Fragment>
+      ))}
+    </>
+  )
+}
+
+// A page-coloured band and the title words, drawn above everything and moved between the list row and the page title
+function flight(words: string[], band: Box, at: Box[]) {
+  const layer = document.createElement("div")
+  layer.setAttribute("aria-hidden", "true")
+  const bandEl = document.createElement("div")
+  bandEl.className = "fixed z-[95] bg-bg"
+  Object.assign(bandEl.style, band)
+  const wordEls = words.map((w, i) => {
+    const el = document.createElement("span")
+    el.className =
+      "pointer-events-none fixed z-[96] whitespace-nowrap font-bold uppercase leading-normal text-fg"
+    el.textContent = w
+    Object.assign(el.style, at[i])
+    return el
+  })
+  layer.append(bandEl, ...wordEls)
+  document.body.append(layer)
+  return {
+    move(toBand: Box, toWords: Box[]) {
+      void layer.offsetWidth // start from the placed positions, not from nowhere
+      const tr = (props: string[]) =>
+        props.map((p) => `${p} ${FLY_MS}ms ${FLY_EASE}`).join(", ")
+      bandEl.style.transition = tr(["left", "top", "width", "height"])
+      Object.assign(bandEl.style, toBand)
+      wordEls.forEach((el, i) => {
+        el.style.transition = tr(["left", "top", "font-size", "letter-spacing"])
+        Object.assign(el.style, toWords[i])
+      })
+      return sleep(FLY_MS + 20)
+    },
+    remove: () => layer.remove(),
+  }
+}
+
+const projectFromHash = () =>
+  projects.find((p) => location.hash === `#projet/${p.slug}`) ?? null
+const onScreen = (el: Element) => {
+  const r = el.getBoundingClientRect()
+  return r.bottom > 0 && r.top < window.innerHeight
+}
+
+// The open project page, its #projet/<slug> address, and the transitions between list and page
+function useProjectView() {
+  const [active, setActive] = useState(projectFromHash)
+  const [view, setView] = useState<View>(() =>
+    projectFromHash() ? "shown" : "hidden",
+  )
+  const current = useRef(active)
+  const busy = useRef(false)
+  useLayoutEffect(() => {
+    current.current = active
+  })
+
+  const show = (p: Project | null) => {
+    setActive(p)
+    setView(p ? "shown" : "hidden")
+  }
+  const open = async (p: Project, row?: HTMLElement) => {
+    if (busy.current) return
+    history.pushState({ project: p.slug }, "", `#projet/${p.slug}`)
+    const from = row?.querySelector("h3")
+    if (!row || !from || reduceMotion) return show(p)
+    busy.current = true
+    const fly = flight(
+      p.title.split(" "),
+      rectBox(row.getBoundingClientRect()),
+      wordBoxes(from),
+    )
+    // The page is laid out but invisible, so its title can be measured as the landing spot
+    flushSync(() => {
+      setActive(p)
+      setView("hidden")
+    })
+    await fly.move(FULL, wordBoxes(document.querySelector("[data-case-title]")))
+    flushSync(() => setView("shown"))
+    fly.remove()
+    busy.current = false
+  }
+  // shortcut: a back press during the 0.7 s flight is ignored and the page stays open; queue it if that ever matters
+  const close = async () => {
+    const p = current.current
+    if (!p || busy.current) return
+    const row = document.querySelector<HTMLElement>(`[data-project="${p.slug}"]`)
+    if (!row || !onScreen(row) || reduceMotion) {
+      show(null)
+      row?.focus({ preventScroll: true })
+      return
+    }
+    busy.current = true
+    setView("leaving")
+    await sleep(300)
+    const fly = flight(
+      p.title.split(" "),
+      FULL,
+      wordBoxes(document.querySelector("[data-case-title]")),
+    )
+    flushSync(() => setView("hidden"))
+    await fly.move(rectBox(row.getBoundingClientRect()), wordBoxes(row.querySelector("h3")))
+    flushSync(() => setActive(null))
+    fly.remove()
+    row.focus({ preventScroll: true })
+    busy.current = false
+  }
+  const next = async () => {
+    const p = current.current
+    if (!p || busy.current) return
+    const n = projects[(projects.indexOf(p) + 1) % projects.length]
+    busy.current = true
+    history.replaceState({ project: n.slug }, "", `#projet/${n.slug}`)
+    setView("leaving")
+    await sleep(300)
+    show(n)
+    busy.current = false
+  }
+  // Our close button goes back in history when we added the entry, so it and the browser's back button agree
+  const dismiss = () => {
+    if (history.state?.project) history.back()
+    else {
+      history.replaceState(null, "", location.pathname + location.search)
+      close()
+    }
+  }
+  const reset = () => {
+    if (!current.current) return
+    history.replaceState(null, "", location.pathname + location.search)
+    show(null)
+  }
+  useEffect(() => {
+    // Only refs and state setters are used, so the first render's handlers stay valid
+    const onPop = () => {
+      const p = projectFromHash()
+      if (!p) close()
+      else if (p.slug !== current.current?.slug) show(p)
+    }
+    window.addEventListener("popstate", onPop)
+    return () => window.removeEventListener("popstate", onPop)
+  }, [])
+  return { active, view, open, next, dismiss, reset }
+}
+
 /* ---------- App ---------- */
 
 /* Cursor turns blue when the background under it is orange (CSS can't read what's underneath) */
@@ -2187,8 +2386,7 @@ export default function App() {
   const [phase, setPhase] = useState<Phase>("opening")
   const [dark, setDark] = useState(false)
   const [lang, setLang] = useState<Lang>("fr")
-  const [active, setActive] = useState<Project | null>(null)
-  const closeRef = useRef(() => setActive(null))
+  const project = useProjectView()
   useAdaptiveCursor()
 
   useEffect(() => {
@@ -2204,7 +2402,7 @@ export default function App() {
   }, [])
 
   const go: Go = (p, hash) => {
-    setActive(null)
+    project.reset()
     const scroll = () =>
       hash &&
       document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" })
@@ -2236,7 +2434,7 @@ export default function App() {
           {page === "home" ? (
             <>
               <Hero go={go} />
-              <Projects open={setActive} />
+              <Projects open={project.open} />
               <Tools />
               <Photos />
             </>
@@ -2246,14 +2444,10 @@ export default function App() {
         </main>
         <Footer go={go} />
         <CaseStudy
-          p={active}
-          onClose={closeRef.current}
-          onNext={() =>
-            active &&
-            setActive(
-              projects[(projects.indexOf(active) + 1) % projects.length],
-            )
-          }
+          p={project.active}
+          view={project.view}
+          onClose={project.dismiss}
+          onNext={project.next}
         />
 
         <div aria-hidden className={`curtains ${phase}`}>
