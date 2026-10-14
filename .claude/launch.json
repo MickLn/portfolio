@@ -4,7 +4,14 @@
     {
       "name": "portfolio",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["--yes", "pnpm@9", "dev", "--port", "8443", "--strictPort"],
+      "runtimeArgs": [
+        "--yes",
+        "pnpm@10.34.3",
+        "dev",
+        "--port",
+        "8443",
+        "--strictPort"
+      ],
       "port": 8443
     }
   ]

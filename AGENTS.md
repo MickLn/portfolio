@@ -1,41 +1,35 @@
-# figma-make-app
+# Portfolio — Mickael Lin (guide for AI agents)
 
-React + Vite + Tailwind CSS project running inside Figma Make.
+Read `README.md` (French) before changing anything: architecture, the project JSON schema, commands, publishing flow and rules. This file is the short version.
 
-## Development Server
+## What this is
 
-A Vite development server is **already running** on `$PORT` (default 8443). You don't need to start it manually.
+- A static, bilingual (FR/EN) portfolio: React 19 + TypeScript + Vite 8 + Tailwind CSS v4. No server, no database.
+- Published on GitHub Pages at https://mickln.github.io/portfolio/ (repository `MickLn/portfolio`).
+- Toolchain: pnpm 10.34.3 and Node 22 (`.mise.toml`). Dev server: `pnpm dev` on port 8443 (not started automatically).
 
-- Preview URL: The user can access the running app through the preview panel
-- Hot reload: Changes to source files are reflected immediately
+## Where things are
 
-## Project Structure
+- `src/App.tsx` — the whole site: home, project list, project page and its transition, "Moi" page, UI texts.
+- `src/projects/<slug>.json` — one file per project. Adding a file adds a project; no code change needed.
+- `scripts/check-projects.mjs` — `pnpm check` validates every project file (fields, FR+EN texts, unique ids, images present).
+- `src/index.css` — theme variables (light/dark), custom cursor, global animations.
+- `public/` — images, CV, favicon, cursors. `.figma/make/site.json` — page title, description, indexing.
+- `.github/workflows/deploy.yml` — check + build on every push; publishes only from `main`.
 
-This is the canonical project structure. Start with task-relevant files below. Only follow imports or inspect other files when required, when a documented path is missing, or when the repository contradicts this guide.
+## Rules
 
-- `src/main.tsx` - React entrypoint; imports `src/index.css` and mounts `src/App.tsx` into the `#root` element
-- `src/App.tsx` - Primary application component and the usual starting point for UI work
-- `src/index.css` - Global CSS entrypoint and Tailwind CSS v4 import
-- `index.html` - Vite HTML shell containing the `#root` element and loading `src/main.tsx`
-- `package.json` - Project dependencies and the Vite build, development, preview, and formatting scripts
-- `vite.config.ts` - Vite configuration with React, Tailwind CSS v4, and Figma Make plugins plus the `@` alias for `src`
-- `.mise.toml` - Toolchain versions for Node.js and pnpm
-
-## Dependencies
-
-- Runtime: React 19 and React DOM 19
-- Styling: Tailwind CSS v4 with the `@tailwindcss/vite` plugin
-- Build tooling: Vite 8, TypeScript 5.7, and `@vitejs/plugin-react`
-- Formatting: oxfmt
-
-## Styling
-
-This project uses **Tailwind CSS v4** through the `@tailwindcss/vite` plugin configured in `vite.config.ts`. `src/index.css` imports Tailwind with `@import 'tailwindcss';`. Use Tailwind utility classes directly in JSX and put global CSS or Tailwind v4 theme customization in `src/index.css`. This scaffold does not need a Tailwind config file or PostCSS config.
-
-`src/main.tsx` imports `src/index.css`, so global font wiring belongs in `src/index.css`. Keep CSS `@import` statements first, then add any `@font-face` rules and font-family defaults there.
+1. **Never push to `main` without the owner's explicit OK** — `main` is the live site. Work on `refonte` (builds, never publishes).
+2. **Every visible text exists in French and English**: `b(fr, en)` in code, `{ "fr": "…", "en": "…" }` in JSON.
+3. **No new dependency unless the owner asks.** GSAP and Three.js are the only libraries considered for later; add them only on request.
+4. **Relative asset paths** (`projects/…`, never `/projects/…`): the site lives in the `/portfolio/` sub-folder.
+5. **Colours through theme variables** (`bg-bg`, `text-fg`, `text-muted`, `border-line`, `var(--blue)`); dark mode is the `dark` class on `<html>`.
+6. **Scroll-driven components** use `useScrollFrame` and write to the DOM; never put per-scroll values in React state.
+7. **Project transition** (`useProjectView`, `flight`, `Words`): after any change, test open, close, the browser back button and a direct `#projet/<slug>` link.
+8. **Before pushing**: `pnpm check && pnpm build` must pass (the CI runs the same).
 
 ## Code quality
 
-- Use double quotes for strings containing apostrophes (`"We're here to help"`), or escape them in single-quoted strings. An unescaped apostrophe in a single-quoted string breaks the build.
-- Ensure JSX tags are closed and braces are balanced.
-- Export components as default exports.
+- French texts contain apostrophes: use double quotes for those strings, or the build breaks.
+- `pnpm format` (oxfmt) removes `;` in inline object types; review its diff before committing.
+- Keep JSX tags closed and braces balanced; `App` stays the default export.
