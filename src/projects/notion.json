@@ -1,0 +1,114 @@
+{
+  "slug": "notion",
+  "id": "04",
+  "title": "Notion Workspaces",
+  "year": "2026",
+  "bg": "#FFFFFF",
+  "coverSrc": "projects/notion/assiette-banner.jpg",
+  "tags": {
+    "fr": "Templates Notion & systèmes no-code",
+    "en": "Notion templates & no-code systems"
+  },
+  "summary": {
+    "fr": "Templates Notion modulaires conçus pour le suivi nutritionnel et la gamification de Street Art.",
+    "en": "Modular Notion templates engineered for daily nutrition tracking and Street Art collection gamification."
+  },
+  "role": {
+    "fr": "No-Code Designer",
+    "en": "No-Code Designer"
+  },
+  "team": {
+    "fr": "Solo",
+    "en": "Solo"
+  },
+  "duration": {
+    "fr": "Projets personnels (2026)",
+    "en": "Personal projects (2026)"
+  },
+  "tools": "Notion",
+  "link": {
+    "href": "https://www.notion.com/fr/@mickln_",
+    "label": {
+      "fr": "Voir mon profil Notion",
+      "en": "View Notion profile"
+    }
+  },
+  "context": [
+    {
+      "fr": "Passionné par l'écosystème Notion, je conçois des templates pour structurer mes habitudes, mes loisirs et mon quotidien. Chaque workspace est pensé pour fonctionner à 100 % sur le plan gratuit de Notion (sans extension payante ni abonnement IA), afin de rester léger, accessible et duplicable en un clic.",
+      "en": "Passionate about Notion, I design templates to structure personal habits, daily routines, and hobbies. Each workspace is intentionally built to operate 100% on Notion's free plan, requiring zero paid add-ons or AI subscriptions, making them lightweight, accessible, and instantly duplicable."
+    }
+  ],
+  "choices": [],
+  "templates": [
+    {
+      "id": "assiette",
+      "title": "Mon Assiette",
+      "desc": {
+        "fr": "Un système complet pour gérer son alimentation au quotidien (perte, prise de masse ou maintien). Il enregistre les repas par moment de la journée, utilise des formules pour calculer automatiquement les calories et les macronutriments (protéines, glucides, lipides, fibres) par rapport aux quotas cibles, et suit l'évolution quotidienne du poids.",
+        "en": "A structured food logging system designed for weight management (loss, gain, or maintenance). It records meals across key time slots, uses dynamic formulas to calculate calories and macronutrients (proteins, carbs, fats, fibers) against target quotas, and tracks weight trends over time."
+      },
+      "items": [
+        {
+          "src": "projects/notion/assiette-journal.png",
+          "alt": "Mon Assiette — Journal de bord",
+          "title": {
+            "fr": "Journal de bord quotidien",
+            "en": "Daily food journal"
+          },
+          "span": "md:col-span-12"
+        },
+        {
+          "src": "projects/notion/assiette-quotas.png",
+          "alt": "Mon Assiette — Quotas nutritionnels",
+          "title": {
+            "fr": "Quotas & validation",
+            "en": "Quotas & validation"
+          },
+          "span": "md:col-span-6"
+        },
+        {
+          "src": "projects/notion/assiette-evolution.png",
+          "alt": "Mon Assiette — Évolution du poids",
+          "title": {
+            "fr": "Évolution & dynamique",
+            "en": "Evolution & momentum"
+          },
+          "span": "md:col-span-6"
+        },
+        {
+          "src": "projects/notion/assiette-references.png",
+          "alt": "Mon Assiette — Base de données Références",
+          "title": {
+            "fr": "Base de données Références",
+            "en": "Reference food database"
+          },
+          "span": "md:col-span-12"
+        }
+      ]
+    },
+    {
+      "id": "invaders",
+      "title": "Invaders",
+      "desc": {
+        "fr": "Un espace dédié au recensement des mosaïques urbaines de l'artiste Invader. En plus de documenter les œuvres flashées avec leurs caractéristiques (points, ville, date), le dashboard intègre un système de succès déblocables, des jauges de complétion et des grades qui évoluent selon le score total.",
+        "en": "An urban mosaic tracking workspace inspired by the street artist Invader. Beyond cataloging photographed artworks with metadata (points, city, date), the dashboard introduces customized unlockable achievements, completion progress gauges, and tiered player ranks based on the global score."
+      },
+      "items": [
+        {
+          "src": "projects/notion/invaders-dashboard.png",
+          "alt": "Invaders — Dashboard",
+          "title": {
+            "fr": "Dashboard de collection & succès",
+            "en": "Collection & achievement dashboard"
+          },
+          "span": "md:col-span-12"
+        }
+      ]
+    }
+  ],
+  "result": {
+    "fr": "Ces deux templates reposent sur des bases de données interconnectées (Relations & Rollups) et des formules conditionnelles pour automatiser les calculs sans aucun outil payant. Cette pratique m'a permis de perfectionner ma vision de l'architecture de données, de l'ergonomie de saisie et de la clarté d'information.",
+    "en": "Both workspaces leverage relational databases (Relations & Rollups) combined with conditional formulas to compute progress without external tools. This practice deepened my understanding of data architecture, friction-free input flows, and clean information hierarchy."
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "slug": "sushilin",
+  "id": "03",
+  "title": "Sushi Lin",
+  "year": "2026",
+  "bg": "#1E2442",
+  "coverSrc": "projects/sushilin/screen-hero.png",
+  "tags": {
+    "fr": "Refonte webdesign & e-commerce restauration",
+    "en": "E-commerce redesign & restaurant UI"
+  },
+  "summary": {
+    "fr": "Refonte proactive du parcours de commande à emporter, cross-selling, espace d'administration et emails transactionnels.",
+    "en": "Proactive redesign of online takeout ordering, cross-selling modules, admin dashboard, and transactional emails."
+  },
+  "role": {
+    "fr": "UX/UI & Webdesigner",
+    "en": "UX/UI & Webdesigner"
+  },
+  "team": {
+    "fr": "Solo",
+    "en": "Solo"
+  },
+  "duration": {
+    "fr": "1 semaine · projet proactif (2026)",
+    "en": "1 week · proactive project (2026)"
+  },
+  "tools": "Figma · IA (Antigravity)",
+  "link": {
+    "href": "https://mickln.github.io/sushi_lin/",
+    "label": {
+      "fr": "Voir le site en ligne",
+      "en": "Visit live site"
+    }
+  },
+  "context": [
+    {
+      "fr": "Aucun brief : refonte complète pour le restaurant japonais Sushi Lin (Les Clayes-sous-Bois), partie de ma propre initiative. L'objectif était de moderniser leur présence en ligne et de fluidifier la commande à emporter avec un parcours de conversion épuré, pour éviter que les clients ne se perdent dans le catalogue. Interface, backend et mentions légales inclus, le tout réalisé en une semaine.",
+      "en": "No brief: a complete redesign for the Japanese restaurant Sushi Lin (Les Clayes-sous-Bois), started on my own initiative. The goal was to modernise their online presence and streamline takeout ordering with a clean conversion flow, so customers don't get lost in the catalogue. Front end, backend and legal notices included, all done in one week."
+    }
+  ],
+  "choices": [
+    {
+      "fr": "Conception mobile-first avec navigation rapide par catégories et pastilles portions claires. Intégration d'un module de cross-selling au moment du panier (« Pour accompagner votre repas ») pour suggérer des accompagnements (boissons, raviolis gyoza) et augmenter le panier moyen. Le site intègre également la réservation de table en ligne et la génération automatique d'un email de confirmation détaillé pour le client et le restaurant.",
+      "en": "Designed with a mobile-first philosophy featuring intuitive category carousels and clear portion badges. Integrated a dedicated cross-selling module at checkout to recommend drink and side pairings, alongside online table reservations and automated confirmation emails."
+    },
+    {
+      "fr": "Une palette de couleurs directement inspirée de la salle du restaurant et de leur carte (Bleu Nuit indigo, Rose poudré et Blanc riz), associant tradition japonaise et modernité épurée.",
+      "en": "A color palette directly inspired by the restaurant interior and printed menu (Midnight Indigo, Powder Pink, and Rice White), paired with traditional Japanese typography."
+    }
+  ],
+  "logo": "projects/sushilin/logo-badge.png",
+  "colors": [
+    [
+      "Indigo Dark",
+      "#1E2442"
+    ],
+    [
+      "Powder Pink",
+      "#FFD2E5"
+    ],
+    [
+      "Rice White",
+      "#FDFBFA"
+    ]
+  ],
+  "fonts": [
+    "Shippori Mincho",
+    "Outfit"
+  ],
+  "screens": [
+    {
+      "src": "projects/sushilin/mobile-catalog.png",
+      "alt": "Sushi Lin — Menu digital mobile & Réductions",
+      "aspect": "mobile",
+      "caption": {
+        "fr": "Menu mobile-first & remise à emporter",
+        "en": "Mobile-first menu & takeaway discount"
+      }
+    },
+    {
+      "src": "projects/sushilin/mobile-cart-crossell.png",
+      "alt": "Sushi Lin — Panier mobile & Suggestions gourmandes",
+      "aspect": "mobile",
+      "caption": {
+        "fr": "Panier interactif & ventes croisées",
+        "en": "Interactive cart & cross-selling"
+      }
+    },
+    {
+      "src": "projects/sushilin/email-confirmation.png",
+      "alt": "Sushi Lin — Reçu & Confirmation de commande",
+      "aspect": "mobile",
+      "caption": {
+        "fr": "Reçu de commande & suivi de retrait",
+        "en": "Order receipt & pickup confirmation"
+      }
+    },
+    {
+      "src": "projects/sushilin/screen-menu.png",
+      "alt": "Sushi Lin — Carte desktop & Filtrage rapide",
+      "aspect": "desktop",
+      "caption": {
+        "fr": "Carte desktop & navigation par catégories",
+        "en": "Desktop menu & category filtering"
+      }
+    },
+    {
+      "src": "projects/sushilin/screen-reservation.png",
+      "alt": "Sushi Lin — Réservation de table en ligne",
+      "aspect": "desktop",
+      "caption": {
+        "fr": "Réservation de table en direct",
+        "en": "Direct online table booking"
+      }
+    },
+    {
+      "src": "projects/sushilin/screen-location.png",
+      "alt": "Sushi Lin — Horaires, Accès & Contact",
+      "aspect": "desktop",
+      "caption": {
+        "fr": "Horaires, accès & informations pratiques",
+        "en": "Hours, directions & practical info"
+      }
+    }
+  ],
+  "result": {
+    "fr": "Développement de l'interface et intégration d'un espace d'administration permettant au restaurateur de modifier les prix, ajouter des plats et gérer les fermetures exceptionnelles. Pour la partie backend (domaine qui m'était inconnu), j'ai travaillé avec l'assistance d'outils IA (Antigravity) pour structurer la logique de données. Des tests utilisateurs ont ensuite permis de valider la fluidité du tunnel d'achat.",
+    "en": "Built the interface and a custom admin dashboard that lets the restaurant owner edit prices, add dishes and manage exceptional closures. For the backend, a domain that was new to me, I worked with AI tools (Antigravity) to structure the data logic. User testing then validated the smoothness of the ordering flow."
+  }
+}
