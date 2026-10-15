@@ -1,0 +1,105 @@
+{
+  "slug": "popfig",
+  "id": "02",
+  "title": "PopFig",
+  "year": "2025",
+  "bg": "#FFBCB3",
+  "coverSrc": "projects/popfig/screen-catalog.png",
+  "tags": {
+    "fr": "Webdesign e-commerce & intégration CMS",
+    "en": "E-commerce webdesign & CMS integration"
+  },
+  "summary": {
+    "fr": "Site e-commerce de figurines de collection avec recherche dynamique et parcours d'achat épuré.",
+    "en": "Collectible figurines e-commerce store with live search filtering and seamless product exploration."
+  },
+  "role": {
+    "fr": "Web Designer & Intégrateur",
+    "en": "Web Designer & Integrator"
+  },
+  "team": {
+    "fr": "Solo",
+    "en": "Solo"
+  },
+  "duration": {
+    "fr": "4 jours et demi · projet d'études (2025)",
+    "en": "4.5 days · academic project (2025)"
+  },
+  "tools": "Figma · WordPress · WooCommerce · Elementor Pro",
+  "context": [
+    {
+      "fr": "Le brief : créer un site e-commerce. J'ai choisi les figurines de collection, parce que j'en collectionne. L'objectif était d'offrir une expérience d'achat fluide, aérée et intuitive. Je me suis inspiré des codes visuels de Pop Mart pour leur approche épurée qui valorise immédiatement chaque pièce de collection.",
+      "en": "The brief: build an e-commerce site. I chose collectible figurines because I collect them myself. The goal was a clean, intuitive and smooth shopping experience. I drew inspiration from Pop Mart's minimalist visual language, which keeps the focus entirely on each collectible."
+    }
+  ],
+  "choices": [
+    {
+      "fr": "Côté fonctionnalités, le site structure un catalogue varié avec une barre de recherche dynamique qui filtre les figurines instantanément dès la frappe. J'ai conçu une fiche produit immersive (visuels grand format, spécifications techniques, matière, sélecteur rapide) et un tunnel d'ajout au panier direct pour minimiser les étapes avant la commande.",
+      "en": "The shop features a diverse collectible catalog equipped with a live search bar that filters products in real time as the user types. I designed a focused product page (high-resolution zoom, material specs, instant quantity selector) and an effortless cart flow to minimize friction from discovery to checkout."
+    },
+    {
+      "fr": "Un univers graphique qui associe la douceur d'un rose saumon à la clarté d'un blanc cassé, pour une expérience pop et chaleureuse sans jamais surcharger la lecture des produits.",
+      "en": "A visual identity blending a soft salmon pink with crisp off-white tones, creating an inviting pop universe while keeping the focus on collectible details."
+    }
+  ],
+  "logo": "projects/popfig/cover.png",
+  "colors": [
+    [
+      "Salmon Pink",
+      "#FFBCB3"
+    ],
+    [
+      "Off-White",
+      "#F8F8F8"
+    ],
+    [
+      "Carbon Black",
+      "#1A1A1A"
+    ]
+  ],
+  "fonts": [
+    "Bebas Neue",
+    "Work Sans"
+  ],
+  "board": {
+    "src": "projects/popfig/figma-board.jpg",
+    "alt": "PopFig — Board Figma & système graphique",
+    "caption": {
+      "fr": "Le board Figma : système visuel et collections",
+      "en": "The Figma board: visual system and collections"
+    }
+  },
+  "screens": [
+    {
+      "src": "projects/popfig/screen-catalog.png",
+      "alt": "PopFig — Catalogue & Nouveautés",
+      "aspect": "desktop",
+      "caption": {
+        "fr": "Catalogue & nouveautés",
+        "en": "Catalog & new arrivals"
+      }
+    },
+    {
+      "src": "projects/popfig/screen-product.jpg",
+      "alt": "PopFig — Fiche produit",
+      "aspect": "desktop",
+      "caption": {
+        "fr": "Fiche produit & spécifications",
+        "en": "Product page & specs"
+      }
+    },
+    {
+      "src": "projects/popfig/screen-cart.png",
+      "alt": "PopFig — Panier & Tunnel d'achat",
+      "aspect": "desktop",
+      "caption": {
+        "fr": "Panier & tunnel d'achat",
+        "en": "Cart & checkout flow"
+      }
+    }
+  ],
+  "result": {
+    "fr": "Mon tout premier site e-commerce conçu et intégré sous WordPress (WooCommerce et Elementor Pro). Ce projet m'a permis de relier concrètement l'UX et l'UI : structurer la recherche en temps réel, optimiser le parcours d'achat et concevoir une fiche produit claire, tout en respectant une identité visuelle affirmée.",
+    "en": "My very first e-commerce store, designed and built on WordPress (WooCommerce and Elementor Pro). It bridged UX research with practical UI execution: structuring live filtering, streamlining the buying journey, and designing intuitive product pages within a cohesive brand identity."
+  }
+}

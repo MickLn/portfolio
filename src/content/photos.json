@@ -1,0 +1,58 @@
+[
+  {
+    "src": "about/food-table.jpg",
+    "alt": {
+      "fr": "Table de restaurant",
+      "en": "Restaurant table"
+    }
+  },
+  {
+    "src": "about/paris-eiffel.jpg",
+    "alt": {
+      "fr": "Paris vu du ciel",
+      "en": "Paris from above"
+    }
+  },
+  {
+    "src": "about/sunset-road.jpg",
+    "alt": {
+      "fr": "Coucher de soleil",
+      "en": "Sunset"
+    }
+  },
+  {
+    "src": "about/pool-architecture.jpg",
+    "alt": {
+      "fr": "Piscine et arches",
+      "en": "Pool and arches"
+    }
+  },
+  {
+    "src": "about/donburi-karaage.jpg",
+    "alt": {
+      "fr": "Donburi karaage",
+      "en": "Karaage donburi"
+    }
+  },
+  {
+    "src": "about/dessert-gastronomique.jpg",
+    "alt": {
+      "fr": "Dessert gastronomique",
+      "en": "Gastronomic dessert"
+    }
+  },
+  {
+    "src": "about/medaille-finisher.jpg",
+    "alt": {
+      "fr": "Médaille finisher",
+      "en": "Finisher medal"
+    }
+  },
+  {
+    "src": "about/running-quais-seine.jpg",
+    "alt": {
+      "fr": "Running quais de Seine",
+      "en": "Running along the Seine"
+    }
+  }
+]

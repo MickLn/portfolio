@@ -1,0 +1,105 @@
+{
+  "slug": "pansies",
+  "id": "01",
+  "title": "Pansies",
+  "year": "2025",
+  "bg": "#E8DEF8",
+  "coverSrc": "projects/pansies/figma-board.png",
+  "tags": {
+    "fr": "IA vocale & productivité",
+    "en": "AI audio & productivity"
+  },
+  "summary": {
+    "fr": "Assistant vocal IA & organisation de flux de pensées.",
+    "en": "AI vocal assistant & brain-dumps organizer."
+  },
+  "role": {
+    "fr": "UX/UI Designer",
+    "en": "UX/UI Designer"
+  },
+  "team": {
+    "fr": "Groupe de 3",
+    "en": "Team of 3"
+  },
+  "duration": {
+    "fr": "Sprint de 4 jours et demi (fin 2025)",
+    "en": "4.5-day sprint (late 2025)"
+  },
+  "tools": "Figma",
+  "context": [
+    {
+      "fr": "Le brief : concevoir l'interface d'une application mobile. Notre groupe de trois a choisi une application vocale pour s'enregistrer, avec un système de notifications.",
+      "en": "The brief: design the interface of a mobile app. Our team of three chose a voice-recording app with a notification system."
+    },
+    {
+      "fr": "Lors d'un sprint intensif de 4 jours et demi, nous avons constaté que noter une idée spontanée sur mobile est souvent freiné par la saisie au clavier et le tri manuel dans des dossiers. L'utilisateur perd son élan avant même d'avoir structuré sa pensée.",
+      "en": "During a fast-paced 4.5-day sprint, we identified that capturing spontaneous thoughts on mobile is often interrupted by slow text inputs, rigid folders, and friction. Users lose momentum before structuring their raw ideas."
+    }
+  ],
+  "choices": [
+    {
+      "fr": "Nous avons conçu Pansies autour d'une interaction unique : l'enregistrement vocal immédiat. L'application convertit la voix en notes structurées, tâches et synthèses prêtes à l'action. J'ai particulièrement travaillé sur les parcours de capture rapide, la hiérarchie des cartes, les micro-interactions de validation et les boutons d'action (CTA).",
+      "en": "We designed Pansies around a single gesture: instant audio capture. The interface processes raw speech into structured notes, tasks, and summaries with zero manual sorting. I focused on the quick-capture flows, the card hierarchy, the validation micro-interactions and the call-to-action buttons."
+    },
+    {
+      "fr": "Une palette douce lavande et fusain qui évoque la sérénité, associée à des formes douces pour limiter la fatigue visuelle lors des sessions de capture quotidienne.",
+      "en": "A soothing lavender and charcoal palette designed to evoke calm, paired with soft organic shapes that reduce visual fatigue during daily capture."
+    }
+  ],
+  "credit": {
+    "fr": "Logo, couleurs et typographies : réalisés par une coéquipière.",
+    "en": "Logo, colours and typefaces: created by a teammate."
+  },
+  "logo": "projects/pansies/cover.png",
+  "colors": [
+    [
+      "Soft Lavender",
+      "#E8DEF8"
+    ],
+    [
+      "Charcoal Dark",
+      "#1D1B20"
+    ],
+    [
+      "Deep Violet",
+      "#61286C"
+    ]
+  ],
+  "fonts": [
+    "Cabinet Grotesk",
+    "Geist Sans"
+  ],
+  "screens": [
+    {
+      "src": "projects/pansies/screen-home.png",
+      "alt": "Pansies — Écran d'accueil & Connexion",
+      "aspect": "mobile",
+      "caption": {
+        "fr": "Accueil & connexion",
+        "en": "Welcome & sign-in"
+      }
+    },
+    {
+      "src": "projects/pansies/screen-list.jpg",
+      "alt": "Pansies — Liste des mémos vocaux",
+      "aspect": "mobile",
+      "caption": {
+        "fr": "Liste des mémos vocaux",
+        "en": "Voice memos list"
+      }
+    },
+    {
+      "src": "projects/pansies/screen-player.jpg",
+      "alt": "Pansies — Lecteur audio & Transcription",
+      "aspect": "mobile",
+      "caption": {
+        "fr": "Lecteur & transcription IA",
+        "en": "Player & AI transcription"
+      }
+    }
+  ],
+  "result": {
+    "fr": "Travailler sur un sprint de 4 jours et demi m'a appris à prioriser sans compromis sur l'essentiel : concentrer l'effort sur le parcours de capture principal pour livrer un prototype mobile tactile, cohérent et immédiatement fluide.",
+    "en": "Working under a tight 4.5-day sprint reinforced the necessity of ruthless prioritization. Focusing on the core capture flow over edge cases allowed us to deliver an intuitive and tactile mobile prototype."
+  }
+}
