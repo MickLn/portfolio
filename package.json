@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "format": "oxfmt",
-    "check": "node scripts/check-projects.mjs"
+    "check": "node scripts/check-content.mjs"
   },
   "dependencies": {
     "react": "^19.0.0",

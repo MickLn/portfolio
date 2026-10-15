@@ -1,0 +1,171 @@
+{
+  "softSkills": [
+    {
+      "name": {
+        "fr": "Empathique",
+        "en": "Empathetic"
+      },
+      "desc": {
+        "fr": "J'écoute toujours en me mettant à la place des autres, pour vraiment comprendre leurs besoins.",
+        "en": "I always listen by putting myself in other people's shoes, to truly understand their needs."
+      }
+    },
+    {
+      "name": {
+        "fr": "Pointilleux",
+        "en": "Meticulous"
+      },
+      "desc": {
+        "fr": "Je fais attention aux détails, même au quotidien : j'aime quand tout est bien aligné.",
+        "en": "I pay attention to details, even in everyday life: I like it when everything lines up."
+      }
+    },
+    {
+      "name": {
+        "fr": "Résilient",
+        "en": "Resilient"
+      },
+      "desc": {
+        "fr": "Face à un défi, je cherche toujours la solution, même si cela prend du temps.",
+        "en": "When facing a challenge, I always look for the solution, even if it takes time."
+      }
+    },
+    {
+      "name": {
+        "fr": "Franc",
+        "en": "Straightforward"
+      },
+      "desc": {
+        "fr": "Je dis toujours ce que je pense, avec nuance, car je ne cherche jamais à blesser.",
+        "en": "I always say what I think, with nuance, because I never mean to hurt anyone."
+      }
+    },
+    {
+      "name": {
+        "fr": "Discipliné",
+        "en": "Disciplined"
+      },
+      "desc": {
+        "fr": "Je garde un rythme de vie sain pour progresser un peu chaque jour.",
+        "en": "I keep a healthy routine to get a little better every day."
+      }
+    },
+    {
+      "name": {
+        "fr": "Polyvalent",
+        "en": "Versatile"
+      },
+      "desc": {
+        "fr": "Je touche à tout pour découvrir là où j'excelle.",
+        "en": "I try my hand at everything to find out where I excel."
+      }
+    }
+  ],
+  "passions": [
+    {
+      "name": {
+        "fr": "Nourriture",
+        "en": "Food"
+      },
+      "desc": {
+        "fr": "Toujours à l'affût de bonnes adresses. J'aime découvrir des cuisines d'ailleurs et goûter des spécialités que je ne connais pas. Me faire surprendre par ce qu'il y a dans l'assiette, c'est ce qui me plaît le plus. Dénicher ces endroits, c'est clairement l'une de mes activités préférées.",
+        "en": "Always on the lookout for good spots. I love discovering cuisines from elsewhere and tasting specialities I don't know yet. Being surprised by what's on the plate is what I enjoy most. Hunting down these places is easily one of my favourite things to do."
+      },
+      "stats": [
+        {
+          "value": "150+",
+          "label": {
+            "fr": "adresses testées",
+            "en": "places tried"
+          }
+        }
+      ]
+    },
+    {
+      "name": {
+        "fr": "Running",
+        "en": "Running"
+      },
+      "desc": {
+        "fr": "Je suis tombé amoureux de ce sport : je me sens libre en courant à travers Paris, en explorant des coins où je n'aurais jamais pensé mettre les pieds. Ça me permet aussi de me défouler et de rester en bonne santé. Mon défi : courir le Marathon de Paris 2027 !",
+        "en": "I fell in love with this sport: I feel free running across Paris, exploring corners I never thought I'd set foot in. It also helps me let off steam and stay healthy. My challenge: running the 2027 Paris Marathon!"
+      },
+      "stats": [
+        {
+          "value": "23:12",
+          "label": {
+            "fr": "5 km",
+            "en": "5 km"
+          }
+        },
+        {
+          "value": "47:09",
+          "label": {
+            "fr": "10 km",
+            "en": "10 km"
+          }
+        },
+        {
+          "value": "1:41:13",
+          "label": {
+            "fr": "20 km",
+            "en": "20 km"
+          }
+        },
+        {
+          "value": "2:05:17",
+          "label": {
+            "fr": "Semi-marathon",
+            "en": "Half marathon"
+          }
+        },
+        {
+          "value": "2027",
+          "label": {
+            "fr": "Marathon · objectif",
+            "en": "Marathon · goal"
+          }
+        }
+      ],
+      "link": {
+        "href": "https://www.strava.com/athletes/135239970",
+        "label": "Strava"
+      }
+    }
+  ],
+  "languages": [
+    {
+      "name": {
+        "fr": "Français",
+        "en": "French"
+      },
+      "level": "C2",
+      "word": {
+        "fr": "fluide",
+        "en": "fluent"
+      }
+    },
+    {
+      "name": {
+        "fr": "Anglais",
+        "en": "English"
+      },
+      "level": "B2",
+      "word": {
+        "fr": "courant",
+        "en": "upper-intermediate"
+      }
+    },
+    {
+      "name": {
+        "fr": "Chinois",
+        "en": "Chinese"
+      },
+      "level": "B2",
+      "word": {
+        "fr": "courant",
+        "en": "upper-intermediate"
+      }
+    }
+  ]
+}

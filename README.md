@@ -4,14 +4,15 @@ Portfolio personnel de **Mickael Lin**, étudiant en Création Digitale & Design
 
 Site en ligne : https://mickln.github.io/portfolio/
 
-Ce document s'adresse aussi bien à une personne qu'à une IA qui reprend le projet. Les sections « Architecture », « Règles » et « Ajouter un projet » sont à lire avant toute modification.
+Ce document s'adresse aussi bien à une personne qu'à une IA qui reprend le projet. Les sections « Structure des fichiers », « Où modifier quoi », « Ajouter un projet » et « Règles » sont à lire avant toute modification.
 
 ---
 
 ## 1. Vue d'ensemble
 
-- **Une seule page** (`src/App.tsx`) avec deux vues : l'accueil (« Bienvenue ») et la page « Moi ».
-- **Les projets** sont des fichiers JSON dans `src/projects/`, un par projet. La liste les découvre automatiquement.
+- **Une seule page** avec deux vues : l'accueil (« Bienvenue ») et la page « Moi ».
+- **Le contenu est séparé du code** : tous les textes, liens, photos et projets sont des fichiers JSON dans `src/content/`. Pour changer un texte ou ajouter un projet, on modifie un fichier JSON, pas le code.
+- **Les projets** sont un fichier JSON chacun, dans `src/content/projects/`. La liste les découvre automatiquement.
 - **Tout le contenu est bilingue** : chaque texte existe en français (`fr`) et en anglais (`en`). Aucun texte ne doit être ajouté dans une seule langue.
 - **Le site est statique** : aucun serveur, aucune base de données, aucun formulaire. Il est compilé en fichiers HTML, CSS et JavaScript, puis publié sur GitHub Pages.
 
@@ -19,7 +20,7 @@ Ce document s'adresse aussi bien à une personne qu'à une IA qui reprend le pro
 
 | Élément | Choix | Remarque |
 |---|---|---|
-| Interface | React 19 + TypeScript 5 | un seul composant principal |
+| Interface | React 19 + TypeScript 5 | un fichier par section, contenu en JSON |
 | Build | Vite 8 | `pnpm dev`, `pnpm build` |
 | Style | Tailwind CSS v4 (plugin `@tailwindcss/vite`) | pas de fichier de configuration Tailwind |
 | Gestionnaire de paquets | pnpm **10.34.3** (fixé dans `.mise.toml`) | le fichier de verrouillage est `pnpm-lock.yaml` |
@@ -33,42 +34,58 @@ Ce document s'adresse aussi bien à une personne qu'à une IA qui reprend le pro
 
 ```
 src/
-  App.tsx              Le site entier : accueil, projets, transitions, page « Moi », textes FR/EN
-  index.css            Thème clair/sombre (variables CSS), curseur, animations globales
-  main.tsx             Point d'entrée React
-  projects/*.json      Un fichier par projet (contenu, voir section 5)
-scripts/
-  check-projects.mjs   Vérifie les fichiers de projets (lancé par `pnpm check`)
-public/
-  projects/<slug>/     Images des projets (captures, couvertures, board)
-  about/               Photos de la page « Moi »
-  profile/             Photo de l'accueil
-  cursor*.svg          Curseur personnalisé (orange, bleu, azur pour le mode sombre)
-  favicon.svg, apple-touch-icon.png
-  cv-mickael-lin.pdf   CV (public)
-.figma/make/site.json  Titre, description et réglages d'indexation (utilisé par le build)
-.github/workflows/deploy.yml   Compilation, contrôle et mise en ligne
+  App.tsx                  Assemble le site : état global (page, langue, mode sombre), navigation, rideau
+  main.tsx                 Point d'entrée React
+  i18n.ts                  Langues : type T = { fr, en }, useT(), b(fr, en)
+  projectView.tsx          Ouverture/fermeture d'un projet, adresse #projet/<slug>, transition (flight, Words)
+  useAdaptiveCursor.ts     Curseur qui passe en bleu sur fond orange
+  index.css                Thème clair/sombre (variables CSS), curseur, animations globales
+  content/                 TOUT LE CONTENU ÉDITABLE
+    index.ts               Charge et type les fichiers ci-dessous (ne contient pas de texte)
+    projects/<slug>.json   Un fichier par projet
+    about.json             Page « Moi » : qualités, passions (avec chiffres et lien), langues
+    tools.json             Section « Outils » de l'accueil
+    photos.json            Section « Photographie » de l'accueil
+    links.json             E-mail, LinkedIn, CV, Notion
+  components/              Une section du site par fichier
+    Nav.tsx, Footer.tsx    En-tête et pied de page
+    Hero.tsx               Haut de l'accueil
+    Projects.tsx           Liste des projets
+    Tools.tsx, Photos.tsx  Sections « Outils » et « Photographie »
+    CaseStudy.tsx          Page d'un projet (étapes, captures, zoom, sélecteur de templates)
+    Cover.tsx, Portrait.tsx
+  pages/About.tsx          Page « Moi »
+  ui/                      Briques réutilisables
+    motion.tsx             Défilement partagé (useScrollFrame), Reveal, SplitLine, Parallax, reduceMotion
+    HoverName.tsx          Titres dont les lettres se transforment au survol
+    icons.tsx              Logo, flèche
+scripts/check-content.mjs  Vérifie tout le contenu (lancé par `pnpm check`)
+public/                    Images, CV, favicon, curseurs (chemins relatifs, voir section 8)
+.figma/make/site.json      Titre, description et indexation (utilisé par le build)
+.github/workflows/deploy.yml   Contrôle, compilation et mise en ligne
 ```
 
-## 4. Architecture de `App.tsx`
+## 4. Où modifier quoi
 
-Ordre des sections du fichier :
+| Je veux… | Fichier |
+|---|---|
+| Changer un texte de la page « Moi », une passion, un record de course | `src/content/about.json` |
+| Ajouter ou modifier un projet | `src/content/projects/<slug>.json` (voir section 5) |
+| Changer une photo de la section Photographie | `src/content/photos.json` + l'image dans `public/about/` |
+| Changer un outil | `src/content/tools.json` (`accent` : `"signal"` = orange, `"blue"` = bleu) |
+| Changer l'e-mail, LinkedIn, le CV | `src/content/links.json` (+ le PDF dans `public/`) |
+| Changer un libellé d'interface (bouton, titre de section) | le composant concerné dans `src/components/` ou `src/pages/` (textes en `b(fr, en)`) |
+| Changer la mise en page d'une section | le composant concerné |
+| Changer les couleurs du thème | `src/index.css` (variables `--bg`, `--fg`, `--muted`, `--blue`, `--line`) |
 
-1. **Utilitaires** : `Logo`, `Reveal` (apparition au défilement), `SplitLine` (texte qui monte ligne par ligne), `HoverName` (lettres animées au survol, en formes géométriques).
-2. **Défilement partagé** : `useScrollFrame` est le seul écouteur de défilement. Les composants qui réagissent au défilement (parallaxe, hero, photos) écrivent directement dans le DOM. Ne pas ajouter de `useState` dans ces composants, cela provoquerait des rendus à chaque défilement.
-3. **Données** : les projets viennent des fichiers JSON (`import.meta.glob` dans `App.tsx`, triés par `id`).
-4. **Chrome** : `Nav` (en-tête), `Footer`, `Cover` (couverture d'un projet).
-5. **Accueil** : `Hero`, `Projects` (la liste), `Tools`, `Photos` (défilement horizontal).
-6. **Transition projet** : `useProjectView` gère l'ouverture et la fermeture d'un projet, son adresse `#projet/<slug>`, et le bouton retour du navigateur. `flight()` anime le fond de la ligne et chaque mot du titre. Le titre est découpé en mots avec `Words`.
-7. **Page projet** : `CaseStudy`, avec trois étapes (`Step` : « Le contexte », « Mes choix », « Le résultat »), la section `Templates` (sélecteur, utilisé par Notion), et les captures (`Shot`, avec cadre et défilement interne pour les images très hautes).
-8. **Page « Moi »** : `About`, avec les qualités, les passions et les liens.
-9. **`App`** : état global (page, langue, mode sombre), navigation, rideau entre les pages.
-
-Une variable CSS donne les couleurs : `--bg`, `--fg`, `--muted`, `--blue`, `--line`. Le mode sombre change ces variables via la classe `dark` sur `<html>`. Utiliser ces variables plutôt que des couleurs en dur.
+**À savoir sur le code :**
+- **Défilement :** `useScrollFrame` (dans `ui/motion.tsx`) est le seul écouteur de défilement. Les composants qui réagissent au défilement écrivent directement dans le DOM. Ne pas ajouter de `useState` mis à jour à chaque défilement.
+- **Transition de projet :** elle vit dans `projectView.tsx`. Toute modification doit être testée dans quatre cas : ouverture, fermeture, bouton retour du navigateur, lien direct `#projet/<slug>`.
+- **Couleurs :** les variables CSS changent avec le mode sombre (classe `dark` sur `<html>`). Utiliser `bg-bg`, `text-fg`, `text-muted`, `border-line`, `var(--blue)` plutôt que des couleurs en dur.
 
 ## 5. Ajouter ou modifier un projet
 
-Chaque projet est un fichier `src/projects/<slug>.json`. Le fichier `popfig.json` sert de modèle.
+Chaque projet est un fichier `src/content/projects/<slug>.json`. Le fichier `popfig.json` sert de modèle.
 
 | Champ | Type | Obligatoire | Rôle |
 |---|---|---|---|
@@ -84,31 +101,31 @@ Chaque projet est un fichier `src/projects/<slug>.json`. Le fichier `popfig.json
 | `tools` | texte | oui | outils, en une ligne (pas de traduction) |
 | `link` | `{href, label}` | non | bouton « voir le site » ; `label` est traduit |
 | `context` | liste de `{fr, en}` | oui | étape 1 : le brief ou le contexte |
-| `choices` | liste de `{fr, en}` | oui (peut être vide) | étape 2 : tes décisions |
+| `choices` | liste de `{fr, en}` | oui (peut être vide) | étape 2 : les décisions |
 | `result` | `{fr, en}` | oui | étape 3 : ce que tu en retiens |
-| `credit` | `{fr, en}` | non | mention d'un travail d'équipe (logo, typo, couleurs faits par quelqu'un d'autre) |
+| `credit` | `{fr, en}` | non | mention d'un travail d'équipe |
 | `logo` | chemin | non | image du logo |
 | `colors` | liste de `[nom, hex]` | non | palette affichée |
-| `fonts` | liste de texte | non | polices (deux maximum, la première pour les titres) |
+| `fonts` | liste de texte | non | polices |
 | `board` | `{src, alt, caption}` | non | grand visuel (board Figma) avec légende |
 | `screens` | liste | non | captures : `{src, alt, caption: {fr,en}, aspect: "mobile" \| "desktop"}` |
 | `templates` | liste | non | pour un projet qui regroupe plusieurs modèles (voir `notion.json`) |
 
 **Procédure :**
-1. Copier `popfig.json` vers `src/projects/<nouveau-slug>.json`.
+1. Copier `popfig.json` vers `src/content/projects/<nouveau-slug>.json`.
 2. Mettre à jour `slug` (le même que le nom du fichier), `id`, les textes en français **et** en anglais, et les images.
 3. Déposer les images dans `public/projects/<nouveau-slug>/`.
 4. Lancer `pnpm check`. Il signale tout champ manquant, toute traduction vide, toute image introuvable et tout `id` en double.
 5. Lancer `pnpm dev` et vérifier le rendu à `http://localhost:8443`.
 
-Le projet apparaît tout seul dans la liste. Aucune modification de `App.tsx` n'est nécessaire.
+Le projet apparaît tout seul dans la liste. Aucune modification de code n'est nécessaire. Une capture plus haute que son cadre défile à l'intérieur : il suffit de l'ajouter à `screens`.
 
 ## 6. Commandes
 
 ```bash
 pnpm install        # installer les dépendances (pnpm 10.34.3, Node 22)
 pnpm dev            # serveur local sur http://localhost:8443
-pnpm check          # vérifier les fichiers de projets
+pnpm check          # vérifier tout le contenu (src/content/)
 pnpm build          # compiler dans dist/
 pnpm preview        # tester le build localement
 ```
@@ -126,13 +143,13 @@ pnpm preview        # tester le build localement
 - **Chemins relatifs :** les images et fichiers sont référencés sans barre initiale (`projects/…`, pas `/projects/…`), pour que le site marche aussi dans le sous-dossier `/portfolio/` de GitHub Pages.
 - **Couleurs :** utiliser les variables CSS (`bg-bg`, `text-fg`, `text-muted`, `border-line`, `var(--blue)`), pour que le mode sombre fonctionne.
 - **Accessibilité :** toute image cliquable est un `<button>` avec un libellé ; les dialogues ont un `aria-label` ; le focus clavier est géré à l'ouverture et à la fermeture d'un projet ; les animations respectent `prefers-reduced-motion`.
-- **Ne pas recréer la transition de projet** à la main : elle est dans `useProjectView` et `flight()`. La modifier demande de vérifier les quatre cas (ouverture, fermeture, bouton retour, lien direct).
+- **Ne pas recréer la transition de projet** à la main : elle est dans `src/projectView.tsx` (`useProjectView`, `flight()`). La modifier demande de vérifier les quatre cas (ouverture, fermeture, bouton retour, lien direct).
 - **Après toute modification :** `pnpm check` puis `pnpm build` doivent passer avant un envoi.
 
 ## 9. Points d'attention connus
 
 - **Curseur personnalisé :** le navigateur le charge depuis `public/cursor*.svg` ; sur un écran tactile il n'a aucun effet.
-- **Captures très hautes :** une image nettement plus haute que son cadre défile à l'intérieur du cadre. Le seuil est dans `Shot` (15 % de marge).
+- **Captures très hautes :** une image nettement plus haute que son cadre défile à l'intérieur du cadre. Le seuil est dans `Shot` (`src/components/CaseStudy.tsx`, 15 % de marge).
 - **Google :** le site est indexable (`.figma/make/site.json`, `robots.index: true`).
 - **Ancienne version :** l'historique de `main` contient l'ancien site, réalisé avec Figma Make. Il est volontairement conservé dans git, pas dans le projet actuel.
 
