@@ -41,7 +41,7 @@
 
 ## Points d'attention
 
-- **Images :** compressées le 2026-10-26 (6,3 Mo → 3,8 Mo, mêmes noms et formats). `.gitattributes` (règles Git LFS jamais utilisées) a été retiré : les images sont des fichiers normaux du dépôt.
+- **Images :** compressées le 2026-10-26 (6,3 Mo → 2,9 Mo, chacune sous 200 Ko, mêmes noms et formats). `.gitattributes` (règles Git LFS jamais utilisées) a été retiré : les images sont des fichiers normaux du dépôt.
 - **Règle des langues à moitié tenue :** les libellés d'interface sont écrits dans le code (`b(fr, en)`). Ajouter une 3ᵉ langue demande de modifier le code.
 - **Publication :** rien sur `main` sans l'accord explicite de Mickael.
 
