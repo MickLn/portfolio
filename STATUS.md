@@ -41,13 +41,12 @@
 
 ## Points d'attention
 
-- **Images et Git LFS :** `.gitattributes` envoie les images vers Git LFS, mais elles sont stockées normalement dans le dépôt. Ne jamais faire `git add -A` ou « tout valider » : n'ajouter que les fichiers modifiés, sinon le site perd ses images.
+- **Images :** compressées le 2026-10-26 (6,3 Mo → 3,8 Mo, mêmes noms et formats). `.gitattributes` (règles Git LFS jamais utilisées) a été retiré : les images sont des fichiers normaux du dépôt.
 - **Règle des langues à moitié tenue :** les libellés d'interface sont écrits dans le code (`b(fr, en)`). Ajouter une 3ᵉ langue demande de modifier le code.
 - **Publication :** rien sur `main` sans l'accord explicite de Mickael.
 
 ## Questions ouvertes
 
-- Corriger la configuration Git LFS (retirer les images de `.gitattributes`) ?
 - Déplacer les libellés d'interface dans des fichiers de langue ?
 
 ## Idées pour plus tard
