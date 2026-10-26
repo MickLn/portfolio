@@ -2,7 +2,7 @@
 
 Read `README.md` (French) before changing anything: architecture, the project JSON schema, commands, publishing flow and rules. This file is the short version.
 
-**Every session:** read `STATUS.md` first (project state). Before saying a step is done, update `STATUS.md` (keep it under ~150 lines; move finished parts to `archive/YYYY-MM-DD-name.md`) and add any decision to `DECISIONS.md`. At the end of a session, write or complete `journal/YYYY-MM-DD.md` (in French, first person, from Mickael's point of view). Never create a separate summary or handover file.
+**Every session:** read `STATUS.md` first (project state). Before saying a step is done, update `STATUS.md` (keep it under ~150 lines; move finished parts to `archive/YYYY-MM-DD-name.md`) and add any decision to `DECISIONS.md`. At the end of a session, write or complete the private work journal `/mnt/project-files/journal/YYYY-MM-DD.md` (in French, first person, from Mickael's point of view; not in this public repo). Never create a separate summary or handover file.
 
 ## What this is
 

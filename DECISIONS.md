@@ -1,9 +1,9 @@
 # Décisions
 
 ## 2026-10-26  Fichiers de suivi du projet
-Décision : ajouter `STATUS.md`, `DECISIONS.md` et `journal/` à la racine, sans déplacer les fichiers existants.
+Décision : ajouter `STATUS.md` et `DECISIONS.md` à la racine, sans déplacer les fichiers existants. Le journal de travail est privé, dans le dossier du projet Claude (pas dans ce dépôt public).
 Pourquoi : chaque nouvelle conversation avec une IA reprend le contexte sans qu'il faille le répéter.
-Écarté : réorganiser le dossier selon le modèle du skill (`code/`, `design/`…), qui casserait le build et les chemins du site.
+Écarté : dépôt privé (GitHub Pages ne marche pas sur un dépôt privé avec un compte gratuit) ; réorganiser le dossier selon le modèle du skill (`code/`, `design/`…), qui casserait le build et les chemins du site.
 
 ## 2026-10-15  Contenu en JSON, un fichier par section
 Décision : tous les textes, liens et projets sont dans `src/content/*.json`, en FR et EN ; un composant par section.
