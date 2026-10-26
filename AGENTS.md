@@ -1,6 +1,8 @@
 # Portfolio — Mickael Lin (guide for AI agents)
 
-Read `README.md` (French) before changing anything: architecture, the project JSON schema, commands, publishing flow and rules. This file is the short version.
+This file is loaded in every session. The owner, Mickael, is a beginner in code, works in French and wants to save tokens.
+
+**Every session:** read `STATUS.md` first (project state). Open `README.md` (French, long) only when a task needs it, e.g. the project JSON schema to add a project. Before saying a step is done, update `STATUS.md` (keep it under ~150 lines; move finished parts to `archive/YYYY-MM-DD-name.md`) and add any decision to `DECISIONS.md`. At the end of a session, write or complete the private work journal `/mnt/project-files/journal/YYYY-MM-DD.md` (in French, first person, from Mickael's point of view; not in this public repo). Never create a separate summary or handover file.
 
 ## What this is
 
@@ -20,16 +22,24 @@ Read `README.md` (French) before changing anything: architecture, the project JS
 - `public/` — images, CV, favicon, cursors. `.figma/make/site.json` — page title, description, indexing.
 - `.github/workflows/deploy.yml` — check + build on every push; publishes only from `main`.
 
+## Workflow
+
+1. Work on a feature branch, never directly on `main`.
+2. Run `pnpm check && pnpm build`, then show the owner the result: screenshots of the changed pages (desktop and mobile, light and dark if relevant), taken with Playwright on `pnpm preview`.
+3. Open a pull request to `main` and merge it only after the owner's explicit OK. `main` publishes the live site in about a minute.
+4. Answer in French, short and in plain words; explain any technical term.
+
 ## Rules
 
-1. **Never push to `main` without the owner's explicit OK** — `main` is the live site. Work on `refonte` (builds, never publishes).
+1. **Never push to `main` without the owner's explicit OK** — `main` is the live site. Any other branch only proves the build.
 2. **Every visible text exists in French and English**: `{ "fr": "…", "en": "…" }` in `src/content/*.json`; `b(fr, en)` only for interface labels inside components.
 3. **No new dependency unless the owner asks.** GSAP and Three.js are the only libraries considered for later; add them only on request.
 4. **Relative asset paths** (`projects/…`, never `/projects/…`): the site lives in the `/portfolio/` sub-folder.
 5. **Colours through theme variables** (`bg-bg`, `text-fg`, `text-muted`, `border-line`, `var(--blue)`); dark mode is the `dark` class on `<html>`.
 6. **Scroll-driven components** use `useScrollFrame` and write to the DOM; never put per-scroll values in React state.
 7. **Project transition** (`useProjectView`, `flight`, `Words`): after any change, test open, close, the browser back button and a direct `#projet/<slug>` link.
-8. **Before pushing**: `pnpm check && pnpm build` must pass (the CI runs the same).
+8. **Images**: keep each image in `public/` under 200 KB, same name and format (compress before adding; photos about 1200–1400 px tall are enough). Git LFS is not used: images are plain files.
+9. **Before pushing**: `pnpm check && pnpm build` must pass (the CI runs the same).
 
 ## Code quality
 

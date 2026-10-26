@@ -4,6 +4,8 @@ Portfolio personnel de **Mickael Lin**, étudiant en Création Digitale & Design
 
 Site en ligne : https://mickln.github.io/portfolio/
 
+**Commence ici : lis `STATUS.md`** (état du projet). Les décisions sont dans `DECISIONS.md`.
+
 Ce document s'adresse aussi bien à une personne qu'à une IA qui reprend le projet. Les sections « Structure des fichiers », « Où modifier quoi », « Ajouter un projet » et « Règles » sont à lire avant toute modification.
 
 ---
@@ -33,6 +35,8 @@ Ce document s'adresse aussi bien à une personne qu'à une IA qui reprend le pro
 ## 3. Structure des fichiers
 
 ```
+STATUS.md                  État du projet : étapes, briques, stack, style, points d'attention
+DECISIONS.md               Décisions prises et pourquoi (la plus récente en haut)
 src/
   App.tsx                  Assemble le site : état global (page, langue, mode sombre), navigation, rideau
   main.tsx                 Point d'entrée React
