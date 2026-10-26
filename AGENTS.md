@@ -2,6 +2,8 @@
 
 Read `README.md` (French) before changing anything: architecture, the project JSON schema, commands, publishing flow and rules. This file is the short version.
 
+**Every session:** read `STATUS.md` first (project state). Before saying a step is done, update `STATUS.md` (keep it under ~150 lines; move finished parts to `archive/YYYY-MM-DD-name.md`) and add any decision to `DECISIONS.md`. At the end of a session, write or complete `journal/YYYY-MM-DD.md` (in French, first person, from Mickael's point of view). Never create a separate summary or handover file.
+
 ## What this is
 
 - A static, bilingual (FR/EN) portfolio, content in JSON (`src/content/`): React 19 + TypeScript + Vite 8 + Tailwind CSS v4. No server, no database.
